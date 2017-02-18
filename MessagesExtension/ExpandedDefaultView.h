@@ -10,4 +10,10 @@
 
 @interface ExpandedDefaultView : UIView
 
+@property (strong, nonatomic) IBOutlet UIButton *takePhotoButton;
+@property (strong, nonatomic) IBOutlet UIButton *takePhotoButtonImage;
+
+@property (strong, nonatomic) IBOutlet UIButton *choosePhotoButton;
+@property (strong, nonatomic) IBOutlet UIButton *choosePhotoButtonImage;
+
 @end

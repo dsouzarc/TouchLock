@@ -1,16 +1,86 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB">
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ExpandedDefaultView">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BLG-eh-XlW">
+                    <rect key="frame" x="24" y="555" width="48" height="48"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="48" id="PqT-mV-Ppl"/>
+                        <constraint firstAttribute="width" constant="48" id="UHf-X3-LIu"/>
+                    </constraints>
+                    <state key="normal" image="access_gallery.png"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2lC-OU-SCm">
+                    <rect key="frame" x="24" y="483" width="48" height="48"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="48" id="BPw-4a-EYt"/>
+                        <constraint firstAttribute="height" constant="48" id="ccx-Vg-5h9"/>
+                    </constraints>
+                    <state key="normal" image="take_photo.png"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="86R-mO-1vD">
+                    <rect key="frame" x="96" y="483" width="271" height="48"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="48" id="V3x-Sp-a6W"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <state key="normal" title="Take Photo"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i2g-8e-YS0">
+                    <rect key="frame" x="96" y="555" width="271" height="48"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="48" id="hl0-hu-s69"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <state key="normal" title="Choose Photo"/>
+                </button>
+            </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="BLG-eh-XlW" secondAttribute="bottom" constant="64" id="25s-il-wHT"/>
+                <constraint firstItem="i2g-8e-YS0" firstAttribute="leading" secondItem="BLG-eh-XlW" secondAttribute="trailing" constant="24" id="BBX-ke-78a"/>
+                <constraint firstAttribute="trailing" secondItem="i2g-8e-YS0" secondAttribute="trailing" constant="8" id="BhD-ep-6Nf"/>
+                <constraint firstItem="BLG-eh-XlW" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="24" id="Ieo-Ur-8eQ"/>
+                <constraint firstItem="i2g-8e-YS0" firstAttribute="leading" secondItem="BLG-eh-XlW" secondAttribute="trailing" constant="24" id="OeV-tC-Bac"/>
+                <constraint firstItem="86R-mO-1vD" firstAttribute="leading" secondItem="2lC-OU-SCm" secondAttribute="trailing" constant="24" id="QE0-Ma-gZJ"/>
+                <constraint firstItem="2lC-OU-SCm" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="24" id="QE3-4i-FxK"/>
+                <constraint firstItem="86R-mO-1vD" firstAttribute="leading" secondItem="2lC-OU-SCm" secondAttribute="trailing" constant="24" id="SBr-9p-MCr"/>
+                <constraint firstAttribute="bottom" secondItem="i2g-8e-YS0" secondAttribute="bottom" constant="64" id="Vwf-zH-OV3"/>
+                <constraint firstAttribute="trailing" secondItem="86R-mO-1vD" secondAttribute="trailing" constant="8" id="f7z-Sw-khr"/>
+                <constraint firstItem="BLG-eh-XlW" firstAttribute="top" secondItem="2lC-OU-SCm" secondAttribute="bottom" constant="24" id="kZZ-RW-JpN"/>
+                <constraint firstItem="i2g-8e-YS0" firstAttribute="top" secondItem="86R-mO-1vD" secondAttribute="bottom" constant="24" id="lnw-Kt-qEm"/>
+                <constraint firstItem="i2g-8e-YS0" firstAttribute="top" secondItem="86R-mO-1vD" secondAttribute="bottom" constant="24" id="pDX-8h-dhv"/>
+                <constraint firstItem="BLG-eh-XlW" firstAttribute="top" secondItem="2lC-OU-SCm" secondAttribute="bottom" constant="24" id="pFE-gr-wzj"/>
+            </constraints>
+            <connections>
+                <outlet property="choosePhotoButton" destination="i2g-8e-YS0" id="UXl-Jo-dUo"/>
+                <outlet property="choosePhotoButtonImage" destination="BLG-eh-XlW" id="xRK-ph-WZH"/>
+                <outlet property="takePhotoButton" destination="86R-mO-1vD" id="b4s-Xg-g1G"/>
+                <outlet property="takePhotoButtonImage" destination="2lC-OU-SCm" id="GFl-gq-blO"/>
+            </connections>
+            <point key="canvasLocation" x="34" y="54"/>
         </view>
     </objects>
+    <resources>
+        <image name="access_gallery.png" width="100" height="100"/>
+        <image name="take_photo.png" width="100" height="100"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
+    </simulatedMetricsContainer>
 </document>
