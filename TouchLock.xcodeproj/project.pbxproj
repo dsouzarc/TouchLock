@@ -95,6 +95,7 @@
 		9422D5951E5952D000691EB6 /* YMSPhotoPickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YMSPhotoPickerViewController.xib; sourceTree = "<group>"; };
 		9422D5961E5952D000691EB6 /* YMSPhotoPickerAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = YMSPhotoPickerAssets.xcassets; sourceTree = "<group>"; };
 		94480F581E91B1D5009C0C71 /* secure_text_photo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = secure_text_photo.png; sourceTree = "<group>"; };
+		94480F5A1E91C28F009C0C71 /* DefaultViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultViewProtocol.h; sourceTree = "<group>"; };
 		94F7D71E1E58BF9300CB1B9E /* TouchLock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TouchLock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		94F7D7211E58BF9300CB1B9E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		94F7D7231E58BF9300CB1B9E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -282,6 +283,7 @@
 		94F7D7571E58D42E00CB1B9E /* Default Views */ = {
 			isa = PBXGroup;
 			children = (
+				94480F5A1E91C28F009C0C71 /* DefaultViewProtocol.h */,
 				94F7D7561E58D42800CB1B9E /* Expanded */,
 				94F7D7551E58D42100CB1B9E /* Compact */,
 			);

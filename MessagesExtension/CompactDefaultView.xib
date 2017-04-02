@@ -22,6 +22,9 @@
                         <constraint firstAttribute="width" constant="48" id="koG-KD-82g"/>
                     </constraints>
                     <state key="normal" image="access_gallery.png"/>
+                    <connections>
+                        <action selector="pressedChoosePhotoButtonIcon:" destination="iN0-l3-epB" eventType="touchUpInside" id="zWV-Uy-Dbc"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qqX-TI-yhW">
                     <rect key="frame" x="16" y="435" width="48" height="48"/>
@@ -30,6 +33,9 @@
                         <constraint firstAttribute="width" constant="48" id="ScP-Y5-mjh"/>
                     </constraints>
                     <state key="normal" image="take_photo.png"/>
+                    <connections>
+                        <action selector="pressedTakePhotoButtonIcon:" destination="iN0-l3-epB" eventType="touchUpInside" id="9yq-Eb-hXk"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wFq-Xt-YjV">
                     <rect key="frame" x="88" y="435" width="271" height="48"/>
@@ -38,6 +44,9 @@
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                     <state key="normal" title="Take Photo/Video"/>
+                    <connections>
+                        <action selector="pressedTakePhotoButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="M1h-ov-edt"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nEd-9I-nUh">
                     <rect key="frame" x="88" y="499" width="271" height="48"/>
@@ -46,6 +55,9 @@
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                     <state key="normal" title="Choose Photos/Videos"/>
+                    <connections>
+                        <action selector="pressedChoosePhotoButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="haB-WG-D2d"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2eT-a1-OVa">
                     <rect key="frame" x="16" y="563" width="48" height="48"/>
@@ -54,6 +66,9 @@
                         <constraint firstAttribute="width" constant="48" id="pQi-Km-7JI"/>
                     </constraints>
                     <state key="normal" image="secure_text_photo.png"/>
+                    <connections>
+                        <action selector="pressedSendTextButtonIcon:" destination="iN0-l3-epB" eventType="touchUpInside" id="BkN-kq-FcI"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jgu-Gv-xXv">
                     <rect key="frame" x="88" y="563" width="271" height="48"/>
@@ -62,6 +77,9 @@
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                     <state key="normal" title="Send Private Text"/>
+                    <connections>
+                        <action selector="pressedSendTextButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="oDp-Nq-7m1"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -85,12 +103,6 @@
                 <constraint firstItem="jgu-Gv-xXv" firstAttribute="leading" secondItem="2eT-a1-OVa" secondAttribute="trailing" constant="24" id="si7-g7-jor"/>
                 <constraint firstAttribute="trailing" secondItem="wFq-Xt-YjV" secondAttribute="trailing" constant="16" id="xeQ-G6-PsD"/>
             </constraints>
-            <connections>
-                <outlet property="choosePhotoButton" destination="nEd-9I-nUh" id="qlg-FY-Hi5"/>
-                <outlet property="choosePhotoButtonImage" destination="V6R-Cw-BIb" id="gbL-zt-0h8"/>
-                <outlet property="takePhotoButton" destination="wFq-Xt-YjV" id="THD-tI-QTA"/>
-                <outlet property="takePhotoButtonImage" destination="qqX-TI-yhW" id="3Of-1m-FcC"/>
-            </connections>
             <point key="canvasLocation" x="33.5" y="53.5"/>
         </view>
     </objects>

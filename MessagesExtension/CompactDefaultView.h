@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "DefaultViewProtocol.h"
+
 @interface CompactDefaultView : UIView
 
 @property (strong, nonatomic) IBOutlet UIButton *takePhotoButton;
@@ -15,5 +17,7 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *choosePhotoButton;
 @property (strong, nonatomic) IBOutlet UIButton *choosePhotoButtonImage;
+
+@property (weak, nonatomic) id<DefaultViewProtocol> delegate;
 
 @end
