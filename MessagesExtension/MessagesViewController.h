@@ -7,7 +7,13 @@
 //
 
 #import <Messages/Messages.h>
+#import <Photos/Photos.h>
 
-@interface MessagesViewController : MSMessagesAppViewController
+#import "YMSPhotoPickerViewController.h"
+
+#import "CompactDefaultView.h"
+#import "ExpandedDefaultView.h"
+
+@interface MessagesViewController : MSMessagesAppViewController<YMSPhotoPickerViewControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @end

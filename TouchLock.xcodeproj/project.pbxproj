@@ -7,12 +7,37 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		05EA63115F19BBD207234668 /* Pods_TouchLock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A9D3639F1EFF43B8CBCC322 /* Pods_TouchLock.framework */; };
+		9422D5971E5952D000691EB6 /* UIScrollView+YMSAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9422D57C1E5952D000691EB6 /* UIScrollView+YMSAdditions.m */; };
+		9422D5981E5952D000691EB6 /* UITableViewCell+YMSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 9422D57E1E5952D000691EB6 /* UITableViewCell+YMSConfig.m */; };
+		9422D5991E5952D000691EB6 /* YMSAlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9422D5801E5952D000691EB6 /* YMSAlbumCell.m */; };
+		9422D59A1E5952D000691EB6 /* YMSAlbumCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9422D5811E5952D000691EB6 /* YMSAlbumCell.xib */; };
+		9422D59B1E5952D000691EB6 /* YMSAlbumPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9422D5831E5952D000691EB6 /* YMSAlbumPickerViewController.m */; };
+		9422D59C1E5952D000691EB6 /* YMSAlbumPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9422D5841E5952D000691EB6 /* YMSAlbumPickerViewController.xib */; };
+		9422D59D1E5952D000691EB6 /* YMSCameraCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9422D5861E5952D000691EB6 /* YMSCameraCell.m */; };
+		9422D59E1E5952D000691EB6 /* YMSCameraCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9422D5871E5952D000691EB6 /* YMSCameraCell.xib */; };
+		9422D59F1E5952D000691EB6 /* YMSPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9422D5891E5952D000691EB6 /* YMSPhotoCell.m */; };
+		9422D5A01E5952D000691EB6 /* YMSPhotoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9422D58A1E5952D000691EB6 /* YMSPhotoCell.xib */; };
+		9422D5A11E5952D000691EB6 /* YMSSinglePhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9422D58C1E5952D000691EB6 /* YMSSinglePhotoViewController.m */; };
+		9422D5A21E5952D000691EB6 /* YMSSinglePhotoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9422D58D1E5952D000691EB6 /* YMSSinglePhotoViewController.xib */; };
+		9422D5A31E5952D000691EB6 /* UIViewController+YMSPhotoHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9422D5901E5952D000691EB6 /* UIViewController+YMSPhotoHelper.m */; };
+		9422D5A41E5952D000691EB6 /* YMSPhotoPickerTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 9422D5921E5952D000691EB6 /* YMSPhotoPickerTheme.m */; };
+		9422D5A51E5952D000691EB6 /* YMSPhotoPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9422D5941E5952D000691EB6 /* YMSPhotoPickerViewController.m */; };
+		9422D5A61E5952D000691EB6 /* YMSPhotoPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9422D5951E5952D000691EB6 /* YMSPhotoPickerViewController.xib */; };
+		9422D5A71E5952D000691EB6 /* YMSPhotoPickerAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9422D5961E5952D000691EB6 /* YMSPhotoPickerAssets.xcassets */; };
+		94480F591E91B1D5009C0C71 /* secure_text_photo.png in Resources */ = {isa = PBXBuildFile; fileRef = 94480F581E91B1D5009C0C71 /* secure_text_photo.png */; };
 		94F7D7221E58BF9300CB1B9E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94F7D7211E58BF9300CB1B9E /* Assets.xcassets */; };
 		94F7D7291E58BF9300CB1B9E /* MessagesExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 94F7D7281E58BF9300CB1B9E /* MessagesExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		94F7D72E1E58BF9300CB1B9E /* Messages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94F7D72D1E58BF9300CB1B9E /* Messages.framework */; };
 		94F7D7321E58BF9300CB1B9E /* MessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F7D7311E58BF9300CB1B9E /* MessagesViewController.m */; };
 		94F7D7351E58BF9300CB1B9E /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94F7D7331E58BF9300CB1B9E /* MainInterface.storyboard */; };
 		94F7D7371E58BF9300CB1B9E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94F7D7361E58BF9300CB1B9E /* Assets.xcassets */; };
+		94F7D7491E58C6DF00CB1B9E /* take_photo.png in Resources */ = {isa = PBXBuildFile; fileRef = 94F7D7471E58C6DF00CB1B9E /* take_photo.png */; };
+		94F7D74A1E58C6DF00CB1B9E /* access_gallery.png in Resources */ = {isa = PBXBuildFile; fileRef = 94F7D7481E58C6DF00CB1B9E /* access_gallery.png */; };
+		94F7D74C1E58CD7900CB1B9E /* CompactDefaultView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94F7D74B1E58CD7900CB1B9E /* CompactDefaultView.xib */; };
+		94F7D74F1E58D10100CB1B9E /* CompactDefaultView.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F7D74E1E58D10100CB1B9E /* CompactDefaultView.m */; };
+		94F7D7511E58D24500CB1B9E /* ExpandedDefaultView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94F7D7501E58D24500CB1B9E /* ExpandedDefaultView.xib */; };
+		94F7D7541E58D3A200CB1B9E /* ExpandedDefaultView.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F7D7531E58D3A200CB1B9E /* ExpandedDefaultView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +65,36 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		28A6B08ADDC0AD7306B432F4 /* Pods-TouchLock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TouchLock.release.xcconfig"; path = "Pods/Target Support Files/Pods-TouchLock/Pods-TouchLock.release.xcconfig"; sourceTree = "<group>"; };
+		4A9D3639F1EFF43B8CBCC322 /* Pods_TouchLock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TouchLock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9422D57B1E5952D000691EB6 /* UIScrollView+YMSAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+YMSAdditions.h"; sourceTree = "<group>"; };
+		9422D57C1E5952D000691EB6 /* UIScrollView+YMSAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+YMSAdditions.m"; sourceTree = "<group>"; };
+		9422D57D1E5952D000691EB6 /* UITableViewCell+YMSConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewCell+YMSConfig.h"; sourceTree = "<group>"; };
+		9422D57E1E5952D000691EB6 /* UITableViewCell+YMSConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+YMSConfig.m"; sourceTree = "<group>"; };
+		9422D57F1E5952D000691EB6 /* YMSAlbumCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMSAlbumCell.h; sourceTree = "<group>"; };
+		9422D5801E5952D000691EB6 /* YMSAlbumCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMSAlbumCell.m; sourceTree = "<group>"; };
+		9422D5811E5952D000691EB6 /* YMSAlbumCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YMSAlbumCell.xib; sourceTree = "<group>"; };
+		9422D5821E5952D000691EB6 /* YMSAlbumPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMSAlbumPickerViewController.h; sourceTree = "<group>"; };
+		9422D5831E5952D000691EB6 /* YMSAlbumPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMSAlbumPickerViewController.m; sourceTree = "<group>"; };
+		9422D5841E5952D000691EB6 /* YMSAlbumPickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YMSAlbumPickerViewController.xib; sourceTree = "<group>"; };
+		9422D5851E5952D000691EB6 /* YMSCameraCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMSCameraCell.h; sourceTree = "<group>"; };
+		9422D5861E5952D000691EB6 /* YMSCameraCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMSCameraCell.m; sourceTree = "<group>"; };
+		9422D5871E5952D000691EB6 /* YMSCameraCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YMSCameraCell.xib; sourceTree = "<group>"; };
+		9422D5881E5952D000691EB6 /* YMSPhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMSPhotoCell.h; sourceTree = "<group>"; };
+		9422D5891E5952D000691EB6 /* YMSPhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMSPhotoCell.m; sourceTree = "<group>"; };
+		9422D58A1E5952D000691EB6 /* YMSPhotoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YMSPhotoCell.xib; sourceTree = "<group>"; };
+		9422D58B1E5952D000691EB6 /* YMSSinglePhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMSSinglePhotoViewController.h; sourceTree = "<group>"; };
+		9422D58C1E5952D000691EB6 /* YMSSinglePhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMSSinglePhotoViewController.m; sourceTree = "<group>"; };
+		9422D58D1E5952D000691EB6 /* YMSSinglePhotoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YMSSinglePhotoViewController.xib; sourceTree = "<group>"; };
+		9422D58F1E5952D000691EB6 /* UIViewController+YMSPhotoHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+YMSPhotoHelper.h"; sourceTree = "<group>"; };
+		9422D5901E5952D000691EB6 /* UIViewController+YMSPhotoHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+YMSPhotoHelper.m"; sourceTree = "<group>"; };
+		9422D5911E5952D000691EB6 /* YMSPhotoPickerTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMSPhotoPickerTheme.h; sourceTree = "<group>"; };
+		9422D5921E5952D000691EB6 /* YMSPhotoPickerTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMSPhotoPickerTheme.m; sourceTree = "<group>"; };
+		9422D5931E5952D000691EB6 /* YMSPhotoPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMSPhotoPickerViewController.h; sourceTree = "<group>"; };
+		9422D5941E5952D000691EB6 /* YMSPhotoPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMSPhotoPickerViewController.m; sourceTree = "<group>"; };
+		9422D5951E5952D000691EB6 /* YMSPhotoPickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YMSPhotoPickerViewController.xib; sourceTree = "<group>"; };
+		9422D5961E5952D000691EB6 /* YMSPhotoPickerAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = YMSPhotoPickerAssets.xcassets; sourceTree = "<group>"; };
+		94480F581E91B1D5009C0C71 /* secure_text_photo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = secure_text_photo.png; sourceTree = "<group>"; };
 		94F7D71E1E58BF9300CB1B9E /* TouchLock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TouchLock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		94F7D7211E58BF9300CB1B9E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		94F7D7231E58BF9300CB1B9E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -50,9 +105,27 @@
 		94F7D7341E58BF9300CB1B9E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		94F7D7361E58BF9300CB1B9E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		94F7D7381E58BF9300CB1B9E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		94F7D7471E58C6DF00CB1B9E /* take_photo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = take_photo.png; sourceTree = "<group>"; };
+		94F7D7481E58C6DF00CB1B9E /* access_gallery.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = access_gallery.png; sourceTree = "<group>"; };
+		94F7D74B1E58CD7900CB1B9E /* CompactDefaultView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CompactDefaultView.xib; sourceTree = "<group>"; };
+		94F7D74D1E58D10100CB1B9E /* CompactDefaultView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompactDefaultView.h; sourceTree = "<group>"; };
+		94F7D74E1E58D10100CB1B9E /* CompactDefaultView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompactDefaultView.m; sourceTree = "<group>"; };
+		94F7D7501E58D24500CB1B9E /* ExpandedDefaultView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExpandedDefaultView.xib; sourceTree = "<group>"; };
+		94F7D7521E58D3A200CB1B9E /* ExpandedDefaultView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpandedDefaultView.h; sourceTree = "<group>"; };
+		94F7D7531E58D3A200CB1B9E /* ExpandedDefaultView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpandedDefaultView.m; sourceTree = "<group>"; };
+		94F7D8001E58EECE00CB1B9E /* MessagesExtension-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MessagesExtension-Bridging-Header.h"; sourceTree = "<group>"; };
+		F68A22B4DC8FE93D3B5FD033 /* Pods-TouchLock.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TouchLock.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TouchLock/Pods-TouchLock.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		7AA28EA50067A672FAB23D6A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				05EA63115F19BBD207234668 /* Pods_TouchLock.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		94F7D7251E58BF9300CB1B9E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -64,6 +137,64 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9422D5781E5952D000691EB6 /* YangMingShan */ = {
+			isa = PBXGroup;
+			children = (
+				9422D5791E5952D000691EB6 /* YMSPhotoPicker */,
+			);
+			path = YangMingShan;
+			sourceTree = "<group>";
+		};
+		9422D5791E5952D000691EB6 /* YMSPhotoPicker */ = {
+			isa = PBXGroup;
+			children = (
+				9422D57A1E5952D000691EB6 /* Private */,
+				9422D58E1E5952D000691EB6 /* Public */,
+				9422D5961E5952D000691EB6 /* YMSPhotoPickerAssets.xcassets */,
+			);
+			path = YMSPhotoPicker;
+			sourceTree = "<group>";
+		};
+		9422D57A1E5952D000691EB6 /* Private */ = {
+			isa = PBXGroup;
+			children = (
+				9422D57B1E5952D000691EB6 /* UIScrollView+YMSAdditions.h */,
+				9422D57C1E5952D000691EB6 /* UIScrollView+YMSAdditions.m */,
+				9422D57D1E5952D000691EB6 /* UITableViewCell+YMSConfig.h */,
+				9422D57E1E5952D000691EB6 /* UITableViewCell+YMSConfig.m */,
+				9422D57F1E5952D000691EB6 /* YMSAlbumCell.h */,
+				9422D5801E5952D000691EB6 /* YMSAlbumCell.m */,
+				9422D5811E5952D000691EB6 /* YMSAlbumCell.xib */,
+				9422D5821E5952D000691EB6 /* YMSAlbumPickerViewController.h */,
+				9422D5831E5952D000691EB6 /* YMSAlbumPickerViewController.m */,
+				9422D5841E5952D000691EB6 /* YMSAlbumPickerViewController.xib */,
+				9422D5851E5952D000691EB6 /* YMSCameraCell.h */,
+				9422D5861E5952D000691EB6 /* YMSCameraCell.m */,
+				9422D5871E5952D000691EB6 /* YMSCameraCell.xib */,
+				9422D5881E5952D000691EB6 /* YMSPhotoCell.h */,
+				9422D5891E5952D000691EB6 /* YMSPhotoCell.m */,
+				9422D58A1E5952D000691EB6 /* YMSPhotoCell.xib */,
+				9422D58B1E5952D000691EB6 /* YMSSinglePhotoViewController.h */,
+				9422D58C1E5952D000691EB6 /* YMSSinglePhotoViewController.m */,
+				9422D58D1E5952D000691EB6 /* YMSSinglePhotoViewController.xib */,
+			);
+			path = Private;
+			sourceTree = "<group>";
+		};
+		9422D58E1E5952D000691EB6 /* Public */ = {
+			isa = PBXGroup;
+			children = (
+				9422D58F1E5952D000691EB6 /* UIViewController+YMSPhotoHelper.h */,
+				9422D5901E5952D000691EB6 /* UIViewController+YMSPhotoHelper.m */,
+				9422D5911E5952D000691EB6 /* YMSPhotoPickerTheme.h */,
+				9422D5921E5952D000691EB6 /* YMSPhotoPickerTheme.m */,
+				9422D5931E5952D000691EB6 /* YMSPhotoPickerViewController.h */,
+				9422D5941E5952D000691EB6 /* YMSPhotoPickerViewController.m */,
+				9422D5951E5952D000691EB6 /* YMSPhotoPickerViewController.xib */,
+			);
+			path = Public;
+			sourceTree = "<group>";
+		};
 		94F7D7171E58BF9300CB1B9E = {
 			isa = PBXGroup;
 			children = (
@@ -71,6 +202,7 @@
 				94F7D72F1E58BF9300CB1B9E /* MessagesExtension */,
 				94F7D72C1E58BF9300CB1B9E /* Frameworks */,
 				94F7D71F1E58BF9300CB1B9E /* Products */,
+				CD2BE4B3BC299AB3E7356069 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -96,6 +228,7 @@
 			isa = PBXGroup;
 			children = (
 				94F7D72D1E58BF9300CB1B9E /* Messages.framework */,
+				4A9D3639F1EFF43B8CBCC322 /* Pods_TouchLock.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -103,13 +236,65 @@
 		94F7D72F1E58BF9300CB1B9E /* MessagesExtension */ = {
 			isa = PBXGroup;
 			children = (
+				9422D5781E5952D000691EB6 /* YangMingShan */,
 				94F7D7301E58BF9300CB1B9E /* MessagesViewController.h */,
 				94F7D7311E58BF9300CB1B9E /* MessagesViewController.m */,
+				94F7D7571E58D42E00CB1B9E /* Default Views */,
 				94F7D7331E58BF9300CB1B9E /* MainInterface.storyboard */,
-				94F7D7361E58BF9300CB1B9E /* Assets.xcassets */,
+				94F7D7461E58C4E800CB1B9E /* icons */,
 				94F7D7381E58BF9300CB1B9E /* Info.plist */,
+				94F7D8001E58EECE00CB1B9E /* MessagesExtension-Bridging-Header.h */,
 			);
 			path = MessagesExtension;
+			sourceTree = "<group>";
+		};
+		94F7D7461E58C4E800CB1B9E /* icons */ = {
+			isa = PBXGroup;
+			children = (
+				94480F581E91B1D5009C0C71 /* secure_text_photo.png */,
+				94F7D7471E58C6DF00CB1B9E /* take_photo.png */,
+				94F7D7481E58C6DF00CB1B9E /* access_gallery.png */,
+				94F7D7361E58BF9300CB1B9E /* Assets.xcassets */,
+			);
+			name = icons;
+			sourceTree = "<group>";
+		};
+		94F7D7551E58D42100CB1B9E /* Compact */ = {
+			isa = PBXGroup;
+			children = (
+				94F7D74D1E58D10100CB1B9E /* CompactDefaultView.h */,
+				94F7D74E1E58D10100CB1B9E /* CompactDefaultView.m */,
+				94F7D74B1E58CD7900CB1B9E /* CompactDefaultView.xib */,
+			);
+			name = Compact;
+			sourceTree = "<group>";
+		};
+		94F7D7561E58D42800CB1B9E /* Expanded */ = {
+			isa = PBXGroup;
+			children = (
+				94F7D7521E58D3A200CB1B9E /* ExpandedDefaultView.h */,
+				94F7D7531E58D3A200CB1B9E /* ExpandedDefaultView.m */,
+				94F7D7501E58D24500CB1B9E /* ExpandedDefaultView.xib */,
+			);
+			name = Expanded;
+			sourceTree = "<group>";
+		};
+		94F7D7571E58D42E00CB1B9E /* Default Views */ = {
+			isa = PBXGroup;
+			children = (
+				94F7D7561E58D42800CB1B9E /* Expanded */,
+				94F7D7551E58D42100CB1B9E /* Compact */,
+			);
+			name = "Default Views";
+			sourceTree = "<group>";
+		};
+		CD2BE4B3BC299AB3E7356069 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F68A22B4DC8FE93D3B5FD033 /* Pods-TouchLock.debug.xcconfig */,
+				28A6B08ADDC0AD7306B432F4 /* Pods-TouchLock.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -119,8 +304,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 94F7D73F1E58BF9300CB1B9E /* Build configuration list for PBXNativeTarget "TouchLock" */;
 			buildPhases = (
+				7C84F03AD095600546F163E5 /* [CP] Check Pods Manifest.lock */,
 				94F7D71C1E58BF9300CB1B9E /* Resources */,
 				94F7D73E1E58BF9300CB1B9E /* Embed App Extensions */,
+				7AA28EA50067A672FAB23D6A /* Frameworks */,
+				3CDF2BC6EA690F0EBA9F8CC6 /* [CP] Embed Pods Frameworks */,
+				69969E39969E050D38F96E1E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -160,10 +349,14 @@
 				TargetAttributes = {
 					94F7D71D1E58BF9300CB1B9E = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = Q7N3L673D8;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
 					94F7D7271E58BF9300CB1B9E = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = Q7N3L673D8;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -175,6 +368,12 @@
 			knownRegions = (
 				en,
 				Base,
+				ca,
+				de,
+				es,
+				fr,
+				it,
+				pt,
 			);
 			mainGroup = 94F7D7171E58BF9300CB1B9E;
 			productRefGroup = 94F7D71F1E58BF9300CB1B9E /* Products */;
@@ -200,19 +399,91 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9422D59C1E5952D000691EB6 /* YMSAlbumPickerViewController.xib in Resources */,
 				94F7D7371E58BF9300CB1B9E /* Assets.xcassets in Resources */,
+				9422D5A01E5952D000691EB6 /* YMSPhotoCell.xib in Resources */,
+				94F7D7511E58D24500CB1B9E /* ExpandedDefaultView.xib in Resources */,
+				94F7D74C1E58CD7900CB1B9E /* CompactDefaultView.xib in Resources */,
+				9422D5A21E5952D000691EB6 /* YMSSinglePhotoViewController.xib in Resources */,
+				94480F591E91B1D5009C0C71 /* secure_text_photo.png in Resources */,
+				9422D59E1E5952D000691EB6 /* YMSCameraCell.xib in Resources */,
 				94F7D7351E58BF9300CB1B9E /* MainInterface.storyboard in Resources */,
+				94F7D74A1E58C6DF00CB1B9E /* access_gallery.png in Resources */,
+				94F7D7491E58C6DF00CB1B9E /* take_photo.png in Resources */,
+				9422D5A71E5952D000691EB6 /* YMSPhotoPickerAssets.xcassets in Resources */,
+				9422D5A61E5952D000691EB6 /* YMSPhotoPickerViewController.xib in Resources */,
+				9422D59A1E5952D000691EB6 /* YMSAlbumCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3CDF2BC6EA690F0EBA9F8CC6 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TouchLock/Pods-TouchLock-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		69969E39969E050D38F96E1E /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TouchLock/Pods-TouchLock-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7C84F03AD095600546F163E5 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		94F7D7241E58BF9300CB1B9E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9422D5A51E5952D000691EB6 /* YMSPhotoPickerViewController.m in Sources */,
+				9422D59F1E5952D000691EB6 /* YMSPhotoCell.m in Sources */,
+				94F7D7541E58D3A200CB1B9E /* ExpandedDefaultView.m in Sources */,
+				9422D59B1E5952D000691EB6 /* YMSAlbumPickerViewController.m in Sources */,
+				9422D5A31E5952D000691EB6 /* UIViewController+YMSPhotoHelper.m in Sources */,
+				9422D5A41E5952D000691EB6 /* YMSPhotoPickerTheme.m in Sources */,
+				9422D5971E5952D000691EB6 /* UIScrollView+YMSAdditions.m in Sources */,
+				9422D5981E5952D000691EB6 /* UITableViewCell+YMSConfig.m in Sources */,
+				9422D59D1E5952D000691EB6 /* YMSCameraCell.m in Sources */,
+				94F7D74F1E58D10100CB1B9E /* CompactDefaultView.m in Sources */,
 				94F7D7321E58BF9300CB1B9E /* MessagesViewController.m in Sources */,
+				9422D5991E5952D000691EB6 /* YMSAlbumCell.m in Sources */,
+				9422D5A11E5952D000691EB6 /* YMSSinglePhotoViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -332,11 +603,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = Q7N3L673D8;
 				INFOPLIST_FILE = MessagesExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ryan.TouchLock.MessagesExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "MessagesExtension/MessagesExtension-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -344,31 +620,53 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = Q7N3L673D8;
 				INFOPLIST_FILE = MessagesExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ryan.TouchLock.MessagesExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "MessagesExtension/MessagesExtension-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
 		94F7D7401E58BF9300CB1B9E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F68A22B4DC8FE93D3B5FD033 /* Pods-TouchLock.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = Q7N3L673D8;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/FacebookImagePicker",
+				);
 				INFOPLIST_FILE = TouchLock/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ryan.TouchLock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		94F7D7411E58BF9300CB1B9E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 28A6B08ADDC0AD7306B432F4 /* Pods-TouchLock.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = Q7N3L673D8;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/FacebookImagePicker",
+				);
 				INFOPLIST_FILE = TouchLock/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ryan.TouchLock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -391,6 +689,7 @@
 				94F7D73D1E58BF9300CB1B9E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		94F7D73F1E58BF9300CB1B9E /* Build configuration list for PBXNativeTarget "TouchLock" */ = {
 			isa = XCConfigurationList;
@@ -399,6 +698,7 @@
 				94F7D7411E58BF9300CB1B9E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

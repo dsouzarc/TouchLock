@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -15,67 +15,82 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BLG-eh-XlW">
-                    <rect key="frame" x="24" y="555" width="48" height="48"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ibk-Ic-k2Y">
+                    <rect key="frame" x="16" y="495" width="48" height="48"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="48" id="PqT-mV-Ppl"/>
-                        <constraint firstAttribute="width" constant="48" id="UHf-X3-LIu"/>
+                        <constraint firstAttribute="height" constant="48" id="Cvv-yA-w4I"/>
+                        <constraint firstAttribute="width" constant="48" id="Zbw-00-SWv"/>
                     </constraints>
                     <state key="normal" image="access_gallery.png"/>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2lC-OU-SCm">
-                    <rect key="frame" x="24" y="483" width="48" height="48"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s0q-c5-BiX">
+                    <rect key="frame" x="16" y="431" width="48" height="48"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="48" id="BPw-4a-EYt"/>
-                        <constraint firstAttribute="height" constant="48" id="ccx-Vg-5h9"/>
+                        <constraint firstAttribute="width" constant="48" id="2kE-rS-oU7"/>
+                        <constraint firstAttribute="height" constant="48" id="eZM-bf-JXf"/>
                     </constraints>
                     <state key="normal" image="take_photo.png"/>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="86R-mO-1vD">
-                    <rect key="frame" x="96" y="483" width="271" height="48"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SnH-Kt-30l">
+                    <rect key="frame" x="88" y="431" width="271" height="48"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="48" id="V3x-Sp-a6W"/>
+                        <constraint firstAttribute="height" constant="48" id="a57-1k-c3T"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                    <state key="normal" title="Take Photo"/>
+                    <state key="normal" title="Take Photo/Video"/>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i2g-8e-YS0">
-                    <rect key="frame" x="96" y="555" width="271" height="48"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ntB-mO-ebt">
+                    <rect key="frame" x="88" y="495" width="271" height="48"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="48" id="hl0-hu-s69"/>
+                        <constraint firstAttribute="height" constant="48" id="Vca-x9-8qW"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                    <state key="normal" title="Choose Photo"/>
+                    <state key="normal" title="Choose Photos/Videos"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eCO-FV-j3m">
+                    <rect key="frame" x="16" y="559" width="48" height="48"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="48" id="UtW-Q1-sLU"/>
+                        <constraint firstAttribute="width" constant="48" id="fhy-Xq-MtX"/>
+                    </constraints>
+                    <state key="normal" image="secure_text_photo.png"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c9A-Bx-w0c">
+                    <rect key="frame" x="88" y="559" width="271" height="48"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="48" id="gF2-d1-kGh"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <state key="normal" title="Send Private Text"/>
                 </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="BLG-eh-XlW" secondAttribute="bottom" constant="64" id="25s-il-wHT"/>
-                <constraint firstItem="i2g-8e-YS0" firstAttribute="leading" secondItem="BLG-eh-XlW" secondAttribute="trailing" constant="24" id="BBX-ke-78a"/>
-                <constraint firstAttribute="trailing" secondItem="i2g-8e-YS0" secondAttribute="trailing" constant="8" id="BhD-ep-6Nf"/>
-                <constraint firstItem="BLG-eh-XlW" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="24" id="Ieo-Ur-8eQ"/>
-                <constraint firstItem="i2g-8e-YS0" firstAttribute="leading" secondItem="BLG-eh-XlW" secondAttribute="trailing" constant="24" id="OeV-tC-Bac"/>
-                <constraint firstItem="86R-mO-1vD" firstAttribute="leading" secondItem="2lC-OU-SCm" secondAttribute="trailing" constant="24" id="QE0-Ma-gZJ"/>
-                <constraint firstItem="2lC-OU-SCm" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="24" id="QE3-4i-FxK"/>
-                <constraint firstItem="86R-mO-1vD" firstAttribute="leading" secondItem="2lC-OU-SCm" secondAttribute="trailing" constant="24" id="SBr-9p-MCr"/>
-                <constraint firstAttribute="bottom" secondItem="i2g-8e-YS0" secondAttribute="bottom" constant="64" id="Vwf-zH-OV3"/>
-                <constraint firstAttribute="trailing" secondItem="86R-mO-1vD" secondAttribute="trailing" constant="8" id="f7z-Sw-khr"/>
-                <constraint firstItem="BLG-eh-XlW" firstAttribute="top" secondItem="2lC-OU-SCm" secondAttribute="bottom" constant="24" id="kZZ-RW-JpN"/>
-                <constraint firstItem="i2g-8e-YS0" firstAttribute="top" secondItem="86R-mO-1vD" secondAttribute="bottom" constant="24" id="lnw-Kt-qEm"/>
-                <constraint firstItem="i2g-8e-YS0" firstAttribute="top" secondItem="86R-mO-1vD" secondAttribute="bottom" constant="24" id="pDX-8h-dhv"/>
-                <constraint firstItem="BLG-eh-XlW" firstAttribute="top" secondItem="2lC-OU-SCm" secondAttribute="bottom" constant="24" id="pFE-gr-wzj"/>
+                <constraint firstItem="c9A-Bx-w0c" firstAttribute="leading" secondItem="eCO-FV-j3m" secondAttribute="trailing" constant="24" id="3HF-s9-FGT"/>
+                <constraint firstItem="eCO-FV-j3m" firstAttribute="leading" secondItem="s0q-c5-BiX" secondAttribute="leading" id="3tX-Kp-Sui"/>
+                <constraint firstItem="SnH-Kt-30l" firstAttribute="leading" secondItem="s0q-c5-BiX" secondAttribute="trailing" constant="24" id="4oj-N6-uCv"/>
+                <constraint firstItem="Ibk-Ic-k2Y" firstAttribute="top" secondItem="s0q-c5-BiX" secondAttribute="bottom" constant="16" id="AX9-Qs-ozJ"/>
+                <constraint firstItem="ntB-mO-ebt" firstAttribute="leading" secondItem="Ibk-Ic-k2Y" secondAttribute="trailing" constant="24" id="BEx-al-pfu"/>
+                <constraint firstItem="eCO-FV-j3m" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="BpF-k8-p49"/>
+                <constraint firstAttribute="trailing" secondItem="c9A-Bx-w0c" secondAttribute="trailing" constant="16" id="E43-PG-BgS"/>
+                <constraint firstItem="eCO-FV-j3m" firstAttribute="top" secondItem="c9A-Bx-w0c" secondAttribute="top" id="EOO-ZZ-PRb"/>
+                <constraint firstItem="c9A-Bx-w0c" firstAttribute="top" secondItem="ntB-mO-ebt" secondAttribute="bottom" constant="16" id="GY5-pJ-8Zb"/>
+                <constraint firstItem="ntB-mO-ebt" firstAttribute="leading" secondItem="Ibk-Ic-k2Y" secondAttribute="trailing" constant="24" id="HDm-WL-hZu"/>
+                <constraint firstItem="SnH-Kt-30l" firstAttribute="leading" secondItem="s0q-c5-BiX" secondAttribute="trailing" constant="24" id="K2Z-Og-EfC"/>
+                <constraint firstAttribute="bottom" secondItem="eCO-FV-j3m" secondAttribute="bottom" constant="60" id="PiR-M6-tmK"/>
+                <constraint firstItem="eCO-FV-j3m" firstAttribute="leading" secondItem="Ibk-Ic-k2Y" secondAttribute="leading" id="azS-Y8-qZW"/>
+                <constraint firstItem="c9A-Bx-w0c" firstAttribute="trailing" secondItem="ntB-mO-ebt" secondAttribute="trailing" id="hLf-xD-4ul"/>
+                <constraint firstItem="eCO-FV-j3m" firstAttribute="top" secondItem="Ibk-Ic-k2Y" secondAttribute="bottom" constant="16" id="ioa-kr-buO"/>
+                <constraint firstItem="c9A-Bx-w0c" firstAttribute="leading" secondItem="eCO-FV-j3m" secondAttribute="trailing" constant="24" id="jB4-qC-lLh"/>
+                <constraint firstItem="ntB-mO-ebt" firstAttribute="top" secondItem="SnH-Kt-30l" secondAttribute="bottom" constant="16" id="kVY-0B-s7s"/>
+                <constraint firstItem="c9A-Bx-w0c" firstAttribute="trailing" secondItem="SnH-Kt-30l" secondAttribute="trailing" id="uZm-yb-EvX"/>
             </constraints>
-            <connections>
-                <outlet property="choosePhotoButton" destination="i2g-8e-YS0" id="UXl-Jo-dUo"/>
-                <outlet property="choosePhotoButtonImage" destination="BLG-eh-XlW" id="xRK-ph-WZH"/>
-                <outlet property="takePhotoButton" destination="86R-mO-1vD" id="b4s-Xg-g1G"/>
-                <outlet property="takePhotoButtonImage" destination="2lC-OU-SCm" id="GFl-gq-blO"/>
-            </connections>
             <point key="canvasLocation" x="34" y="54"/>
         </view>
     </objects>
     <resources>
         <image name="access_gallery.png" width="100" height="100"/>
+        <image name="secure_text_photo.png" width="400" height="400"/>
         <image name="take_photo.png" width="100" height="100"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -16,54 +16,74 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V6R-Cw-BIb">
-                    <rect key="frame" x="16" y="555" width="48" height="48"/>
+                    <rect key="frame" x="16" y="499" width="48" height="48"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="48" id="Whe-eQ-0wC"/>
-                        <constraint firstAttribute="height" constant="48" id="mPr-em-G1r"/>
+                        <constraint firstAttribute="height" constant="48" id="KTp-Nd-8Fu"/>
+                        <constraint firstAttribute="width" constant="48" id="koG-KD-82g"/>
                     </constraints>
                     <state key="normal" image="access_gallery.png"/>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qqX-TI-yhW">
-                    <rect key="frame" x="16" y="483" width="48" height="48"/>
+                    <rect key="frame" x="16" y="435" width="48" height="48"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="48" id="1at-Ts-lTV"/>
-                        <constraint firstAttribute="height" constant="48" id="luz-5p-H6D"/>
+                        <constraint firstAttribute="height" constant="48" id="A8m-dO-UtX"/>
+                        <constraint firstAttribute="width" constant="48" id="ScP-Y5-mjh"/>
                     </constraints>
                     <state key="normal" image="take_photo.png"/>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wFq-Xt-YjV">
-                    <rect key="frame" x="88" y="483" width="271" height="48"/>
+                    <rect key="frame" x="88" y="435" width="271" height="48"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="48" id="No4-ja-bJH"/>
+                        <constraint firstAttribute="height" constant="48" id="Ty2-3K-xrD"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                    <state key="normal" title="Take Photo"/>
+                    <state key="normal" title="Take Photo/Video"/>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nEd-9I-nUh">
-                    <rect key="frame" x="88" y="555" width="271" height="48"/>
+                    <rect key="frame" x="88" y="499" width="271" height="48"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="48" id="SZF-hp-Ilg"/>
+                        <constraint firstAttribute="height" constant="48" id="72c-xZ-UiA"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                    <state key="normal" title="Choose Photo"/>
+                    <state key="normal" title="Choose Photos/Videos"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2eT-a1-OVa">
+                    <rect key="frame" x="16" y="563" width="48" height="48"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="48" id="TDX-qZ-qYL"/>
+                        <constraint firstAttribute="width" constant="48" id="pQi-Km-7JI"/>
+                    </constraints>
+                    <state key="normal" image="secure_text_photo.png"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jgu-Gv-xXv">
+                    <rect key="frame" x="88" y="563" width="271" height="48"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="48" id="KVm-hR-1J2"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <state key="normal" title="Send Private Text"/>
                 </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="nEd-9I-nUh" secondAttribute="bottom" constant="64" id="02H-wr-afJ"/>
-                <constraint firstItem="V6R-Cw-BIb" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="5At-I3-gkN"/>
-                <constraint firstItem="wFq-Xt-YjV" firstAttribute="leading" secondItem="qqX-TI-yhW" secondAttribute="trailing" constant="24" id="6YN-o1-orx"/>
-                <constraint firstAttribute="bottom" secondItem="V6R-Cw-BIb" secondAttribute="bottom" constant="64" id="9dT-qe-YKV"/>
-                <constraint firstItem="nEd-9I-nUh" firstAttribute="top" secondItem="wFq-Xt-YjV" secondAttribute="bottom" constant="24" id="ASJ-Og-hxu"/>
-                <constraint firstItem="nEd-9I-nUh" firstAttribute="top" secondItem="wFq-Xt-YjV" secondAttribute="bottom" constant="24" id="TdK-Ds-9Ic"/>
-                <constraint firstAttribute="trailing" secondItem="wFq-Xt-YjV" secondAttribute="trailing" constant="16" id="Wel-JT-u7g"/>
-                <constraint firstItem="V6R-Cw-BIb" firstAttribute="top" secondItem="qqX-TI-yhW" secondAttribute="bottom" constant="24" id="Yvh-mM-rmD"/>
-                <constraint firstItem="nEd-9I-nUh" firstAttribute="leading" secondItem="V6R-Cw-BIb" secondAttribute="trailing" constant="24" id="dOT-Bc-Nr4"/>
-                <constraint firstItem="wFq-Xt-YjV" firstAttribute="leading" secondItem="qqX-TI-yhW" secondAttribute="trailing" constant="24" id="hLq-KT-5Qc"/>
-                <constraint firstItem="qqX-TI-yhW" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="j93-Og-4Jv"/>
-                <constraint firstItem="V6R-Cw-BIb" firstAttribute="top" secondItem="qqX-TI-yhW" secondAttribute="bottom" constant="24" id="jSt-HI-wKG"/>
-                <constraint firstAttribute="trailing" secondItem="nEd-9I-nUh" secondAttribute="trailing" constant="16" id="qXi-tN-l27"/>
-                <constraint firstItem="nEd-9I-nUh" firstAttribute="leading" secondItem="V6R-Cw-BIb" secondAttribute="trailing" constant="24" id="tVt-gy-WXs"/>
+                <constraint firstItem="jgu-Gv-xXv" firstAttribute="top" secondItem="nEd-9I-nUh" secondAttribute="bottom" constant="16" id="2Hh-Gn-Dp2"/>
+                <constraint firstAttribute="trailing" secondItem="jgu-Gv-xXv" secondAttribute="trailing" constant="16" id="3id-9g-cjo"/>
+                <constraint firstItem="nEd-9I-nUh" firstAttribute="top" secondItem="wFq-Xt-YjV" secondAttribute="bottom" constant="16" id="7X4-Fu-gcr"/>
+                <constraint firstItem="wFq-Xt-YjV" firstAttribute="leading" secondItem="qqX-TI-yhW" secondAttribute="trailing" constant="24" id="7cA-Qz-ig6"/>
+                <constraint firstItem="qqX-TI-yhW" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="8T9-Gf-BhW"/>
+                <constraint firstItem="jgu-Gv-xXv" firstAttribute="leading" secondItem="2eT-a1-OVa" secondAttribute="trailing" constant="24" id="FNb-uZ-suL"/>
+                <constraint firstItem="nEd-9I-nUh" firstAttribute="leading" secondItem="V6R-Cw-BIb" secondAttribute="trailing" constant="24" id="Ghc-yy-II3"/>
+                <constraint firstItem="V6R-Cw-BIb" firstAttribute="top" secondItem="qqX-TI-yhW" secondAttribute="bottom" constant="16" id="HC5-Zu-uV6"/>
+                <constraint firstItem="2eT-a1-OVa" firstAttribute="top" secondItem="V6R-Cw-BIb" secondAttribute="bottom" constant="16" id="JHi-pC-lkA"/>
+                <constraint firstAttribute="trailing" secondItem="nEd-9I-nUh" secondAttribute="trailing" constant="16" id="JtI-2f-gVM"/>
+                <constraint firstItem="2eT-a1-OVa" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="Xoh-xn-YFk"/>
+                <constraint firstAttribute="bottom" secondItem="jgu-Gv-xXv" secondAttribute="bottom" constant="56" id="bhR-F8-BBH"/>
+                <constraint firstItem="wFq-Xt-YjV" firstAttribute="leading" secondItem="qqX-TI-yhW" secondAttribute="trailing" constant="24" id="p6H-6h-zJu"/>
+                <constraint firstItem="V6R-Cw-BIb" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="q11-KD-nE7"/>
+                <constraint firstItem="nEd-9I-nUh" firstAttribute="leading" secondItem="V6R-Cw-BIb" secondAttribute="trailing" constant="24" id="qcC-rf-jnY"/>
+                <constraint firstAttribute="bottom" secondItem="2eT-a1-OVa" secondAttribute="bottom" constant="56" id="qi6-oC-uTK"/>
+                <constraint firstItem="jgu-Gv-xXv" firstAttribute="leading" secondItem="2eT-a1-OVa" secondAttribute="trailing" constant="24" id="si7-g7-jor"/>
+                <constraint firstAttribute="trailing" secondItem="wFq-Xt-YjV" secondAttribute="trailing" constant="16" id="xeQ-G6-PsD"/>
             </constraints>
             <connections>
                 <outlet property="choosePhotoButton" destination="nEd-9I-nUh" id="qlg-FY-Hi5"/>
@@ -76,6 +96,12 @@
     </objects>
     <resources>
         <image name="access_gallery.png" width="100" height="100"/>
+        <image name="secure_text_photo.png" width="400" height="400"/>
         <image name="take_photo.png" width="100" height="100"/>
     </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
+    </simulatedMetricsContainer>
 </document>
