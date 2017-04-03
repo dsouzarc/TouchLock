@@ -15,6 +15,7 @@
 @property (strong, nonatomic) ExpandedDefaultView *expandedDefaultView;
 
 @property (strong, nonatomic) QBImagePickerController *imagePickerController;
+@property (strong, nonatomic) NSMutableArray *assetsToSend;
 
 
 @end
@@ -35,12 +36,57 @@
 
 - (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didFinishPickingAssets:(NSArray *)assets
 {
+    self.assetsToSend = [[NSMutableArray alloc] init];
+    PHImageManager *manager = [PHImageManager defaultManager];
+    
+    PHImageRequestOptions *requestOptions = [[PHImageRequestOptions alloc] init];
+    requestOptions.resizeMode   = PHImageRequestOptionsResizeModeNone;
+    requestOptions.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
+    requestOptions.synchronous = true;
+    requestOptions.version = PHImageRequestOptionsVersionOriginal;
+    
     for (PHAsset *asset in assets) {
         // Do something with the asset
+        
+        if([asset mediaType] == PHAssetMediaTypeImage) {
+            [manager requestImageForAsset:asset
+                               targetSize:PHImageManagerMaximumSize
+                              contentMode:PHImageContentModeDefault
+                                  options:requestOptions
+                            resultHandler:^void(UIImage *image, NSDictionary *info) {
+                                [self.assetsToSend addObject:image];
+                                
+                                
+                                MSSession *messageSession = [[MSSession alloc] init];
+                                MSMessage *message = [[MSMessage alloc] initWithSession:messageSession];
+                                
+                                MSMessageTemplateLayout *messageLayout = [[MSMessageTemplateLayout alloc] init];
+                                messageLayout.image = image;
+
+                                messageLayout.imageTitle = @"iMessage extension";
+                                messageLayout.caption = @"Hello World!";
+                                messageLayout.subcaption = @"Sent by Ryan!";
+                                
+                                NSURLComponents *urlComponents = [[NSURLComponents alloc] init];
+                                NSURLQueryItem *firstItem = [[NSURLQueryItem alloc] initWithName:@"some_key" value:@"some_value"];
+                                [urlComponents setQueryItems:@[firstItem]];
+                                
+                                message.layout = messageLayout;
+                                message.URL = urlComponents.URL;
+                                message.summaryText = @"Summary!";
+                                [self.activeConversation insertMessage:message completionHandler:^(NSError *error) {
+                                    if(error) {
+                                        NSLog(@"ERROR SENDING HERE: %@", [error localizedDescription]);
+                                    }
+                                }];
+
+                                
+                            }
+             ];
+        }
     }
-    
+
     [[self.imagePickerController view] removeFromSuperview];
-    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController
@@ -94,7 +140,6 @@
         CGRect newSize = CGRectMake(0, self.topLayoutGuide.length, self.view.frame.size.width, self.view.frame.size.height - self.topLayoutGuide.length);
         [[self.imagePickerController view] setFrame:newSize];
         [self.view addSubview:[self.imagePickerController view]];
-        
     }
     
     else if (status == PHAuthorizationStatusDenied) {
