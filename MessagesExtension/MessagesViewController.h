@@ -10,7 +10,6 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <Photos/Photos.h>
 
-#import "YMSPhotoPickerViewController.h"
 #import "QBImagePickerController.h"
 
 #import "CompactDefaultView.h"
@@ -18,6 +17,6 @@
 
 #import "DefaultViewProtocol.h"
 
-@interface MessagesViewController : MSMessagesAppViewController<QBImagePickerControllerDelegate, YMSPhotoPickerViewControllerDelegate, DefaultViewProtocol, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface MessagesViewController : MSMessagesAppViewController<QBImagePickerControllerDelegate, DefaultViewProtocol, UINavigationControllerDelegate>
 
 @end

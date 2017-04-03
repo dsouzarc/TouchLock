@@ -14,7 +14,7 @@
 @property (strong, nonatomic) CompactDefaultView *compactDefaultView;
 @property (strong, nonatomic) ExpandedDefaultView *expandedDefaultView;
 
-@property (strong, nonatomic) YMSPhotoPickerViewController *photoPickerViewController;
+@property (strong, nonatomic) QBImagePickerController *imagePickerController;
 
 
 @end
@@ -33,16 +33,19 @@
     
 }
 
-- (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didFinishPickingAssets:(NSArray *)assets {
+- (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didFinishPickingAssets:(NSArray *)assets
+{
     for (PHAsset *asset in assets) {
         // Do something with the asset
     }
     
+    [[self.imagePickerController view] removeFromSuperview];
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
-- (void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController {
-    [self dismissViewControllerAnimated:YES completion:NULL];
+- (void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController
+{
+    [[self.imagePickerController view] removeFromSuperview];
 }
 
 - (void) pressedChoosePhotoButton
@@ -64,29 +67,34 @@
         NSLog(@"AUTHORIZED");
         // Access has been granted.
         
-        QBImagePickerController *imagePickerController = [QBImagePickerController new];
-        imagePickerController.delegate = self;
-        imagePickerController.allowsMultipleSelection = YES;
-        imagePickerController.maximumNumberOfSelection = 6;
-        imagePickerController.showsNumberOfSelectedAssets = YES;
+        self.imagePickerController = [QBImagePickerController new];
+        self.imagePickerController.delegate = self;
+        self.imagePickerController.allowsMultipleSelection = YES;
+        self.imagePickerController.maximumNumberOfSelection = 10;
+        self.imagePickerController.showsNumberOfSelectedAssets = YES;
+        self.imagePickerController.mediaType = QBImagePickerMediaTypeAny;
+        self.imagePickerController.prompt = @"Select the Photos And Videos to Securely Send";
+        self.imagePickerController.assetCollectionSubtypes = @[
+                                                               @(PHAssetCollectionSubtypeSmartAlbumUserLibrary),
+                                                               @(PHAssetCollectionSubtypeAlbumMyPhotoStream),
+                                                               @(PHAssetCollectionSubtypeSmartAlbumFavorites),
+                                                               @(PHAssetCollectionSubtypeSmartAlbumScreenshots),
+                                                               @(PHAssetCollectionSubtypeAlbumRegular),
+                                                               @(PHAssetCollectionSubtypeAlbumMyPhotoStream),
+                                                               @(PHAssetCollectionSubtypeAlbumCloudShared),
+                                                               @(PHAssetCollectionSubtypeSmartAlbumGeneric),
+                                                               @(PHAssetCollectionSubtypeSmartAlbumUserLibrary),
+                                                               @(PHAssetCollectionSubtypeSmartAlbumPanoramas),
+                                                               @(PHAssetCollectionSubtypeSmartAlbumVideos),
+                                                               @(PHAssetCollectionSubtypeSmartAlbumBursts),
+                                                               @(PHAssetCollectionSubtypeSmartAlbumLivePhotos),
+                                                               @(PHAssetCollectionSubtypeSmartAlbumSlomoVideos)
+                                                               ];
         
         CGRect newSize = CGRectMake(0, self.topLayoutGuide.length, self.view.frame.size.width, self.view.frame.size.height - self.topLayoutGuide.length);
-        [[imagePickerController view] setFrame:newSize];
-        [self.view addSubview:[imagePickerController view]];
+        [[self.imagePickerController view] setFrame:newSize];
+        [self.view addSubview:[self.imagePickerController view]];
         
-        //[self presentViewController:imagePickerController animated:YES completion:NULL];
-        
-        
-        /*if(!self.photoPickerViewController) {
-            self.photoPickerViewController = [[YMSPhotoPickerViewController alloc] init];
-            self.photoPickerViewController.delegate = self;
-            self.photoPickerViewController.numberOfPhotoToSelect = 10;
-        }
-        
-        //[[self.photoPickerViewController view] setFrame:self.view.frame];
-        //[self.view addSubview:[self.photoPickerViewController view]];
-        
-        [self presentViewController:self.photoPickerViewController animated:YES completion:nil];*/
     }
     
     else if (status == PHAuthorizationStatusDenied) {
@@ -120,32 +128,11 @@
     }
 }
 
-- (void) photoPickerViewControllerDidCancel:(YMSPhotoPickerViewController *)picker
-{
-    NSLog(@"CALLED CANCEL");
-    [self.photoPickerViewController dismissViewControllerAnimated:YES completion:nil];
-    //[[self.photoPickerViewController view] removeFromSuperview];
-}
-
 - (void) pressedTakePhotoButton
 {
     NSLog(@"TAKE PHOTO");
 }
 
-- (void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
-{
-}
-
-- (void) photoPickerViewControllerDidReceiveCameraAccessDenied:(YMSPhotoPickerViewController *)picker
-{
-    
-    NSLog(@"NO CAMERA");
-}
-
-- (void) photoPickerViewControllerDidReceivePhotoAlbumAccessDenied:(YMSPhotoPickerViewController *)picker
-{
-    NSLog(@"NO ALBUM");
-}
 
 - (void) showCompactDefaultView
 {

@@ -8,23 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		05EA63115F19BBD207234668 /* Pods_TouchLock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A9D3639F1EFF43B8CBCC322 /* Pods_TouchLock.framework */; };
-		9422D5971E5952D000691EB6 /* UIScrollView+YMSAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9422D57C1E5952D000691EB6 /* UIScrollView+YMSAdditions.m */; };
-		9422D5981E5952D000691EB6 /* UITableViewCell+YMSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 9422D57E1E5952D000691EB6 /* UITableViewCell+YMSConfig.m */; };
-		9422D5991E5952D000691EB6 /* YMSAlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9422D5801E5952D000691EB6 /* YMSAlbumCell.m */; };
-		9422D59A1E5952D000691EB6 /* YMSAlbumCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9422D5811E5952D000691EB6 /* YMSAlbumCell.xib */; };
-		9422D59B1E5952D000691EB6 /* YMSAlbumPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9422D5831E5952D000691EB6 /* YMSAlbumPickerViewController.m */; };
-		9422D59C1E5952D000691EB6 /* YMSAlbumPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9422D5841E5952D000691EB6 /* YMSAlbumPickerViewController.xib */; };
-		9422D59D1E5952D000691EB6 /* YMSCameraCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9422D5861E5952D000691EB6 /* YMSCameraCell.m */; };
-		9422D59E1E5952D000691EB6 /* YMSCameraCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9422D5871E5952D000691EB6 /* YMSCameraCell.xib */; };
-		9422D59F1E5952D000691EB6 /* YMSPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9422D5891E5952D000691EB6 /* YMSPhotoCell.m */; };
-		9422D5A01E5952D000691EB6 /* YMSPhotoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9422D58A1E5952D000691EB6 /* YMSPhotoCell.xib */; };
-		9422D5A11E5952D000691EB6 /* YMSSinglePhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9422D58C1E5952D000691EB6 /* YMSSinglePhotoViewController.m */; };
-		9422D5A21E5952D000691EB6 /* YMSSinglePhotoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9422D58D1E5952D000691EB6 /* YMSSinglePhotoViewController.xib */; };
-		9422D5A31E5952D000691EB6 /* UIViewController+YMSPhotoHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9422D5901E5952D000691EB6 /* UIViewController+YMSPhotoHelper.m */; };
-		9422D5A41E5952D000691EB6 /* YMSPhotoPickerTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 9422D5921E5952D000691EB6 /* YMSPhotoPickerTheme.m */; };
-		9422D5A51E5952D000691EB6 /* YMSPhotoPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9422D5941E5952D000691EB6 /* YMSPhotoPickerViewController.m */; };
-		9422D5A61E5952D000691EB6 /* YMSPhotoPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9422D5951E5952D000691EB6 /* YMSPhotoPickerViewController.xib */; };
-		9422D5A71E5952D000691EB6 /* YMSPhotoPickerAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9422D5961E5952D000691EB6 /* YMSPhotoPickerAssets.xcassets */; };
 		94231E811E91D3E200214BCF /* QBImagePicker.strings in Resources */ = {isa = PBXBuildFile; fileRef = 94231E661E91D3E200214BCF /* QBImagePicker.strings */; };
 		94231E821E91D3E200214BCF /* QBAlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 94231E6D1E91D3E200214BCF /* QBAlbumCell.m */; };
 		94231E831E91D3E200214BCF /* QBAlbumsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94231E6F1E91D3E200214BCF /* QBAlbumsViewController.m */; };
@@ -78,33 +61,6 @@
 /* Begin PBXFileReference section */
 		28A6B08ADDC0AD7306B432F4 /* Pods-TouchLock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TouchLock.release.xcconfig"; path = "Pods/Target Support Files/Pods-TouchLock/Pods-TouchLock.release.xcconfig"; sourceTree = "<group>"; };
 		4A9D3639F1EFF43B8CBCC322 /* Pods_TouchLock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TouchLock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9422D57B1E5952D000691EB6 /* UIScrollView+YMSAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+YMSAdditions.h"; sourceTree = "<group>"; };
-		9422D57C1E5952D000691EB6 /* UIScrollView+YMSAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+YMSAdditions.m"; sourceTree = "<group>"; };
-		9422D57D1E5952D000691EB6 /* UITableViewCell+YMSConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewCell+YMSConfig.h"; sourceTree = "<group>"; };
-		9422D57E1E5952D000691EB6 /* UITableViewCell+YMSConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+YMSConfig.m"; sourceTree = "<group>"; };
-		9422D57F1E5952D000691EB6 /* YMSAlbumCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMSAlbumCell.h; sourceTree = "<group>"; };
-		9422D5801E5952D000691EB6 /* YMSAlbumCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMSAlbumCell.m; sourceTree = "<group>"; };
-		9422D5811E5952D000691EB6 /* YMSAlbumCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YMSAlbumCell.xib; sourceTree = "<group>"; };
-		9422D5821E5952D000691EB6 /* YMSAlbumPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMSAlbumPickerViewController.h; sourceTree = "<group>"; };
-		9422D5831E5952D000691EB6 /* YMSAlbumPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMSAlbumPickerViewController.m; sourceTree = "<group>"; };
-		9422D5841E5952D000691EB6 /* YMSAlbumPickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YMSAlbumPickerViewController.xib; sourceTree = "<group>"; };
-		9422D5851E5952D000691EB6 /* YMSCameraCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMSCameraCell.h; sourceTree = "<group>"; };
-		9422D5861E5952D000691EB6 /* YMSCameraCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMSCameraCell.m; sourceTree = "<group>"; };
-		9422D5871E5952D000691EB6 /* YMSCameraCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YMSCameraCell.xib; sourceTree = "<group>"; };
-		9422D5881E5952D000691EB6 /* YMSPhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMSPhotoCell.h; sourceTree = "<group>"; };
-		9422D5891E5952D000691EB6 /* YMSPhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMSPhotoCell.m; sourceTree = "<group>"; };
-		9422D58A1E5952D000691EB6 /* YMSPhotoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YMSPhotoCell.xib; sourceTree = "<group>"; };
-		9422D58B1E5952D000691EB6 /* YMSSinglePhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMSSinglePhotoViewController.h; sourceTree = "<group>"; };
-		9422D58C1E5952D000691EB6 /* YMSSinglePhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMSSinglePhotoViewController.m; sourceTree = "<group>"; };
-		9422D58D1E5952D000691EB6 /* YMSSinglePhotoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YMSSinglePhotoViewController.xib; sourceTree = "<group>"; };
-		9422D58F1E5952D000691EB6 /* UIViewController+YMSPhotoHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+YMSPhotoHelper.h"; sourceTree = "<group>"; };
-		9422D5901E5952D000691EB6 /* UIViewController+YMSPhotoHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+YMSPhotoHelper.m"; sourceTree = "<group>"; };
-		9422D5911E5952D000691EB6 /* YMSPhotoPickerTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMSPhotoPickerTheme.h; sourceTree = "<group>"; };
-		9422D5921E5952D000691EB6 /* YMSPhotoPickerTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMSPhotoPickerTheme.m; sourceTree = "<group>"; };
-		9422D5931E5952D000691EB6 /* YMSPhotoPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMSPhotoPickerViewController.h; sourceTree = "<group>"; };
-		9422D5941E5952D000691EB6 /* YMSPhotoPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMSPhotoPickerViewController.m; sourceTree = "<group>"; };
-		9422D5951E5952D000691EB6 /* YMSPhotoPickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YMSPhotoPickerViewController.xib; sourceTree = "<group>"; };
-		9422D5961E5952D000691EB6 /* YMSPhotoPickerAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = YMSPhotoPickerAssets.xcassets; sourceTree = "<group>"; };
 		94231E671E91D3E200214BCF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/QBImagePicker.strings; sourceTree = "<group>"; };
 		94231E681E91D3E200214BCF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/QBImagePicker.strings; sourceTree = "<group>"; };
 		94231E691E91D3E200214BCF /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/QBImagePicker.strings; sourceTree = "<group>"; };
@@ -176,64 +132,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		9422D5781E5952D000691EB6 /* YangMingShan */ = {
-			isa = PBXGroup;
-			children = (
-				9422D5791E5952D000691EB6 /* YMSPhotoPicker */,
-			);
-			path = YangMingShan;
-			sourceTree = "<group>";
-		};
-		9422D5791E5952D000691EB6 /* YMSPhotoPicker */ = {
-			isa = PBXGroup;
-			children = (
-				9422D57A1E5952D000691EB6 /* Private */,
-				9422D58E1E5952D000691EB6 /* Public */,
-				9422D5961E5952D000691EB6 /* YMSPhotoPickerAssets.xcassets */,
-			);
-			path = YMSPhotoPicker;
-			sourceTree = "<group>";
-		};
-		9422D57A1E5952D000691EB6 /* Private */ = {
-			isa = PBXGroup;
-			children = (
-				9422D57B1E5952D000691EB6 /* UIScrollView+YMSAdditions.h */,
-				9422D57C1E5952D000691EB6 /* UIScrollView+YMSAdditions.m */,
-				9422D57D1E5952D000691EB6 /* UITableViewCell+YMSConfig.h */,
-				9422D57E1E5952D000691EB6 /* UITableViewCell+YMSConfig.m */,
-				9422D57F1E5952D000691EB6 /* YMSAlbumCell.h */,
-				9422D5801E5952D000691EB6 /* YMSAlbumCell.m */,
-				9422D5811E5952D000691EB6 /* YMSAlbumCell.xib */,
-				9422D5821E5952D000691EB6 /* YMSAlbumPickerViewController.h */,
-				9422D5831E5952D000691EB6 /* YMSAlbumPickerViewController.m */,
-				9422D5841E5952D000691EB6 /* YMSAlbumPickerViewController.xib */,
-				9422D5851E5952D000691EB6 /* YMSCameraCell.h */,
-				9422D5861E5952D000691EB6 /* YMSCameraCell.m */,
-				9422D5871E5952D000691EB6 /* YMSCameraCell.xib */,
-				9422D5881E5952D000691EB6 /* YMSPhotoCell.h */,
-				9422D5891E5952D000691EB6 /* YMSPhotoCell.m */,
-				9422D58A1E5952D000691EB6 /* YMSPhotoCell.xib */,
-				9422D58B1E5952D000691EB6 /* YMSSinglePhotoViewController.h */,
-				9422D58C1E5952D000691EB6 /* YMSSinglePhotoViewController.m */,
-				9422D58D1E5952D000691EB6 /* YMSSinglePhotoViewController.xib */,
-			);
-			path = Private;
-			sourceTree = "<group>";
-		};
-		9422D58E1E5952D000691EB6 /* Public */ = {
-			isa = PBXGroup;
-			children = (
-				9422D58F1E5952D000691EB6 /* UIViewController+YMSPhotoHelper.h */,
-				9422D5901E5952D000691EB6 /* UIViewController+YMSPhotoHelper.m */,
-				9422D5911E5952D000691EB6 /* YMSPhotoPickerTheme.h */,
-				9422D5921E5952D000691EB6 /* YMSPhotoPickerTheme.m */,
-				9422D5931E5952D000691EB6 /* YMSPhotoPickerViewController.h */,
-				9422D5941E5952D000691EB6 /* YMSPhotoPickerViewController.m */,
-				9422D5951E5952D000691EB6 /* YMSPhotoPickerViewController.xib */,
-			);
-			path = Public;
-			sourceTree = "<group>";
-		};
 		94231E651E91D3E200214BCF /* QBImagePicker */ = {
 			isa = PBXGroup;
 			children = (
@@ -305,7 +203,6 @@
 			isa = PBXGroup;
 			children = (
 				94231E651E91D3E200214BCF /* QBImagePicker */,
-				9422D5781E5952D000691EB6 /* YangMingShan */,
 				94F7D7301E58BF9300CB1B9E /* MessagesViewController.h */,
 				94F7D7311E58BF9300CB1B9E /* MessagesViewController.m */,
 				94F7D7571E58D42E00CB1B9E /* Default Views */,
@@ -472,22 +369,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9422D59C1E5952D000691EB6 /* YMSAlbumPickerViewController.xib in Resources */,
 				94F7D7371E58BF9300CB1B9E /* Assets.xcassets in Resources */,
-				9422D5A01E5952D000691EB6 /* YMSPhotoCell.xib in Resources */,
 				94231E871E91D3E200214BCF /* QBImagePicker.storyboard in Resources */,
 				94F7D7511E58D24500CB1B9E /* ExpandedDefaultView.xib in Resources */,
 				94F7D74C1E58CD7900CB1B9E /* CompactDefaultView.xib in Resources */,
 				94231E811E91D3E200214BCF /* QBImagePicker.strings in Resources */,
-				9422D5A21E5952D000691EB6 /* YMSSinglePhotoViewController.xib in Resources */,
 				94480F591E91B1D5009C0C71 /* secure_text_photo.png in Resources */,
-				9422D59E1E5952D000691EB6 /* YMSCameraCell.xib in Resources */,
 				94F7D7351E58BF9300CB1B9E /* MainInterface.storyboard in Resources */,
 				94F7D74A1E58C6DF00CB1B9E /* access_gallery.png in Resources */,
 				94F7D7491E58C6DF00CB1B9E /* take_photo.png in Resources */,
-				9422D5A71E5952D000691EB6 /* YMSPhotoPickerAssets.xcassets in Resources */,
-				9422D5A61E5952D000691EB6 /* YMSPhotoPickerViewController.xib in Resources */,
-				9422D59A1E5952D000691EB6 /* YMSAlbumCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -549,25 +439,15 @@
 				94231E821E91D3E200214BCF /* QBAlbumCell.m in Sources */,
 				94231E831E91D3E200214BCF /* QBAlbumsViewController.m in Sources */,
 				94231E8A1E91D3E200214BCF /* QBVideoIconView.m in Sources */,
-				9422D5A51E5952D000691EB6 /* YMSPhotoPickerViewController.m in Sources */,
-				9422D59F1E5952D000691EB6 /* YMSPhotoCell.m in Sources */,
 				94F7D7541E58D3A200CB1B9E /* ExpandedDefaultView.m in Sources */,
 				94231E891E91D3E200214BCF /* QBSlomoIconView.m in Sources */,
 				94231E851E91D3E200214BCF /* QBAssetsViewController.m in Sources */,
-				9422D59B1E5952D000691EB6 /* YMSAlbumPickerViewController.m in Sources */,
-				9422D5A31E5952D000691EB6 /* UIViewController+YMSPhotoHelper.m in Sources */,
-				9422D5A41E5952D000691EB6 /* YMSPhotoPickerTheme.m in Sources */,
-				9422D5971E5952D000691EB6 /* UIScrollView+YMSAdditions.m in Sources */,
-				9422D5981E5952D000691EB6 /* UITableViewCell+YMSConfig.m in Sources */,
 				94231E881E91D3E200214BCF /* QBImagePickerController.m in Sources */,
-				9422D59D1E5952D000691EB6 /* YMSCameraCell.m in Sources */,
 				94231E841E91D3E200214BCF /* QBAssetCell.m in Sources */,
 				94F7D74F1E58D10100CB1B9E /* CompactDefaultView.m in Sources */,
 				94F7D7321E58BF9300CB1B9E /* MessagesViewController.m in Sources */,
 				94231E861E91D3E200214BCF /* QBCheckmarkView.m in Sources */,
 				94231E8B1E91D3E200214BCF /* QBVideoIndicatorView.m in Sources */,
-				9422D5991E5952D000691EB6 /* YMSAlbumCell.m in Sources */,
-				9422D5A11E5952D000691EB6 /* YMSSinglePhotoViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
