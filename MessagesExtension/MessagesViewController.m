@@ -16,6 +16,7 @@
 
 @property (strong, nonatomic) YMSPhotoPickerViewController *photoPickerViewController;
 
+
 @end
 
 @implementation MessagesViewController
@@ -30,6 +31,18 @@
 - (void) pressedSendTextButton
 {
     
+}
+
+- (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didFinishPickingAssets:(NSArray *)assets {
+    for (PHAsset *asset in assets) {
+        // Do something with the asset
+    }
+    
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController {
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (void) pressedChoosePhotoButton
@@ -51,16 +64,29 @@
         NSLog(@"AUTHORIZED");
         // Access has been granted.
         
-        if(!self.photoPickerViewController) {
+        QBImagePickerController *imagePickerController = [QBImagePickerController new];
+        imagePickerController.delegate = self;
+        imagePickerController.allowsMultipleSelection = YES;
+        imagePickerController.maximumNumberOfSelection = 6;
+        imagePickerController.showsNumberOfSelectedAssets = YES;
+        
+        CGRect newSize = CGRectMake(0, self.topLayoutGuide.length, self.view.frame.size.width, self.view.frame.size.height - self.topLayoutGuide.length);
+        [[imagePickerController view] setFrame:newSize];
+        [self.view addSubview:[imagePickerController view]];
+        
+        //[self presentViewController:imagePickerController animated:YES completion:NULL];
+        
+        
+        /*if(!self.photoPickerViewController) {
             self.photoPickerViewController = [[YMSPhotoPickerViewController alloc] init];
             self.photoPickerViewController.delegate = self;
             self.photoPickerViewController.numberOfPhotoToSelect = 10;
         }
         
-        [[self.photoPickerViewController view] setFrame:self.view.frame];
-        [self.view addSubview:[self.photoPickerViewController view]];
+        //[[self.photoPickerViewController view] setFrame:self.view.frame];
+        //[self.view addSubview:[self.photoPickerViewController view]];
         
-        //[self presentViewController:pickerViewController animated:YES completion:nil];
+        [self presentViewController:self.photoPickerViewController animated:YES completion:nil];*/
     }
     
     else if (status == PHAuthorizationStatusDenied) {
@@ -97,8 +123,8 @@
 - (void) photoPickerViewControllerDidCancel:(YMSPhotoPickerViewController *)picker
 {
     NSLog(@"CALLED CANCEL");
-    
-    [[self.photoPickerViewController view] removeFromSuperview];
+    [self.photoPickerViewController dismissViewControllerAnimated:YES completion:nil];
+    //[[self.photoPickerViewController view] removeFromSuperview];
 }
 
 - (void) pressedTakePhotoButton
