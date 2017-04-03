@@ -14,6 +14,8 @@
 #import "CompactDefaultView.h"
 #import "ExpandedDefaultView.h"
 
-@interface MessagesViewController : MSMessagesAppViewController<YMSPhotoPickerViewControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+#import "DefaultViewProtocol.h"
+
+@interface MessagesViewController : MSMessagesAppViewController<YMSPhotoPickerViewControllerDelegate, DefaultViewProtocol, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @end

@@ -14,6 +14,8 @@
 @property (strong, nonatomic) CompactDefaultView *compactDefaultView;
 @property (strong, nonatomic) ExpandedDefaultView *expandedDefaultView;
 
+@property (strong, nonatomic) YMSPhotoPickerViewController *photoPickerViewController;
+
 @end
 
 @implementation MessagesViewController
@@ -25,27 +27,12 @@
     [self showCompactDefaultView];
 }
 
-- (void) clickedOnTakePhoto:(UIButton*)sender
-{
-    NSLog(@"TAKE PHOTO");
-}
-
-- (void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
-{
-}
-
-- (void) photoPickerViewControllerDidReceiveCameraAccessDenied:(YMSPhotoPickerViewController *)picker
+- (void) pressedSendTextButton
 {
     
-    NSLog(@"NO CAMERA");
 }
 
-- (void) photoPickerViewControllerDidReceivePhotoAlbumAccessDenied:(YMSPhotoPickerViewController *)picker
-{
-    NSLog(@"NO ALBUM");
-}
-
-- (void) clickedOnChoosePhoto:(UIButton*)button
+- (void) pressedChoosePhotoButton
 {
     NSLog(@"CHOOSE PHOTO");
     
@@ -57,17 +44,22 @@
         return;
     }
     
-
+    
     PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
     
     if (status == PHAuthorizationStatusAuthorized) {
         NSLog(@"AUTHORIZED");
         // Access has been granted.
         
-
+        if(!self.photoPickerViewController) {
+            self.photoPickerViewController = [[YMSPhotoPickerViewController alloc] init];
+            self.photoPickerViewController.delegate = self;
+            self.photoPickerViewController.numberOfPhotoToSelect = 10;
+        }
         
-        //YMSPhotoPickerViewController *pickerViewController = [[YMSPhotoPickerViewController alloc] init];
-        //pickerViewController.numberOfPhotoToSelect = 10;
+        [[self.photoPickerViewController view] setFrame:self.view.frame];
+        [self.view addSubview:[self.photoPickerViewController view]];
+        
         //[self presentViewController:pickerViewController animated:YES completion:nil];
     }
     
@@ -100,10 +92,34 @@
         // Restricted access - normally won't happen.
         NSLog(@"RESTRICTED");
     }
-    
-    
 }
 
+- (void) photoPickerViewControllerDidCancel:(YMSPhotoPickerViewController *)picker
+{
+    NSLog(@"CALLED CANCEL");
+    
+    [[self.photoPickerViewController view] removeFromSuperview];
+}
+
+- (void) pressedTakePhotoButton
+{
+    NSLog(@"TAKE PHOTO");
+}
+
+- (void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
+{
+}
+
+- (void) photoPickerViewControllerDidReceiveCameraAccessDenied:(YMSPhotoPickerViewController *)picker
+{
+    
+    NSLog(@"NO CAMERA");
+}
+
+- (void) photoPickerViewControllerDidReceivePhotoAlbumAccessDenied:(YMSPhotoPickerViewController *)picker
+{
+    NSLog(@"NO ALBUM");
+}
 
 - (void) showCompactDefaultView
 {
@@ -111,15 +127,12 @@
         [self.expandedDefaultView removeFromSuperview];
     }
     
-    self.compactDefaultView = (CompactDefaultView*) [[[NSBundle mainBundle] loadNibNamed:@"CompactDefaultView" owner:self options:nil] firstObject];
+    if(!self.compactDefaultView) {
+        self.compactDefaultView = (CompactDefaultView*) [[[NSBundle mainBundle] loadNibNamed:@"CompactDefaultView" owner:self options:nil] firstObject];
+        self.compactDefaultView.delegate = self;
+    }
+    
     [self.compactDefaultView setFrame:self.view.frame];
-    
-    [self.compactDefaultView.takePhotoButton addTarget:self action:@selector(clickedOnTakePhoto:) forControlEvents:UIControlEventTouchUpInside];
-    [self.compactDefaultView.takePhotoButtonImage addTarget:self action:@selector(clickedOnTakePhoto:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.compactDefaultView.choosePhotoButton addTarget:self action:@selector(clickedOnChoosePhoto:) forControlEvents:UIControlEventTouchUpInside];
-    [self.compactDefaultView.choosePhotoButtonImage addTarget:self action:@selector(clickedOnChoosePhoto:) forControlEvents:UIControlEventTouchUpInside];
-    
     [self.view addSubview:self.compactDefaultView];
 }
 
@@ -130,24 +143,15 @@
         [self.compactDefaultView removeFromSuperview];
     }
     
-    self.expandedDefaultView = (ExpandedDefaultView*) [[[NSBundle mainBundle] loadNibNamed:@"ExpandedDefaultView" owner:self options:nil] firstObject];
+    if(!self.expandedDefaultView) {
+        self.expandedDefaultView = (ExpandedDefaultView*) [[[NSBundle mainBundle] loadNibNamed:@"ExpandedDefaultView" owner:self options:nil] firstObject];
+        self.expandedDefaultView.delegate = self;
+    }
+    
     [self.expandedDefaultView setFrame:self.view.frame];
-    
-    [self.expandedDefaultView.takePhotoButton addTarget:self action:@selector(clickedOnTakePhoto:) forControlEvents:UIControlEventTouchUpInside];
-    [self.expandedDefaultView.takePhotoButtonImage addTarget:self action:@selector(clickedOnTakePhoto:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.expandedDefaultView.choosePhotoButton addTarget:self action:@selector(clickedOnChoosePhoto:) forControlEvents:UIControlEventTouchUpInside];
-    [self.expandedDefaultView.choosePhotoButtonImage addTarget:self action:@selector(clickedOnChoosePhoto:) forControlEvents:UIControlEventTouchUpInside];
-    
     [self.view addSubview:self.expandedDefaultView];
 }
 
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 #pragma mark - Conversation Handling
 
@@ -197,16 +201,16 @@
 
 -(void)didTransitionToPresentationStyle:(MSMessagesAppPresentationStyle)presentationStyle
 {
-    
     if(presentationStyle == MSMessagesAppPresentationStyleExpanded) {
+        NSLog(@"TRANSITIONING TO EXPANDED");
         [self showExpandedDefaultView];
     }
     
     //Compact or base case
     else {
+        NSLog(@"TRANSITIONING TO SHOW COMPACT");
         [self showCompactDefaultView];
     }
-    
 }
 
 @end
