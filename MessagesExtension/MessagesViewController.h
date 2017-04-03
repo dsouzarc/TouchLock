@@ -16,6 +16,8 @@
 #import "ExpandedDefaultView.h"
 
 #import "DefaultViewProtocol.h"
+#import "RNEncryptor.h"
+#import "RNDecryptor.h"
 
 @interface MessagesViewController : MSMessagesAppViewController<QBImagePickerControllerDelegate, DefaultViewProtocol, UINavigationControllerDelegate>
 

@@ -45,42 +45,73 @@
     requestOptions.synchronous = true;
     requestOptions.version = PHImageRequestOptionsVersionOriginal;
     
+    UIImage *defaultImage = [UIImage imageNamed:@"default_blurred_image.jpg"];
+    
     for (PHAsset *asset in assets) {
         // Do something with the asset
         
         if([asset mediaType] == PHAssetMediaTypeImage) {
+            
             [manager requestImageForAsset:asset
                                targetSize:PHImageManagerMaximumSize
                               contentMode:PHImageContentModeDefault
                                   options:requestOptions
-                            resultHandler:^void(UIImage *image, NSDictionary *info) {
-                                [self.assetsToSend addObject:image];
+                            resultHandler:^void(UIImage *originalImage, NSDictionary *info) {
                                 
+                                NSString *encryptionKey = @"Some super long password";
                                 
-                                MSSession *messageSession = [[MSSession alloc] init];
-                                MSMessage *message = [[MSMessage alloc] initWithSession:messageSession];
+                                //  Code for encrypting and saveing image
+                                NSString  *imagePath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/encryptedImage.pdf"];
+                                
+                                NSData *data = UIImagePNGRepresentation(originalImage);
+                                NSError *error;
+                                NSData *encryptedData = [RNEncryptor encryptData:data
+                                                                    withSettings:kRNCryptorAES256Settings
+                                                                        password:encryptionKey
+                                                                           error:&error];
+                                
+                                if(error) {
+                                    NSLog(@"ERROR ENCRYPTING MESSAGE: %@: ", [error description]);
+                                }
+                                
+                                [encryptedData writeToFile:imagePath atomically:YES];
+                                NSURL *imageSavePath = [NSURL fileURLWithPath:imagePath];
+                                
+                                /*[self.activeConversation insertAttachment:imageSavePath withAlternateFilename:@"Alternative name" completionHandler:^(NSError *error) {
+                                    if(error) {
+                                        NSLog(@"ERROR INSERTING ATTACHMENT: %@", [error description]);
+                                    } else {
+                                        NSLog(@"INSERTED ATTACHMENT");
+                                    }
+                                }];*/
+                                
+                                UIImage *encryptedImage = [UIImage imageWithData:encryptedData];
                                 
                                 MSMessageTemplateLayout *messageLayout = [[MSMessageTemplateLayout alloc] init];
-                                messageLayout.image = image;
-
+                                messageLayout.image = defaultImage;
                                 messageLayout.imageTitle = @"iMessage extension";
                                 messageLayout.caption = @"Hello World!";
                                 messageLayout.subcaption = @"Sent by Ryan!";
                                 
                                 NSURLComponents *urlComponents = [[NSURLComponents alloc] init];
-                                NSURLQueryItem *firstItem = [[NSURLQueryItem alloc] initWithName:@"some_key" value:@"some_value"];
+                                NSURLQueryItem *firstItem = [[NSURLQueryItem alloc] initWithName:@"encryption_key" value:encryptionKey];
                                 [urlComponents setQueryItems:@[firstItem]];
                                 
+                                MSSession *messageSession = [[MSSession alloc] init];
+                                MSMessage *message = [[MSMessage alloc] initWithSession:messageSession];
+                                messageLayout.mediaFileURL = imageSavePath;
                                 message.layout = messageLayout;
                                 message.URL = urlComponents.URL;
                                 message.summaryText = @"Summary!";
+                                
+                                
+                                
                                 [self.activeConversation insertMessage:message completionHandler:^(NSError *error) {
                                     if(error) {
                                         NSLog(@"ERROR SENDING HERE: %@", [error localizedDescription]);
                                     }
                                 }];
-
-                                
+                                return;
                             }
              ];
         }
@@ -213,12 +244,124 @@
 
 #pragma mark - Conversation Handling
 
+- (void) willSelectMessage:(MSMessage *)message conversation:(MSConversation *)conversation
+{
+    NSLog(@"ABOUT TO SELECT MESSAGE!!");
+    
+    
+}
+
+
+- (void) didSelectMessage:(MSMessage *)message conversation:(MSConversation *)conversation
+{
+    NSLog(@"DID SELECT - ANALYZING NOW");
+    
+    NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:[message URL] resolvingAgainstBaseURL:NO];
+    
+    NSString *encryptionKey = @"";
+    
+    for(NSURLQueryItem *queryItem in [urlComponents queryItems]) {
+        if([[queryItem name] isEqualToString:@"encryption_key"]) {
+            encryptionKey = [queryItem value];
+        }
+    }
+    
+    //  Code for loading image by decryption
+    NSString  *imagePath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/encryptedImage.pdf"];
+    NSError *error;
+    
+    NSData *encryptedData = [NSData dataWithContentsOfFile:imagePath];
+    NSData *decryptedData = [RNDecryptor decryptData:encryptedData
+                                        withPassword:encryptionKey
+                                               error:&error];
+    
+    if(error) {
+        NSLog(@"ERROR DECRYPTING IMAGE: %@", [error description]);
+        return;
+    }
+
+    UIImage *image = [UIImage imageWithData:decryptedData];
+    
+    UIViewController *someController = [[UIViewController alloc] init];
+    UIImageView *imgView = [[UIImageView alloc] initWithImage:image];
+    [imgView setFrame:self.view.frame];
+    [[someController view] setFrame:self.view.frame];
+    
+    [self presentViewController:someController animated:YES completion:nil];
+    
+}
+
 -(void)didBecomeActiveWithConversation:(MSConversation *)conversation
 {
     // Called when the extension is about to move from the inactive to active state.
     // This will happen when the extension is about to present UI.
     
     // Use this method to configure the extension and restore previously stored state.
+    NSLog(@"ACTIVE NOW");
+    
+    if([conversation selectedMessage]) {
+        NSLog(@"FOUND MESSAGE");
+        
+        MSMessage *message = [conversation selectedMessage];
+        
+        NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:[message URL] resolvingAgainstBaseURL:NO];
+        
+        NSString *encryptionKey = @"";
+        
+        for(NSURLQueryItem *queryItem in [urlComponents queryItems]) {
+            if([[queryItem name] isEqualToString:@"encryption_key"]) {
+                encryptionKey = [queryItem value];
+            }
+        }
+        
+        //  Code for loading image by decryption
+        NSString  *imagePath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/encryptedImage.pdf"];
+        NSError *error;
+        
+        NSData *encryptedData = [NSData dataWithContentsOfFile:imagePath];
+        NSData *decryptedData = [RNDecryptor decryptData:encryptedData
+                                            withPassword:encryptionKey
+                                                   error:&error];
+        
+        if(error) {
+            NSLog(@"ERROR DECRYPTING IMAGE: %@", [error description]);
+            return;
+        }
+        
+        UIImage *image = [UIImage imageWithData:decryptedData];
+
+        if(image) {
+            NSLog(@"RECREATED IMAGE SUCCESSFULLY");
+        }
+        
+
+        
+        MSMessageTemplateLayout *messageLayout = [[MSMessageTemplateLayout alloc] init];
+        messageLayout.image = image; //originalImage;
+        messageLayout.imageTitle = @"Reply iMessage extension";
+        messageLayout.caption = @"Reply Hello World!";
+        messageLayout.subcaption = @"Reply Sent by Ryan!";
+        
+        
+        MSSession *messageSession = [[MSSession alloc] init];
+        message = [[MSMessage alloc] initWithSession:messageSession];
+        //messageLayout.mediaFileURL = imageSavePath;
+        message.layout = messageLayout;
+        message.URL = urlComponents.URL;
+        message.summaryText = @"Summary!";
+        
+        
+        
+        [self.activeConversation insertMessage:message completionHandler:^(NSError *error) {
+            if(error) {
+                NSLog(@"ERROR SENDING HERE: %@", [error localizedDescription]);
+            } else {
+                NSLog(@"REPLY IS GUCCI");
+            }
+        }];
+        
+    }
+    
 }
 
 -(void)willResignActiveWithConversation:(MSConversation *)conversation
@@ -238,11 +381,21 @@
     // extension on a remote device.
     
     // Use this method to trigger UI updates in response to the message.
+    NSLog(@"RECEIVED MESSAGE");
 }
 
 -(void)didStartSendingMessage:(MSMessage *)message conversation:(MSConversation *)conversation
 {
     // Called when the user taps the send button.
+    
+    MSMessageTemplateLayout *messageLayout = [[MSMessageTemplateLayout alloc] init];
+    messageLayout.image = [UIImage imageNamed:@"default_blurred_image.jpg"];
+    messageLayout.imageTitle = @"Start Sending";
+    messageLayout.caption = @"Sending Hello World!";
+    messageLayout.subcaption = @"Sending by Ryan!";
+    
+    [message setLayout:messageLayout];
+    
 }
 
 -(void)didCancelSendingMessage:(MSMessage *)message conversation:(MSConversation *)conversation

@@ -19,6 +19,11 @@
 		94231E891E91D3E200214BCF /* QBSlomoIconView.m in Sources */ = {isa = PBXBuildFile; fileRef = 94231E7B1E91D3E200214BCF /* QBSlomoIconView.m */; };
 		94231E8A1E91D3E200214BCF /* QBVideoIconView.m in Sources */ = {isa = PBXBuildFile; fileRef = 94231E7D1E91D3E200214BCF /* QBVideoIconView.m */; };
 		94231E8B1E91D3E200214BCF /* QBVideoIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 94231E7F1E91D3E200214BCF /* QBVideoIndicatorView.m */; };
+		94231EA11E91E82300214BCF /* default_blurred_image.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 94231EA01E91E82300214BCF /* default_blurred_image.jpg */; };
+		94231EB01E91F19300214BCF /* RNCryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 94231EA91E91F19300214BCF /* RNCryptor.m */; };
+		94231EB11E91F19300214BCF /* RNCryptorEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 94231EAB1E91F19300214BCF /* RNCryptorEngine.m */; };
+		94231EB21E91F19300214BCF /* RNDecryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 94231EAD1E91F19300214BCF /* RNDecryptor.m */; };
+		94231EB31E91F19300214BCF /* RNEncryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 94231EAF1E91F19300214BCF /* RNEncryptor.m */; };
 		94480F591E91B1D5009C0C71 /* secure_text_photo.png in Resources */ = {isa = PBXBuildFile; fileRef = 94480F581E91B1D5009C0C71 /* secure_text_photo.png */; };
 		94F7D7221E58BF9300CB1B9E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94F7D7211E58BF9300CB1B9E /* Assets.xcassets */; };
 		94F7D7291E58BF9300CB1B9E /* MessagesExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 94F7D7281E58BF9300CB1B9E /* MessagesExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -87,6 +92,19 @@
 		94231E7E1E91D3E200214BCF /* QBVideoIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBVideoIndicatorView.h; sourceTree = "<group>"; };
 		94231E7F1E91D3E200214BCF /* QBVideoIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBVideoIndicatorView.m; sourceTree = "<group>"; };
 		94231E801E91D3E200214BCF /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/QBImagePicker.strings"; sourceTree = "<group>"; };
+		94231EA01E91E82300214BCF /* default_blurred_image.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = default_blurred_image.jpg; sourceTree = "<group>"; };
+		94231EA31E91F19300214BCF /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
+		94231EA41E91F19300214BCF /* RNCryptor iOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RNCryptor iOS.h"; sourceTree = "<group>"; };
+		94231EA61E91F19300214BCF /* RNCryptor+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RNCryptor+Private.h"; sourceTree = "<group>"; };
+		94231EA71E91F19300214BCF /* RNCryptor-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RNCryptor-Prefix.pch"; sourceTree = "<group>"; };
+		94231EA81E91F19300214BCF /* RNCryptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNCryptor.h; sourceTree = "<group>"; };
+		94231EA91E91F19300214BCF /* RNCryptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNCryptor.m; sourceTree = "<group>"; };
+		94231EAA1E91F19300214BCF /* RNCryptorEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNCryptorEngine.h; sourceTree = "<group>"; };
+		94231EAB1E91F19300214BCF /* RNCryptorEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNCryptorEngine.m; sourceTree = "<group>"; };
+		94231EAC1E91F19300214BCF /* RNDecryptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNDecryptor.h; sourceTree = "<group>"; };
+		94231EAD1E91F19300214BCF /* RNDecryptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNDecryptor.m; sourceTree = "<group>"; };
+		94231EAE1E91F19300214BCF /* RNEncryptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNEncryptor.h; sourceTree = "<group>"; };
+		94231EAF1E91F19300214BCF /* RNEncryptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNEncryptor.m; sourceTree = "<group>"; };
 		94480F581E91B1D5009C0C71 /* secure_text_photo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = secure_text_photo.png; sourceTree = "<group>"; };
 		94480F5A1E91C28F009C0C71 /* DefaultViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultViewProtocol.h; sourceTree = "<group>"; };
 		94689D511E91D38B00372712 /* QBImagePickerController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QBImagePickerController.framework; path = "Pods/../build/Debug-iphoneos/QBImagePickerController/QBImagePickerController.framework"; sourceTree = "<group>"; };
@@ -160,6 +178,32 @@
 			path = QBImagePicker;
 			sourceTree = "<group>";
 		};
+		94231EA21E91F19300214BCF /* RNCryptor iOS */ = {
+			isa = PBXGroup;
+			children = (
+				94231EA31E91F19300214BCF /* module.modulemap */,
+				94231EA41E91F19300214BCF /* RNCryptor iOS.h */,
+			);
+			path = "RNCryptor iOS";
+			sourceTree = "<group>";
+		};
+		94231EA51E91F19300214BCF /* RNCryptor */ = {
+			isa = PBXGroup;
+			children = (
+				94231EA61E91F19300214BCF /* RNCryptor+Private.h */,
+				94231EA71E91F19300214BCF /* RNCryptor-Prefix.pch */,
+				94231EA81E91F19300214BCF /* RNCryptor.h */,
+				94231EA91E91F19300214BCF /* RNCryptor.m */,
+				94231EAA1E91F19300214BCF /* RNCryptorEngine.h */,
+				94231EAB1E91F19300214BCF /* RNCryptorEngine.m */,
+				94231EAC1E91F19300214BCF /* RNDecryptor.h */,
+				94231EAD1E91F19300214BCF /* RNDecryptor.m */,
+				94231EAE1E91F19300214BCF /* RNEncryptor.h */,
+				94231EAF1E91F19300214BCF /* RNEncryptor.m */,
+			);
+			path = RNCryptor;
+			sourceTree = "<group>";
+		};
 		94F7D7171E58BF9300CB1B9E = {
 			isa = PBXGroup;
 			children = (
@@ -202,6 +246,8 @@
 		94F7D72F1E58BF9300CB1B9E /* MessagesExtension */ = {
 			isa = PBXGroup;
 			children = (
+				94231EA21E91F19300214BCF /* RNCryptor iOS */,
+				94231EA51E91F19300214BCF /* RNCryptor */,
 				94231E651E91D3E200214BCF /* QBImagePicker */,
 				94F7D7301E58BF9300CB1B9E /* MessagesViewController.h */,
 				94F7D7311E58BF9300CB1B9E /* MessagesViewController.m */,
@@ -217,6 +263,7 @@
 		94F7D7461E58C4E800CB1B9E /* icons */ = {
 			isa = PBXGroup;
 			children = (
+				94231EA01E91E82300214BCF /* default_blurred_image.jpg */,
 				94480F581E91B1D5009C0C71 /* secure_text_photo.png */,
 				94F7D7471E58C6DF00CB1B9E /* take_photo.png */,
 				94F7D7481E58C6DF00CB1B9E /* access_gallery.png */,
@@ -373,6 +420,7 @@
 				94231E871E91D3E200214BCF /* QBImagePicker.storyboard in Resources */,
 				94F7D7511E58D24500CB1B9E /* ExpandedDefaultView.xib in Resources */,
 				94F7D74C1E58CD7900CB1B9E /* CompactDefaultView.xib in Resources */,
+				94231EA11E91E82300214BCF /* default_blurred_image.jpg in Resources */,
 				94231E811E91D3E200214BCF /* QBImagePicker.strings in Resources */,
 				94480F591E91B1D5009C0C71 /* secure_text_photo.png in Resources */,
 				94F7D7351E58BF9300CB1B9E /* MainInterface.storyboard in Resources */,
@@ -437,14 +485,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				94231E821E91D3E200214BCF /* QBAlbumCell.m in Sources */,
+				94231EB21E91F19300214BCF /* RNDecryptor.m in Sources */,
 				94231E831E91D3E200214BCF /* QBAlbumsViewController.m in Sources */,
 				94231E8A1E91D3E200214BCF /* QBVideoIconView.m in Sources */,
 				94F7D7541E58D3A200CB1B9E /* ExpandedDefaultView.m in Sources */,
+				94231EB01E91F19300214BCF /* RNCryptor.m in Sources */,
 				94231E891E91D3E200214BCF /* QBSlomoIconView.m in Sources */,
 				94231E851E91D3E200214BCF /* QBAssetsViewController.m in Sources */,
+				94231EB31E91F19300214BCF /* RNEncryptor.m in Sources */,
 				94231E881E91D3E200214BCF /* QBImagePickerController.m in Sources */,
 				94231E841E91D3E200214BCF /* QBAssetCell.m in Sources */,
 				94F7D74F1E58D10100CB1B9E /* CompactDefaultView.m in Sources */,
+				94231EB11E91F19300214BCF /* RNCryptorEngine.m in Sources */,
 				94F7D7321E58BF9300CB1B9E /* MessagesViewController.m in Sources */,
 				94231E861E91D3E200214BCF /* QBCheckmarkView.m in Sources */,
 				94231E8B1E91D3E200214BCF /* QBVideoIndicatorView.m in Sources */,
