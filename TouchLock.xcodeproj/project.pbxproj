@@ -7,7 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		05EA63115F19BBD207234668 /* Pods_TouchLock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A9D3639F1EFF43B8CBCC322 /* Pods_TouchLock.framework */; };
+		940ECCFC1E9461D100178CB9 /* ViewMediaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 940ECCFB1E9461D100178CB9 /* ViewMediaViewController.m */; };
+		940ECD241E9464AE00178CB9 /* aescrypt.c in Sources */ = {isa = PBXBuildFile; fileRef = 940ECD011E9464AE00178CB9 /* aescrypt.c */; };
+		940ECD251E9464AE00178CB9 /* aeskey.c in Sources */ = {isa = PBXBuildFile; fileRef = 940ECD021E9464AE00178CB9 /* aeskey.c */; };
+		940ECD261E9464AE00178CB9 /* aestab.c in Sources */ = {isa = PBXBuildFile; fileRef = 940ECD041E9464AE00178CB9 /* aestab.c */; };
+		940ECD271E9464AE00178CB9 /* entropy.c in Sources */ = {isa = PBXBuildFile; fileRef = 940ECD081E9464AE00178CB9 /* entropy.c */; };
+		940ECD281E9464AE00178CB9 /* fileenc.c in Sources */ = {isa = PBXBuildFile; fileRef = 940ECD0A1E9464AE00178CB9 /* fileenc.c */; };
+		940ECD291E9464AE00178CB9 /* hmac.c in Sources */ = {isa = PBXBuildFile; fileRef = 940ECD0C1E9464AE00178CB9 /* hmac.c */; };
+		940ECD2A1E9464AE00178CB9 /* prng.c in Sources */ = {isa = PBXBuildFile; fileRef = 940ECD0E1E9464AE00178CB9 /* prng.c */; };
+		940ECD2B1E9464AE00178CB9 /* pwd2key.c in Sources */ = {isa = PBXBuildFile; fileRef = 940ECD101E9464AE00178CB9 /* pwd2key.c */; };
+		940ECD2C1E9464AE00178CB9 /* sha1.c in Sources */ = {isa = PBXBuildFile; fileRef = 940ECD121E9464AE00178CB9 /* sha1.c */; };
+		940ECD2E1E9464AE00178CB9 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 940ECD171E9464AE00178CB9 /* ioapi.c */; };
+		940ECD2F1E9464AE00178CB9 /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 940ECD191E9464AE00178CB9 /* mztools.c */; };
+		940ECD301E9464AE00178CB9 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 940ECD1B1E9464AE00178CB9 /* unzip.c */; };
+		940ECD311E9464AE00178CB9 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 940ECD1D1E9464AE00178CB9 /* zip.c */; };
+		940ECD321E9464AE00178CB9 /* SSZipArchive+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940ECD1F1E9464AE00178CB9 /* SSZipArchive+Swift.swift */; };
+		940ECD331E9464AE00178CB9 /* SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 940ECD211E9464AE00178CB9 /* SSZipArchive.m */; };
+		940ECD351E9464CE00178CB9 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 940ECD341E9464CE00178CB9 /* libz.tbd */; };
 		94231E811E91D3E200214BCF /* QBImagePicker.strings in Resources */ = {isa = PBXBuildFile; fileRef = 94231E661E91D3E200214BCF /* QBImagePicker.strings */; };
 		94231E821E91D3E200214BCF /* QBAlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 94231E6D1E91D3E200214BCF /* QBAlbumCell.m */; };
 		94231E831E91D3E200214BCF /* QBAlbumsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94231E6F1E91D3E200214BCF /* QBAlbumsViewController.m */; };
@@ -64,8 +80,44 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		28A6B08ADDC0AD7306B432F4 /* Pods-TouchLock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TouchLock.release.xcconfig"; path = "Pods/Target Support Files/Pods-TouchLock/Pods-TouchLock.release.xcconfig"; sourceTree = "<group>"; };
-		4A9D3639F1EFF43B8CBCC322 /* Pods_TouchLock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TouchLock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		940ECCFA1E9461D100178CB9 /* ViewMediaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewMediaViewController.h; sourceTree = "<group>"; };
+		940ECCFB1E9461D100178CB9 /* ViewMediaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewMediaViewController.m; sourceTree = "<group>"; };
+		940ECCFF1E9464AE00178CB9 /* aes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aes.h; sourceTree = "<group>"; };
+		940ECD001E9464AE00178CB9 /* aes_via_ace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aes_via_ace.h; sourceTree = "<group>"; };
+		940ECD011E9464AE00178CB9 /* aescrypt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aescrypt.c; sourceTree = "<group>"; };
+		940ECD021E9464AE00178CB9 /* aeskey.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aeskey.c; sourceTree = "<group>"; };
+		940ECD031E9464AE00178CB9 /* aesopt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aesopt.h; sourceTree = "<group>"; };
+		940ECD041E9464AE00178CB9 /* aestab.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aestab.c; sourceTree = "<group>"; };
+		940ECD051E9464AE00178CB9 /* aestab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aestab.h; sourceTree = "<group>"; };
+		940ECD061E9464AE00178CB9 /* brg_endian.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = brg_endian.h; sourceTree = "<group>"; };
+		940ECD071E9464AE00178CB9 /* brg_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = brg_types.h; sourceTree = "<group>"; };
+		940ECD081E9464AE00178CB9 /* entropy.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = entropy.c; sourceTree = "<group>"; };
+		940ECD091E9464AE00178CB9 /* entropy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = entropy.h; sourceTree = "<group>"; };
+		940ECD0A1E9464AE00178CB9 /* fileenc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fileenc.c; sourceTree = "<group>"; };
+		940ECD0B1E9464AE00178CB9 /* fileenc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fileenc.h; sourceTree = "<group>"; };
+		940ECD0C1E9464AE00178CB9 /* hmac.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = hmac.c; sourceTree = "<group>"; };
+		940ECD0D1E9464AE00178CB9 /* hmac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hmac.h; sourceTree = "<group>"; };
+		940ECD0E1E9464AE00178CB9 /* prng.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = prng.c; sourceTree = "<group>"; };
+		940ECD0F1E9464AE00178CB9 /* prng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prng.h; sourceTree = "<group>"; };
+		940ECD101E9464AE00178CB9 /* pwd2key.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pwd2key.c; sourceTree = "<group>"; };
+		940ECD111E9464AE00178CB9 /* pwd2key.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pwd2key.h; sourceTree = "<group>"; };
+		940ECD121E9464AE00178CB9 /* sha1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sha1.c; sourceTree = "<group>"; };
+		940ECD131E9464AE00178CB9 /* sha1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sha1.h; sourceTree = "<group>"; };
+		940ECD161E9464AE00178CB9 /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
+		940ECD171E9464AE00178CB9 /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ioapi.c; sourceTree = "<group>"; };
+		940ECD181E9464AE00178CB9 /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi.h; sourceTree = "<group>"; };
+		940ECD191E9464AE00178CB9 /* mztools.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mztools.c; sourceTree = "<group>"; };
+		940ECD1A1E9464AE00178CB9 /* mztools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mztools.h; sourceTree = "<group>"; };
+		940ECD1B1E9464AE00178CB9 /* unzip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = unzip.c; sourceTree = "<group>"; };
+		940ECD1C1E9464AE00178CB9 /* unzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unzip.h; sourceTree = "<group>"; };
+		940ECD1D1E9464AE00178CB9 /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zip.c; sourceTree = "<group>"; };
+		940ECD1E1E9464AE00178CB9 /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
+		940ECD1F1E9464AE00178CB9 /* SSZipArchive+Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SSZipArchive+Swift.swift"; sourceTree = "<group>"; };
+		940ECD201E9464AE00178CB9 /* SSZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSZipArchive.h; sourceTree = "<group>"; };
+		940ECD211E9464AE00178CB9 /* SSZipArchive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSZipArchive.m; sourceTree = "<group>"; };
+		940ECD221E9464AE00178CB9 /* SSZipCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSZipCommon.h; sourceTree = "<group>"; };
+		940ECD231E9464AE00178CB9 /* ZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipArchive.h; sourceTree = "<group>"; };
+		940ECD341E9464CE00178CB9 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		94231E671E91D3E200214BCF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/QBImagePicker.strings; sourceTree = "<group>"; };
 		94231E681E91D3E200214BCF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/QBImagePicker.strings; sourceTree = "<group>"; };
 		94231E691E91D3E200214BCF /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/QBImagePicker.strings; sourceTree = "<group>"; };
@@ -127,7 +179,6 @@
 		94F7D7521E58D3A200CB1B9E /* ExpandedDefaultView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpandedDefaultView.h; sourceTree = "<group>"; };
 		94F7D7531E58D3A200CB1B9E /* ExpandedDefaultView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpandedDefaultView.m; sourceTree = "<group>"; };
 		94F7D8001E58EECE00CB1B9E /* MessagesExtension-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MessagesExtension-Bridging-Header.h"; sourceTree = "<group>"; };
-		F68A22B4DC8FE93D3B5FD033 /* Pods-TouchLock.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TouchLock.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TouchLock/Pods-TouchLock.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,7 +186,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				05EA63115F19BBD207234668 /* Pods_TouchLock.framework in Frameworks */,
+				940ECD351E9464CE00178CB9 /* libz.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,6 +201,64 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		940ECCFD1E9464AE00178CB9 /* SSZipArchive */ = {
+			isa = PBXGroup;
+			children = (
+				940ECCFE1E9464AE00178CB9 /* aes */,
+				940ECD151E9464AE00178CB9 /* minizip */,
+				940ECD1F1E9464AE00178CB9 /* SSZipArchive+Swift.swift */,
+				940ECD201E9464AE00178CB9 /* SSZipArchive.h */,
+				940ECD211E9464AE00178CB9 /* SSZipArchive.m */,
+				940ECD221E9464AE00178CB9 /* SSZipCommon.h */,
+				940ECD231E9464AE00178CB9 /* ZipArchive.h */,
+			);
+			path = SSZipArchive;
+			sourceTree = "<group>";
+		};
+		940ECCFE1E9464AE00178CB9 /* aes */ = {
+			isa = PBXGroup;
+			children = (
+				940ECCFF1E9464AE00178CB9 /* aes.h */,
+				940ECD001E9464AE00178CB9 /* aes_via_ace.h */,
+				940ECD011E9464AE00178CB9 /* aescrypt.c */,
+				940ECD021E9464AE00178CB9 /* aeskey.c */,
+				940ECD031E9464AE00178CB9 /* aesopt.h */,
+				940ECD041E9464AE00178CB9 /* aestab.c */,
+				940ECD051E9464AE00178CB9 /* aestab.h */,
+				940ECD061E9464AE00178CB9 /* brg_endian.h */,
+				940ECD071E9464AE00178CB9 /* brg_types.h */,
+				940ECD081E9464AE00178CB9 /* entropy.c */,
+				940ECD091E9464AE00178CB9 /* entropy.h */,
+				940ECD0A1E9464AE00178CB9 /* fileenc.c */,
+				940ECD0B1E9464AE00178CB9 /* fileenc.h */,
+				940ECD0C1E9464AE00178CB9 /* hmac.c */,
+				940ECD0D1E9464AE00178CB9 /* hmac.h */,
+				940ECD0E1E9464AE00178CB9 /* prng.c */,
+				940ECD0F1E9464AE00178CB9 /* prng.h */,
+				940ECD101E9464AE00178CB9 /* pwd2key.c */,
+				940ECD111E9464AE00178CB9 /* pwd2key.h */,
+				940ECD121E9464AE00178CB9 /* sha1.c */,
+				940ECD131E9464AE00178CB9 /* sha1.h */,
+			);
+			path = aes;
+			sourceTree = "<group>";
+		};
+		940ECD151E9464AE00178CB9 /* minizip */ = {
+			isa = PBXGroup;
+			children = (
+				940ECD161E9464AE00178CB9 /* crypt.h */,
+				940ECD171E9464AE00178CB9 /* ioapi.c */,
+				940ECD181E9464AE00178CB9 /* ioapi.h */,
+				940ECD191E9464AE00178CB9 /* mztools.c */,
+				940ECD1A1E9464AE00178CB9 /* mztools.h */,
+				940ECD1B1E9464AE00178CB9 /* unzip.c */,
+				940ECD1C1E9464AE00178CB9 /* unzip.h */,
+				940ECD1D1E9464AE00178CB9 /* zip.c */,
+				940ECD1E1E9464AE00178CB9 /* zip.h */,
+			);
+			path = minizip;
+			sourceTree = "<group>";
+		};
 		94231E651E91D3E200214BCF /* QBImagePicker */ = {
 			isa = PBXGroup;
 			children = (
@@ -211,7 +320,6 @@
 				94F7D72F1E58BF9300CB1B9E /* MessagesExtension */,
 				94F7D72C1E58BF9300CB1B9E /* Frameworks */,
 				94F7D71F1E58BF9300CB1B9E /* Products */,
-				CD2BE4B3BC299AB3E7356069 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -236,9 +344,9 @@
 		94F7D72C1E58BF9300CB1B9E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				940ECD341E9464CE00178CB9 /* libz.tbd */,
 				94689D511E91D38B00372712 /* QBImagePickerController.framework */,
 				94F7D72D1E58BF9300CB1B9E /* Messages.framework */,
-				4A9D3639F1EFF43B8CBCC322 /* Pods_TouchLock.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -246,6 +354,7 @@
 		94F7D72F1E58BF9300CB1B9E /* MessagesExtension */ = {
 			isa = PBXGroup;
 			children = (
+				940ECCFD1E9464AE00178CB9 /* SSZipArchive */,
 				94231EA21E91F19300214BCF /* RNCryptor iOS */,
 				94231EA51E91F19300214BCF /* RNCryptor */,
 				94231E651E91D3E200214BCF /* QBImagePicker */,
@@ -298,17 +407,10 @@
 				94480F5A1E91C28F009C0C71 /* DefaultViewProtocol.h */,
 				94F7D7561E58D42800CB1B9E /* Expanded */,
 				94F7D7551E58D42100CB1B9E /* Compact */,
+				940ECCFA1E9461D100178CB9 /* ViewMediaViewController.h */,
+				940ECCFB1E9461D100178CB9 /* ViewMediaViewController.m */,
 			);
 			name = "Default Views";
-			sourceTree = "<group>";
-		};
-		CD2BE4B3BC299AB3E7356069 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				F68A22B4DC8FE93D3B5FD033 /* Pods-TouchLock.debug.xcconfig */,
-				28A6B08ADDC0AD7306B432F4 /* Pods-TouchLock.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -318,12 +420,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 94F7D73F1E58BF9300CB1B9E /* Build configuration list for PBXNativeTarget "TouchLock" */;
 			buildPhases = (
-				7C84F03AD095600546F163E5 /* [CP] Check Pods Manifest.lock */,
 				94F7D71C1E58BF9300CB1B9E /* Resources */,
 				94F7D73E1E58BF9300CB1B9E /* Embed App Extensions */,
 				7AA28EA50067A672FAB23D6A /* Frameworks */,
-				3CDF2BC6EA690F0EBA9F8CC6 /* [CP] Embed Pods Frameworks */,
-				69969E39969E050D38F96E1E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -431,75 +530,43 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		3CDF2BC6EA690F0EBA9F8CC6 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TouchLock/Pods-TouchLock-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		69969E39969E050D38F96E1E /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TouchLock/Pods-TouchLock-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		7C84F03AD095600546F163E5 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		94F7D7241E58BF9300CB1B9E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				940ECD2C1E9464AE00178CB9 /* sha1.c in Sources */,
+				940ECD291E9464AE00178CB9 /* hmac.c in Sources */,
+				940ECD301E9464AE00178CB9 /* unzip.c in Sources */,
+				940ECD311E9464AE00178CB9 /* zip.c in Sources */,
+				940ECD331E9464AE00178CB9 /* SSZipArchive.m in Sources */,
 				94231E821E91D3E200214BCF /* QBAlbumCell.m in Sources */,
+				940ECD261E9464AE00178CB9 /* aestab.c in Sources */,
 				94231EB21E91F19300214BCF /* RNDecryptor.m in Sources */,
 				94231E831E91D3E200214BCF /* QBAlbumsViewController.m in Sources */,
 				94231E8A1E91D3E200214BCF /* QBVideoIconView.m in Sources */,
+				940ECD2A1E9464AE00178CB9 /* prng.c in Sources */,
+				940ECD321E9464AE00178CB9 /* SSZipArchive+Swift.swift in Sources */,
 				94F7D7541E58D3A200CB1B9E /* ExpandedDefaultView.m in Sources */,
 				94231EB01E91F19300214BCF /* RNCryptor.m in Sources */,
 				94231E891E91D3E200214BCF /* QBSlomoIconView.m in Sources */,
 				94231E851E91D3E200214BCF /* QBAssetsViewController.m in Sources */,
+				940ECD2B1E9464AE00178CB9 /* pwd2key.c in Sources */,
 				94231EB31E91F19300214BCF /* RNEncryptor.m in Sources */,
+				940ECD281E9464AE00178CB9 /* fileenc.c in Sources */,
+				940ECD2E1E9464AE00178CB9 /* ioapi.c in Sources */,
 				94231E881E91D3E200214BCF /* QBImagePickerController.m in Sources */,
 				94231E841E91D3E200214BCF /* QBAssetCell.m in Sources */,
+				940ECD2F1E9464AE00178CB9 /* mztools.c in Sources */,
 				94F7D74F1E58D10100CB1B9E /* CompactDefaultView.m in Sources */,
+				940ECCFC1E9461D100178CB9 /* ViewMediaViewController.m in Sources */,
 				94231EB11E91F19300214BCF /* RNCryptorEngine.m in Sources */,
+				940ECD251E9464AE00178CB9 /* aeskey.c in Sources */,
 				94F7D7321E58BF9300CB1B9E /* MessagesViewController.m in Sources */,
 				94231E861E91D3E200214BCF /* QBCheckmarkView.m in Sources */,
+				940ECD241E9464AE00178CB9 /* aescrypt.c in Sources */,
 				94231E8B1E91D3E200214BCF /* QBVideoIndicatorView.m in Sources */,
+				940ECD271E9464AE00178CB9 /* entropy.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -671,8 +738,8 @@
 		};
 		94F7D7401E58BF9300CB1B9E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F68A22B4DC8FE93D3B5FD033 /* Pods-TouchLock.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = Q7N3L673D8;
@@ -690,8 +757,8 @@
 		};
 		94F7D7411E58BF9300CB1B9E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 28A6B08ADDC0AD7306B432F4 /* Pods-TouchLock.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = Q7N3L673D8;

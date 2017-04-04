@@ -36,6 +36,33 @@
 
 - (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didFinishPickingAssets:(NSArray *)assets
 {
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(void) {
+       
+        PHImageManager *manager = [PHImageManager defaultManager];
+        
+        PHImageRequestOptions *requestOptions = [[PHImageRequestOptions alloc] init];
+        requestOptions.resizeMode   = PHImageRequestOptionsResizeModeNone;
+        requestOptions.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
+        requestOptions.synchronous = true;
+        requestOptions.version = PHImageRequestOptionsVersionOriginal;
+        
+        UIImage *defaultImage = [UIImage imageNamed:@"default_blurred_image.jpg"];
+        
+        NSError *error;
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsDirectory = [paths objectAtIndex:0];
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    });
+    
     self.assetsToSend = [[NSMutableArray alloc] init];
     PHImageManager *manager = [PHImageManager defaultManager];
     
@@ -103,7 +130,7 @@
                                 message.URL = urlComponents.URL;
                                 message.summaryText = @"Summary!";
                                 
-                                
+                
                                 
                                 [self.activeConversation insertMessage:message completionHandler:^(NSError *error) {
                                     if(error) {
@@ -333,7 +360,6 @@
             NSLog(@"RECREATED IMAGE SUCCESSFULLY");
         }
         
-
         
         MSMessageTemplateLayout *messageLayout = [[MSMessageTemplateLayout alloc] init];
         messageLayout.image = image; //originalImage;
