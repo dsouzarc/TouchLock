@@ -84,8 +84,7 @@
                                         NSLog(@"INSERTED ATTACHMENT");
                                     }
                                 }];*/
-                                
-                                UIImage *encryptedImage = [UIImage imageWithData:encryptedData];
+                            
                                 
                                 MSMessageTemplateLayout *messageLayout = [[MSMessageTemplateLayout alloc] init];
                                 messageLayout.image = defaultImage;
@@ -384,33 +383,23 @@
     NSLog(@"RECEIVED MESSAGE");
 }
 
--(void)didStartSendingMessage:(MSMessage *)message conversation:(MSConversation *)conversation
+- (void) didStartSendingMessage:(MSMessage *)message conversation:(MSConversation *)conversation
 {
     // Called when the user taps the send button.
-    
-    MSMessageTemplateLayout *messageLayout = [[MSMessageTemplateLayout alloc] init];
-    messageLayout.image = [UIImage imageNamed:@"default_blurred_image.jpg"];
-    messageLayout.imageTitle = @"Start Sending";
-    messageLayout.caption = @"Sending Hello World!";
-    messageLayout.subcaption = @"Sending by Ryan!";
-    
-    [message setLayout:messageLayout];
+
+    [super didStartSendingMessage:message conversation:conversation];
     
 }
 
--(void)didCancelSendingMessage:(MSMessage *)message conversation:(MSConversation *)conversation
+- (void) didCancelSendingMessage:(MSMessage *)message conversation:(MSConversation *)conversation
 {
     // Called when the user deletes the message without sending it.
-    
     // Use this to clean up state related to the deleted message.
+    [super didCancelSendingMessage:message conversation:conversation];
 }
 
--(void)willTransitionToPresentationStyle:(MSMessagesAppPresentationStyle)presentationStyle
-{
-    
-}
 
--(void)didTransitionToPresentationStyle:(MSMessagesAppPresentationStyle)presentationStyle
+- (void) didTransitionToPresentationStyle:(MSMessagesAppPresentationStyle)presentationStyle
 {
     if(presentationStyle == MSMessagesAppPresentationStyleExpanded) {
         NSLog(@"TRANSITIONING TO EXPANDED");
