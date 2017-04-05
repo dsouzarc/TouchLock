@@ -41,6 +41,7 @@
 		94231EB11E91F19300214BCF /* RNCryptorEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 94231EAB1E91F19300214BCF /* RNCryptorEngine.m */; };
 		94231EB21E91F19300214BCF /* RNDecryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 94231EAD1E91F19300214BCF /* RNDecryptor.m */; };
 		94231EB31E91F19300214BCF /* RNEncryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 94231EAF1E91F19300214BCF /* RNEncryptor.m */; };
+		942EE1051E94B7C900E113E0 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 942EE1041E94B7C900E113E0 /* Constants.m */; };
 		94480F591E91B1D5009C0C71 /* secure_text_photo.png in Resources */ = {isa = PBXBuildFile; fileRef = 94480F581E91B1D5009C0C71 /* secure_text_photo.png */; };
 		94F7D7221E58BF9300CB1B9E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94F7D7211E58BF9300CB1B9E /* Assets.xcassets */; };
 		94F7D7291E58BF9300CB1B9E /* MessagesExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 94F7D7281E58BF9300CB1B9E /* MessagesExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -120,6 +121,10 @@
 		940ECD341E9464CE00178CB9 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		940ECD361E94769A00178CB9 /* libz.1.1.3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.1.3.tbd; path = usr/lib/libz.1.1.3.tbd; sourceTree = SDKROOT; };
 		940ECD381E94770300178CB9 /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
+		940ECE941E94AF3D00178CB9 /* libCocoaLumberjack.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCocoaLumberjack.a; path = "../../Library/Developer/Xcode/DerivedData/TouchLock-fnlpavhqbrkdzycvnzbiljfklyrk/Build/Products/Debug-iphonesimulator/CocoaLumberjack/libCocoaLumberjack.a"; sourceTree = "<group>"; };
+		940ECE951E94AF3D00178CB9 /* libPods-TouchLock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-TouchLock.a"; path = "../../Library/Developer/Xcode/DerivedData/TouchLock-fnlpavhqbrkdzycvnzbiljfklyrk/Build/Products/Debug-iphonesimulator/libPods-TouchLock.a"; sourceTree = "<group>"; };
+		940ECE961E94AF3D00178CB9 /* libReachability.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libReachability.a; path = "../../Library/Developer/Xcode/DerivedData/TouchLock-fnlpavhqbrkdzycvnzbiljfklyrk/Build/Products/Debug-iphonesimulator/Reachability/libReachability.a"; sourceTree = "<group>"; };
+		940ECE971E94AF3D00178CB9 /* libYapDatabase.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libYapDatabase.a; path = "../../Library/Developer/Xcode/DerivedData/TouchLock-fnlpavhqbrkdzycvnzbiljfklyrk/Build/Products/Debug-iphonesimulator/YapDatabase/libYapDatabase.a"; sourceTree = "<group>"; };
 		94231E671E91D3E200214BCF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/QBImagePicker.strings; sourceTree = "<group>"; };
 		94231E681E91D3E200214BCF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/QBImagePicker.strings; sourceTree = "<group>"; };
 		94231E691E91D3E200214BCF /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/QBImagePicker.strings; sourceTree = "<group>"; };
@@ -159,6 +164,8 @@
 		94231EAD1E91F19300214BCF /* RNDecryptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNDecryptor.m; sourceTree = "<group>"; };
 		94231EAE1E91F19300214BCF /* RNEncryptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNEncryptor.h; sourceTree = "<group>"; };
 		94231EAF1E91F19300214BCF /* RNEncryptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNEncryptor.m; sourceTree = "<group>"; };
+		942EE1031E94B7C900E113E0 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		942EE1041E94B7C900E113E0 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		94480F581E91B1D5009C0C71 /* secure_text_photo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = secure_text_photo.png; sourceTree = "<group>"; };
 		94480F5A1E91C28F009C0C71 /* DefaultViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultViewProtocol.h; sourceTree = "<group>"; };
 		94689D511E91D38B00372712 /* QBImagePickerController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QBImagePickerController.framework; path = "Pods/../build/Debug-iphoneos/QBImagePickerController/QBImagePickerController.framework"; sourceTree = "<group>"; };
@@ -347,6 +354,10 @@
 		94F7D72C1E58BF9300CB1B9E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				940ECE941E94AF3D00178CB9 /* libCocoaLumberjack.a */,
+				940ECE951E94AF3D00178CB9 /* libPods-TouchLock.a */,
+				940ECE961E94AF3D00178CB9 /* libReachability.a */,
+				940ECE971E94AF3D00178CB9 /* libYapDatabase.a */,
 				940ECD381E94770300178CB9 /* libz.1.dylib */,
 				940ECD361E94769A00178CB9 /* libz.1.1.3.tbd */,
 				940ECD341E9464CE00178CB9 /* libz.tbd */,
@@ -359,12 +370,14 @@
 		94F7D72F1E58BF9300CB1B9E /* MessagesExtension */ = {
 			isa = PBXGroup;
 			children = (
+				942EE1031E94B7C900E113E0 /* Constants.h */,
+				942EE1041E94B7C900E113E0 /* Constants.m */,
+				94F7D7301E58BF9300CB1B9E /* MessagesViewController.h */,
+				94F7D7311E58BF9300CB1B9E /* MessagesViewController.m */,
 				940ECCFD1E9464AE00178CB9 /* SSZipArchive */,
 				94231EA21E91F19300214BCF /* RNCryptor iOS */,
 				94231EA51E91F19300214BCF /* RNCryptor */,
 				94231E651E91D3E200214BCF /* QBImagePicker */,
-				94F7D7301E58BF9300CB1B9E /* MessagesViewController.h */,
-				94F7D7311E58BF9300CB1B9E /* MessagesViewController.m */,
 				94F7D7571E58D42E00CB1B9E /* Default Views */,
 				94F7D7331E58BF9300CB1B9E /* MainInterface.storyboard */,
 				94F7D7461E58C4E800CB1B9E /* icons */,
@@ -543,6 +556,7 @@
 				940ECD2C1E9464AE00178CB9 /* sha1.c in Sources */,
 				940ECD291E9464AE00178CB9 /* hmac.c in Sources */,
 				940ECD301E9464AE00178CB9 /* unzip.c in Sources */,
+				942EE1051E94B7C900E113E0 /* Constants.m in Sources */,
 				940ECD311E9464AE00178CB9 /* zip.c in Sources */,
 				940ECD331E9464AE00178CB9 /* SSZipArchive.m in Sources */,
 				94231E821E91D3E200214BCF /* QBAlbumCell.m in Sources */,
