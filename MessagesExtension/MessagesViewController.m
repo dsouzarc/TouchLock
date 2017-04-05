@@ -15,8 +15,6 @@
 @property (strong, nonatomic) ExpandedDefaultView *expandedDefaultView;
 
 @property (strong, nonatomic) QBImagePickerController *imagePickerController;
-@property (strong, nonatomic) NSMutableArray *assetsToSend;
-
 
 @end
 
@@ -74,7 +72,6 @@
         
         NSString *currentSendFolder = [documentsDirectory stringByAppendingPathComponent:currentSendName];
         [fileManager createDirectoryAtPath:currentSendFolder withIntermediateDirectories:YES attributes:nil error:&error];
-
         
         NSString *currentSendImagesFolder = [currentSendFolder stringByAppendingPathComponent:@"images"];
         [fileManager createDirectoryAtPath:currentSendImagesFolder withIntermediateDirectories:YES attributes:nil error:&error];
@@ -87,6 +84,9 @@
     
         for(PHAsset *asset in assets) {
             
+            NSLog(@"Going through asset");
+            
+            
             if([asset mediaType] == PHAssetMediaTypeImage) {
                 
                 [photoManager requestImageForAsset:asset
@@ -98,6 +98,8 @@
                                     NSString *imageFileName = [NSString stringWithFormat:@"%@.png", [[NSUUID UUID] UUIDString]];
                                     NSData *pngImageData = UIImagePNGRepresentation(originalImage);
                                     [pngImageData writeToFile:[currentSendImagesFolder stringByAppendingPathComponent:imageFileName] atomically:YES];
+                                    
+                                    NSLog(@"Finished photo");
                                     
                                     numberOfOtherMediaSaved++;
                                 }
@@ -119,6 +121,8 @@
                                            [fileManager copyItemAtURL:[videoURLAsset URL]
                                                                 toURL:videoFileURL
                                                                 error:&error];
+                                           
+                                           NSLog(@"Finished video");
                                            
                                            numberOfVideosSaved++;
                                        }
@@ -150,6 +154,12 @@
             }
         }
         
+        //Long, randomly generated string --> each UUID = 36 characters long
+        NSMutableString *encryptionKey = [[NSMutableString alloc] init];
+        for(int i = 0; i < 5; i++) {
+            [encryptionKey appendString:[[NSUUID UUID] UUIDString]];
+        }
+        
         //Since we can't load videos synchronously, wait for the rest to finish
         while((numberOfOtherMediaSaved + numberOfVideosSaved) < totalNumberOfItems) {
             sleep(100); //100 milliseconds
@@ -157,8 +167,6 @@
         
         
         [SSZipArchive createZipFileAtPath:currentSendZIPPath withContentsOfDirectory:currentSendFolder];
-        
-        NSString *encryptionKey = @"Some super long password";
         
         NSData *encryptedData = [RNEncryptor encryptData:[NSData dataWithContentsOfFile:currentSendZIPPath]
                                             withSettings:kRNCryptorAES256Settings
@@ -170,18 +178,22 @@
         }
         
         [encryptedData writeToFile:currentSendZIPPath atomically:YES];
+        encryptedData = nil;
         
         UIImage *defaultImage = [UIImage imageNamed:@"default_blurred_image.jpg"];
         
         MSMessageTemplateLayout *messageLayout = [[MSMessageTemplateLayout alloc] init];
-        messageLayout.image = defaultImage;
+        //TODO: Implement //messageLayout.image = defaultImage;
         messageLayout.imageTitle = @"iMessage extension";
         messageLayout.caption = @"Hello World!";
         messageLayout.subcaption = @"Sent by Ryan!";
         
         NSURLComponents *urlComponents = [[NSURLComponents alloc] init];
-        NSURLQueryItem *firstItem = [[NSURLQueryItem alloc] initWithName:@"encryption_key" value:encryptionKey];
-        [urlComponents setQueryItems:@[firstItem]];
+        NSURLQueryItem *encryptionItem = [[NSURLQueryItem alloc] initWithName:@"encryption_key" value:encryptionKey];
+        NSURLQueryItem *sendNameItem = [[NSURLQueryItem alloc] initWithName:@"send_name" value:currentSendName];
+        [urlComponents setQueryItems:@[encryptionItem, sendNameItem]];
+        
+        NSLog(@"SEND ZIP: %@", currentSendZIPPath);
         
         MSSession *messageSession = [[MSSession alloc] init];
         MSMessage *message = [[MSMessage alloc] initWithSession:messageSession];
@@ -203,7 +215,6 @@
                                          NSError *deleteError;
                                          [fileManager removeItemAtPath:currentSendZIPPath error:&deleteError];
                                      });
-                                     
                                  }
              ];
             
@@ -214,79 +225,6 @@
         [fileManager removeItemAtPath:currentSendFolder error:&error];
         
     });
-    
-    
-    /*self.assetsToSend = [[NSMutableArray alloc] init];
-    PHImageManager *manager = [PHImageManager defaultManager];
-    
-    PHImageRequestOptions *requestOptions = [[PHImageRequestOptions alloc] init];
-    requestOptions.resizeMode   = PHImageRequestOptionsResizeModeNone;
-    requestOptions.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
-    requestOptions.synchronous = true;
-    requestOptions.version = PHImageRequestOptionsVersionOriginal;
-    
-    UIImage *defaultImage = [UIImage imageNamed:@"default_blurred_image.jpg"];
-    
-    for (PHAsset *asset in assets) {
-        // Do something with the asset
-        
-        if([asset mediaType] == PHAssetMediaTypeImage) {
-            
-            [manager requestImageForAsset:asset
-                               targetSize:PHImageManagerMaximumSize
-                              contentMode:PHImageContentModeDefault
-                                  options:requestOptions
-                            resultHandler:^void(UIImage *originalImage, NSDictionary *info) {
-                                
-                                NSString *encryptionKey = @"Some super long password";
-                                
-                                //  Code for encrypting and saveing image
-                                NSString  *imagePath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/encryptedImage.pdf"];
-                                
-                                NSData *data = UIImagePNGRepresentation(originalImage);
-                                NSError *error;
-                                NSData *encryptedData = [RNEncryptor encryptData:data
-                                                                    withSettings:kRNCryptorAES256Settings
-                                                                        password:encryptionKey
-                                                                           error:&error];
-                                
-                                if(error) {
-                                    NSLog(@"ERROR ENCRYPTING MESSAGE: %@: ", [error description]);
-                                }
-                                
-                                [encryptedData writeToFile:imagePath atomically:YES];
-                                NSURL *imageSavePath = [NSURL fileURLWithPath:imagePath];
-                            
-                                
-                                MSMessageTemplateLayout *messageLayout = [[MSMessageTemplateLayout alloc] init];
-                                messageLayout.image = defaultImage;
-                                messageLayout.imageTitle = @"iMessage extension";
-                                messageLayout.caption = @"Hello World!";
-                                messageLayout.subcaption = @"Sent by Ryan!";
-                                
-                                NSURLComponents *urlComponents = [[NSURLComponents alloc] init];
-                                NSURLQueryItem *firstItem = [[NSURLQueryItem alloc] initWithName:@"encryption_key" value:encryptionKey];
-                                [urlComponents setQueryItems:@[firstItem]];
-                                
-                                MSSession *messageSession = [[MSSession alloc] init];
-                                MSMessage *message = [[MSMessage alloc] initWithSession:messageSession];
-                                messageLayout.mediaFileURL = imageSavePath;
-                                message.layout = messageLayout;
-                                message.URL = urlComponents.URL;
-                                message.summaryText = @"Summary!";
-                                
-                
-                                
-                                [self.activeConversation insertMessage:message completionHandler:^(NSError *error) {
-                                    if(error) {
-                                        NSLog(@"ERROR SENDING HERE: %@", [error localizedDescription]);
-                                    }
-                                }];
-                                return;
-                            }
-             ];
-        }
-    }*/
 
     [[self.imagePickerController view] removeFromSuperview];
 }
@@ -298,8 +236,6 @@
 
 - (void) pressedChoosePhotoButton
 {
-    NSLog(@"CHOOSE PHOTO");
-    
     if ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypePhotoLibrary]) {
         NSLog(@"AVAILABLE");
     }
@@ -426,40 +362,6 @@
 - (void) didSelectMessage:(MSMessage *)message conversation:(MSConversation *)conversation
 {
     NSLog(@"DID SELECT - ANALYZING NOW");
-    
-    NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:[message URL] resolvingAgainstBaseURL:NO];
-    
-    NSString *encryptionKey = @"";
-    
-    for(NSURLQueryItem *queryItem in [urlComponents queryItems]) {
-        if([[queryItem name] isEqualToString:@"encryption_key"]) {
-            encryptionKey = [queryItem value];
-        }
-    }
-    
-    //  Code for loading image by decryption
-    NSString  *imagePath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/encryptedImage.pdf"];
-    NSError *error;
-    
-    NSData *encryptedData = [NSData dataWithContentsOfFile:imagePath];
-    NSData *decryptedData = [RNDecryptor decryptData:encryptedData
-                                        withPassword:encryptionKey
-                                               error:&error];
-    
-    if(error) {
-        NSLog(@"ERROR DECRYPTING IMAGE: %@", [error description]);
-        return;
-    }
-
-    UIImage *image = [UIImage imageWithData:decryptedData];
-    
-    UIViewController *someController = [[UIViewController alloc] init];
-    UIImageView *imgView = [[UIImageView alloc] initWithImage:image];
-    [imgView setFrame:self.view.frame];
-    [[someController view] setFrame:self.view.frame];
-    
-    [self presentViewController:someController animated:YES completion:nil];
-    
 }
 
 -(void)didBecomeActiveWithConversation:(MSConversation *)conversation
@@ -473,20 +375,70 @@
     if([conversation selectedMessage]) {
         NSLog(@"FOUND MESSAGE");
         
+        NSError *error;
+        
         MSMessage *message = [conversation selectedMessage];
+        MSMessageTemplateLayout *messageLayout = (MSMessageTemplateLayout*) [message layout];
+        
+        NSURL *zipFileURL = receivedURL; //[messageLayout mediaFileURL];
+        
+        NSLog(@"RECEIVED ZIP FILE URL: %@", [zipFileURL path]);
         
         NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:[message URL] resolvingAgainstBaseURL:NO];
         
         NSString *encryptionKey = @"";
-        
+        NSString *fileName = @"";
         for(NSURLQueryItem *queryItem in [urlComponents queryItems]) {
             if([[queryItem name] isEqualToString:@"encryption_key"]) {
                 encryptionKey = [queryItem value];
             }
+            
+            else if([[queryItem name] isEqualToString:@"send_name"]) {
+                fileName = [queryItem value];
+            }
         }
         
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsDirectory = [paths objectAtIndex:0];
+        
+        NSString *zippedFilePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.zip", fileName]];
+        NSString *unzippedFolderPath = [documentsDirectory stringByAppendingPathComponent:fileName];
+        
+        if([NSData dataWithContentsOfURL:zipFileURL]) {
+            NSLog(@"RECEIVED ENCRYPTED DATA: %@\t%@\t%@", zipFileURL.path, zippedFilePath, unzippedFolderPath);
+            
+        }
+
+        NSData *decryptedData = [RNDecryptor decryptData:[NSData dataWithContentsOfURL:zipFileURL]
+                                            withPassword:encryptionKey
+                                                   error:&error];
+        
+        if(error || !decryptedData) {
+            NSLog(@"ERROR DECRYPTING: %@", [error description]);
+        } else {
+            NSLog(@"DECRYPTED SUCCESSFULLY");
+        }
+        
+        [decryptedData writeToFile:zippedFilePath atomically:YES];
+        decryptedData = nil;
+        
+        [SSZipArchive unzipFileAtPath:zippedFilePath toDestination:unzippedFolderPath];
+        
+        NSString *currentImagesFolder = [unzippedFolderPath stringByAppendingPathComponent:@"images"];
+        NSString *currentVideosFolder = [unzippedFolderPath stringByAppendingPathComponent:@"videos"];
+        
+        if([[NSFileManager defaultManager] fileExistsAtPath:currentVideosFolder]) {
+            NSLog(@"FOUND IMAGES!!!!");
+        }
+        
+        int numberOfImages = (int) [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:currentImagesFolder error:&error] count];
+        int numberOfVideos = (int) [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:currentVideosFolder error:&error] count];
+        
+        NSLog(@"RECEIVED: %d\t%d", numberOfImages, numberOfVideos);
+        
+        
         //  Code for loading image by decryption
-        NSString  *imagePath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/encryptedImage.pdf"];
+       /* NSString  *imagePath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/encryptedImage.pdf"];
         NSError *error;
         
         NSData *encryptedData = [NSData dataWithContentsOfFile:imagePath];
@@ -521,14 +473,13 @@
         message.summaryText = @"Summary!";
         
         
-        
         [self.activeConversation insertMessage:message completionHandler:^(NSError *error) {
             if(error) {
                 NSLog(@"ERROR SENDING HERE: %@", [error localizedDescription]);
             } else {
                 NSLog(@"REPLY IS GUCCI");
             }
-        }];
+        }];*/
         
     }
     
@@ -544,6 +495,7 @@
     // and store enough state information to restore your extension to its current state
     // in case it is terminated later.
 }
+static NSURL *receivedURL;
 
 -(void)didReceiveMessage:(MSMessage *)message conversation:(MSConversation *)conversation
 {
@@ -551,7 +503,16 @@
     // extension on a remote device.
     
     // Use this method to trigger UI updates in response to the message.
+    
     NSLog(@"RECEIVED MESSAGE");
+    
+    MSMessageTemplateLayout *templateLayout = (MSMessageTemplateLayout*) message.layout;
+    
+    NSLog(@"%@", templateLayout ? @"GOT TEMPLATE" : @"NO TEMPLATE");
+    receivedURL = [templateLayout mediaFileURL];
+    if([[NSFileManager defaultManager] fileExistsAtPath:[[templateLayout mediaFileURL] path]]) {
+        NSLog(@"GOT IT!!L :%@", [[templateLayout mediaFileURL] path]);
+    }
 }
 
 - (void) didStartSendingMessage:(MSMessage *)message conversation:(MSConversation *)conversation
