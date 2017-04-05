@@ -41,19 +41,11 @@
         NSFileManager *fileManager = [NSFileManager defaultManager];
         PHImageManager *photoManager = [PHImageManager defaultManager];
         
-        //Image request options
-        PHImageRequestOptions *photoRequestOptions = [[PHImageRequestOptions alloc] init];
-        [photoRequestOptions setResizeMode:PHImageRequestOptionsResizeModeNone];
-        [photoRequestOptions setDeliveryMode:PHImageRequestOptionsDeliveryModeHighQualityFormat];
-        [photoRequestOptions setSynchronous:YES];
-        [photoRequestOptions setNetworkAccessAllowed:YES];
-        [photoRequestOptions setVersion:PHImageRequestOptionsVersionOriginal];
+        //PHAsset Request Options
+        PHImageRequestOptions *photoRequestOptions = [Constants getPhotoRequestOptions];
         
         //Video request options
-        PHVideoRequestOptions *videoRequestOptions = [[PHVideoRequestOptions alloc] init];
-        [videoRequestOptions setDeliveryMode:PHVideoRequestOptionsDeliveryModeHighQualityFormat];
-        [videoRequestOptions setVersion:PHVideoRequestOptionsVersionOriginal];
-        [videoRequestOptions setNetworkAccessAllowed:YES];
+        PHVideoRequestOptions *videoRequestOptions = [Constants getVideoRequestOptions];
         
         __block int numberOfVideosSaved = 0;
         __block int numberOfOtherMediaSaved = 0;
@@ -61,12 +53,9 @@
         
         //Set up folders for temporarily saving everything
         NSError *error;
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *documentsDirectory = [paths objectAtIndex:0];
         
-        NSDateFormatter *currentSendFormat = [[NSDateFormatter alloc] init];
-        [currentSendFormat setDateFormat:@"dd-MM-yy HH:mm:ss"];
-        NSString *currentSendName = [currentSendFormat stringFromDate:[NSDate date]];
+        NSString *documentsDirectory = [Constants getDocumentsDirectory];
+        NSString *currentSendName = [Constants getSendFormatUsingCurrentDate];
         
         NSString *currentSendZIPPath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.zip", currentSendName]];
         
@@ -85,7 +74,6 @@
         for(PHAsset *asset in assets) {
             
             NSLog(@"Going through asset");
-            
             
             if([asset mediaType] == PHAssetMediaTypeImage) {
                 
@@ -155,10 +143,7 @@
         }
         
         //Long, randomly generated string --> each UUID = 36 characters long
-        NSMutableString *encryptionKey = [[NSMutableString alloc] init];
-        for(int i = 0; i < 5; i++) {
-            [encryptionKey appendString:[[NSUUID UUID] UUIDString]];
-        }
+        NSString *encryptionKey = [Constants generateEncryptionKey];
         
         //Since we can't load videos synchronously, wait for the rest to finish
         while((numberOfOtherMediaSaved + numberOfVideosSaved) < totalNumberOfItems) {
@@ -258,22 +243,7 @@
         self.imagePickerController.showsNumberOfSelectedAssets = YES;
         self.imagePickerController.mediaType = QBImagePickerMediaTypeAny;
         self.imagePickerController.prompt = @"Select the Photos And Videos to Securely Send";
-        self.imagePickerController.assetCollectionSubtypes = @[
-                                                               @(PHAssetCollectionSubtypeSmartAlbumUserLibrary),
-                                                               @(PHAssetCollectionSubtypeAlbumMyPhotoStream),
-                                                               @(PHAssetCollectionSubtypeSmartAlbumFavorites),
-                                                               @(PHAssetCollectionSubtypeSmartAlbumScreenshots),
-                                                               @(PHAssetCollectionSubtypeAlbumRegular),
-                                                               @(PHAssetCollectionSubtypeAlbumMyPhotoStream),
-                                                               @(PHAssetCollectionSubtypeAlbumCloudShared),
-                                                               @(PHAssetCollectionSubtypeSmartAlbumGeneric),
-                                                               @(PHAssetCollectionSubtypeSmartAlbumUserLibrary),
-                                                               @(PHAssetCollectionSubtypeSmartAlbumPanoramas),
-                                                               @(PHAssetCollectionSubtypeSmartAlbumVideos),
-                                                               @(PHAssetCollectionSubtypeSmartAlbumBursts),
-                                                               @(PHAssetCollectionSubtypeSmartAlbumLivePhotos),
-                                                               @(PHAssetCollectionSubtypeSmartAlbumSlomoVideos)
-                                                               ];
+        self.imagePickerController.assetCollectionSubtypes = [Constants getPHAssetCollectionSubtypes];
         
         CGRect newSize = CGRectMake(0, self.topLayoutGuide.length, self.view.frame.size.width, self.view.frame.size.height - self.topLayoutGuide.length);
         [[self.imagePickerController view] setFrame:newSize];
@@ -398,8 +368,7 @@
             }
         }
         
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *documentsDirectory = [paths objectAtIndex:0];
+        NSString *documentsDirectory = [Constants getDocumentsDirectory];
         
         NSString *zippedFilePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.zip", fileName]];
         NSString *unzippedFolderPath = [documentsDirectory stringByAppendingPathComponent:fileName];

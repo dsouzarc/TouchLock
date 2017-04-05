@@ -7,7 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <Photos/Photos.h>
 
 @interface Constants : NSObject
+
++ (NSArray*) getPHAssetCollectionSubtypes;
+
++ (NSString*) getDocumentsDirectory;
++ (NSString*) getSendFormatUsingCurrentDate;
+
++ (PHImageRequestOptions*) getPhotoRequestOptions;
++ (PHVideoRequestOptions*) getVideoRequestOptions;
+
++ (NSString*) generateEncryptionKey;
 
 @end
