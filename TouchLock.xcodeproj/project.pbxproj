@@ -21,9 +21,10 @@
 		940ECD2F1E9464AE00178CB9 /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 940ECD191E9464AE00178CB9 /* mztools.c */; };
 		940ECD301E9464AE00178CB9 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 940ECD1B1E9464AE00178CB9 /* unzip.c */; };
 		940ECD311E9464AE00178CB9 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 940ECD1D1E9464AE00178CB9 /* zip.c */; };
-		940ECD321E9464AE00178CB9 /* SSZipArchive+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940ECD1F1E9464AE00178CB9 /* SSZipArchive+Swift.swift */; };
 		940ECD331E9464AE00178CB9 /* SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 940ECD211E9464AE00178CB9 /* SSZipArchive.m */; };
-		940ECD351E9464CE00178CB9 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 940ECD341E9464CE00178CB9 /* libz.tbd */; };
+		940ECD391E94770300178CB9 /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 940ECD381E94770300178CB9 /* libz.1.dylib */; };
+		940ECD3A1E94773C00178CB9 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 940ECD341E9464CE00178CB9 /* libz.tbd */; };
+		940ECD3B1E94774300178CB9 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 940ECD341E9464CE00178CB9 /* libz.tbd */; };
 		94231E811E91D3E200214BCF /* QBImagePicker.strings in Resources */ = {isa = PBXBuildFile; fileRef = 94231E661E91D3E200214BCF /* QBImagePicker.strings */; };
 		94231E821E91D3E200214BCF /* QBAlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 94231E6D1E91D3E200214BCF /* QBAlbumCell.m */; };
 		94231E831E91D3E200214BCF /* QBAlbumsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94231E6F1E91D3E200214BCF /* QBAlbumsViewController.m */; };
@@ -112,12 +113,13 @@
 		940ECD1C1E9464AE00178CB9 /* unzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unzip.h; sourceTree = "<group>"; };
 		940ECD1D1E9464AE00178CB9 /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zip.c; sourceTree = "<group>"; };
 		940ECD1E1E9464AE00178CB9 /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
-		940ECD1F1E9464AE00178CB9 /* SSZipArchive+Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SSZipArchive+Swift.swift"; sourceTree = "<group>"; };
 		940ECD201E9464AE00178CB9 /* SSZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSZipArchive.h; sourceTree = "<group>"; };
 		940ECD211E9464AE00178CB9 /* SSZipArchive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSZipArchive.m; sourceTree = "<group>"; };
 		940ECD221E9464AE00178CB9 /* SSZipCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSZipCommon.h; sourceTree = "<group>"; };
 		940ECD231E9464AE00178CB9 /* ZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipArchive.h; sourceTree = "<group>"; };
 		940ECD341E9464CE00178CB9 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		940ECD361E94769A00178CB9 /* libz.1.1.3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.1.3.tbd; path = usr/lib/libz.1.1.3.tbd; sourceTree = SDKROOT; };
+		940ECD381E94770300178CB9 /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
 		94231E671E91D3E200214BCF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/QBImagePicker.strings; sourceTree = "<group>"; };
 		94231E681E91D3E200214BCF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/QBImagePicker.strings; sourceTree = "<group>"; };
 		94231E691E91D3E200214BCF /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/QBImagePicker.strings; sourceTree = "<group>"; };
@@ -186,7 +188,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				940ECD351E9464CE00178CB9 /* libz.tbd in Frameworks */,
+				940ECD3A1E94773C00178CB9 /* libz.tbd in Frameworks */,
+				940ECD391E94770300178CB9 /* libz.1.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -194,6 +197,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				940ECD3B1E94774300178CB9 /* libz.tbd in Frameworks */,
 				94F7D72E1E58BF9300CB1B9E /* Messages.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -206,7 +210,6 @@
 			children = (
 				940ECCFE1E9464AE00178CB9 /* aes */,
 				940ECD151E9464AE00178CB9 /* minizip */,
-				940ECD1F1E9464AE00178CB9 /* SSZipArchive+Swift.swift */,
 				940ECD201E9464AE00178CB9 /* SSZipArchive.h */,
 				940ECD211E9464AE00178CB9 /* SSZipArchive.m */,
 				940ECD221E9464AE00178CB9 /* SSZipCommon.h */,
@@ -344,6 +347,8 @@
 		94F7D72C1E58BF9300CB1B9E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				940ECD381E94770300178CB9 /* libz.1.dylib */,
+				940ECD361E94769A00178CB9 /* libz.1.1.3.tbd */,
 				940ECD341E9464CE00178CB9 /* libz.tbd */,
 				94689D511E91D38B00372712 /* QBImagePickerController.framework */,
 				94F7D72D1E58BF9300CB1B9E /* Messages.framework */,
@@ -546,7 +551,6 @@
 				94231E831E91D3E200214BCF /* QBAlbumsViewController.m in Sources */,
 				94231E8A1E91D3E200214BCF /* QBVideoIconView.m in Sources */,
 				940ECD2A1E9464AE00178CB9 /* prng.c in Sources */,
-				940ECD321E9464AE00178CB9 /* SSZipArchive+Swift.swift in Sources */,
 				94F7D7541E58D3A200CB1B9E /* ExpandedDefaultView.m in Sources */,
 				94231EB01E91F19300214BCF /* RNCryptor.m in Sources */,
 				94231E891E91D3E200214BCF /* QBSlomoIconView.m in Sources */,
@@ -739,7 +743,6 @@
 		94F7D7401E58BF9300CB1B9E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = Q7N3L673D8;
@@ -758,7 +761,6 @@
 		94F7D7411E58BF9300CB1B9E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = Q7N3L673D8;

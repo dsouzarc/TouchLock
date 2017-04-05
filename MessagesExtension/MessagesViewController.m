@@ -38,32 +38,185 @@
 {
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(void) {
-       
-        PHImageManager *manager = [PHImageManager defaultManager];
         
-        PHImageRequestOptions *requestOptions = [[PHImageRequestOptions alloc] init];
-        requestOptions.resizeMode   = PHImageRequestOptionsResizeModeNone;
-        requestOptions.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
-        requestOptions.synchronous = true;
-        requestOptions.version = PHImageRequestOptionsVersionOriginal;
+        //Managers
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        PHImageManager *photoManager = [PHImageManager defaultManager];
         
-        UIImage *defaultImage = [UIImage imageNamed:@"default_blurred_image.jpg"];
+        //Image request options
+        PHImageRequestOptions *photoRequestOptions = [[PHImageRequestOptions alloc] init];
+        [photoRequestOptions setResizeMode:PHImageRequestOptionsResizeModeNone];
+        [photoRequestOptions setDeliveryMode:PHImageRequestOptionsDeliveryModeHighQualityFormat];
+        [photoRequestOptions setSynchronous:YES];
+        [photoRequestOptions setNetworkAccessAllowed:YES];
+        [photoRequestOptions setVersion:PHImageRequestOptionsVersionOriginal];
         
+        //Video request options
+        PHVideoRequestOptions *videoRequestOptions = [[PHVideoRequestOptions alloc] init];
+        [videoRequestOptions setDeliveryMode:PHVideoRequestOptionsDeliveryModeHighQualityFormat];
+        [videoRequestOptions setVersion:PHVideoRequestOptionsVersionOriginal];
+        [videoRequestOptions setNetworkAccessAllowed:YES];
+        
+        __block int numberOfVideosSaved = 0;
+        __block int numberOfOtherMediaSaved = 0;
+        const int totalNumberOfItems = (int) [assets count];
+        
+        //Set up folders for temporarily saving everything
         NSError *error;
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsDirectory = [paths objectAtIndex:0];
         
+        NSDateFormatter *currentSendFormat = [[NSDateFormatter alloc] init];
+        [currentSendFormat setDateFormat:@"dd-MM-yy HH:mm:ss"];
+        NSString *currentSendName = [currentSendFormat stringFromDate:[NSDate date]];
+        
+        NSString *currentSendZIPPath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.zip", currentSendName]];
+        
+        NSString *currentSendFolder = [documentsDirectory stringByAppendingPathComponent:currentSendName];
+        [fileManager createDirectoryAtPath:currentSendFolder withIntermediateDirectories:YES attributes:nil error:&error];
+
+        
+        NSString *currentSendImagesFolder = [currentSendFolder stringByAppendingPathComponent:@"images"];
+        [fileManager createDirectoryAtPath:currentSendImagesFolder withIntermediateDirectories:YES attributes:nil error:&error];
+        
+        NSString *currentSendVideosFolder = [currentSendFolder stringByAppendingPathComponent:@"videos"];
+        [fileManager createDirectoryAtPath:currentSendVideosFolder withIntermediateDirectories:YES attributes:nil error:&error];
         
         
+        //Let's save all the photos and videos to this temporary directory
+    
+        for(PHAsset *asset in assets) {
+            
+            if([asset mediaType] == PHAssetMediaTypeImage) {
+                
+                [photoManager requestImageForAsset:asset
+                                   targetSize:PHImageManagerMaximumSize
+                                  contentMode:PHImageContentModeDefault
+                                      options:photoRequestOptions
+                                resultHandler:^(UIImage *originalImage, NSDictionary *info) {
+                                    
+                                    NSString *imageFileName = [NSString stringWithFormat:@"%@.png", [[NSUUID UUID] UUIDString]];
+                                    NSData *pngImageData = UIImagePNGRepresentation(originalImage);
+                                    [pngImageData writeToFile:[currentSendImagesFolder stringByAppendingPathComponent:imageFileName] atomically:YES];
+                                    
+                                    numberOfOtherMediaSaved++;
+                                }
+                 ];
+            }
+            
+            else if([asset mediaType] == PHAssetMediaTypeVideo) {
+                
+                [photoManager requestAVAssetForVideo:asset
+                                             options:videoRequestOptions
+                                       resultHandler:^(AVAsset * _Nullable asset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info) {
+                                           
+                                           NSString *videoFileName = [NSString stringWithFormat:@"%@.MOV", [[NSUUID UUID] UUIDString]];
+                                           NSURL *videoFileURL = [NSURL fileURLWithPath:[currentSendVideosFolder stringByAppendingPathComponent:videoFileName]];
+                                           
+                                           NSError *error;
+                                           AVURLAsset *videoURLAsset = (AVURLAsset*) asset;
+                                           
+                                           [fileManager copyItemAtURL:[videoURLAsset URL]
+                                                                toURL:videoFileURL
+                                                                error:&error];
+                                           
+                                           numberOfVideosSaved++;
+                                       }
+                 ];
+                
+                
+                /*[photoManager requestExportSessionForVideo:asset
+                                                   options:videoRequestOptions
+                                              exportPreset:AVAssetExportPreset3840x2160
+                                             resultHandler:^(AVAssetExportSession * _Nullable exportSession, NSDictionary * _Nullable info) {
+                                                 
+                                                 NSString *videoFileName = [NSString stringWithFormat:@"%@.MOV", [[NSUUID UUID] UUIDString]];
+                                                 NSURL *videoFilePath = [NSURL fileURLWithPath:[currentSendVideosFolder stringByAppendingPathComponent:videoFileName]];
+                                                 
+                                                 exportSession.outputFileType = AVFileTypeQuickTimeMovie;
+                                                 exportSession.outputURL = videoFilePath;
+                                                 
+                                                 [exportSession exportAsynchronouslyWithCompletionHandler:^{
+                                                     
+                                                 }];
+                                                 
+                                             }
+                 ];*/
+            }
+            
+            //Some other form of media or unknown file
+            else {
+                numberOfOtherMediaSaved++;
+            }
+        }
+        
+        //Since we can't load videos synchronously, wait for the rest to finish
+        while((numberOfOtherMediaSaved + numberOfVideosSaved) < totalNumberOfItems) {
+            sleep(100); //100 milliseconds
+        }
         
         
+        [SSZipArchive createZipFileAtPath:currentSendZIPPath withContentsOfDirectory:currentSendFolder];
         
+        NSString *encryptionKey = @"Some super long password";
         
+        NSData *encryptedData = [RNEncryptor encryptData:[NSData dataWithContentsOfFile:currentSendZIPPath]
+                                            withSettings:kRNCryptorAES256Settings
+                                                password:encryptionKey
+                                                   error:&error];
         
+        if(error) {
+            NSLog(@"ERROR ENCRYPTING MESSAGE: %@: ", [error description]);
+        }
+        
+        [encryptedData writeToFile:currentSendZIPPath atomically:YES];
+        
+        UIImage *defaultImage = [UIImage imageNamed:@"default_blurred_image.jpg"];
+        
+        MSMessageTemplateLayout *messageLayout = [[MSMessageTemplateLayout alloc] init];
+        messageLayout.image = defaultImage;
+        messageLayout.imageTitle = @"iMessage extension";
+        messageLayout.caption = @"Hello World!";
+        messageLayout.subcaption = @"Sent by Ryan!";
+        
+        NSURLComponents *urlComponents = [[NSURLComponents alloc] init];
+        NSURLQueryItem *firstItem = [[NSURLQueryItem alloc] initWithName:@"encryption_key" value:encryptionKey];
+        [urlComponents setQueryItems:@[firstItem]];
+        
+        MSSession *messageSession = [[MSSession alloc] init];
+        MSMessage *message = [[MSMessage alloc] initWithSession:messageSession];
+        messageLayout.mediaFileURL = [NSURL fileURLWithPath:currentSendZIPPath];
+        message.layout = messageLayout;
+        message.URL = urlComponents.URL;
+        message.summaryText = @"Summary!";
+
+        dispatch_async(dispatch_get_main_queue(), ^(void) {
+            
+            [self.activeConversation insertMessage:message
+                                 completionHandler:^(NSError *error) {
+                                     if(error) {
+                                         NSLog(@"ERROR SENDING HERE: %@", [error localizedDescription]);
+                                     }
+                                     
+                                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(void) {
+                                        
+                                         NSError *deleteError;
+                                         [fileManager removeItemAtPath:currentSendZIPPath error:&deleteError];
+                                     });
+                                     
+                                 }
+             ];
+            
+            [[self.imagePickerController view] removeFromSuperview];
+            
+        });
+        
+        [fileManager removeItemAtPath:currentSendFolder error:&error];
         
     });
     
-    self.assetsToSend = [[NSMutableArray alloc] init];
+    
+    /*self.assetsToSend = [[NSMutableArray alloc] init];
     PHImageManager *manager = [PHImageManager defaultManager];
     
     PHImageRequestOptions *requestOptions = [[PHImageRequestOptions alloc] init];
@@ -103,14 +256,6 @@
                                 
                                 [encryptedData writeToFile:imagePath atomically:YES];
                                 NSURL *imageSavePath = [NSURL fileURLWithPath:imagePath];
-                                
-                                /*[self.activeConversation insertAttachment:imageSavePath withAlternateFilename:@"Alternative name" completionHandler:^(NSError *error) {
-                                    if(error) {
-                                        NSLog(@"ERROR INSERTING ATTACHMENT: %@", [error description]);
-                                    } else {
-                                        NSLog(@"INSERTED ATTACHMENT");
-                                    }
-                                }];*/
                             
                                 
                                 MSMessageTemplateLayout *messageLayout = [[MSMessageTemplateLayout alloc] init];
@@ -141,7 +286,7 @@
                             }
              ];
         }
-    }
+    }*/
 
     [[self.imagePickerController view] removeFromSuperview];
 }
