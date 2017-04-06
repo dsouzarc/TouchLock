@@ -9,8 +9,10 @@
 #import <Messages/Messages.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <Photos/Photos.h>
+#import <AVKit/AVKit.h>
 
 #import "QBImagePickerController.h"
+#import "MWPhotoBrowser.h"
 
 #import "CompactDefaultView.h"
 #import "ExpandedDefaultView.h"
@@ -21,6 +23,6 @@
 #import "RNDecryptor.h"
 #import "SSZipArchive.h"
 
-@interface MessagesViewController : MSMessagesAppViewController<QBImagePickerControllerDelegate, DefaultViewProtocol, UINavigationControllerDelegate>
+@interface MessagesViewController : MSMessagesAppViewController<QBImagePickerControllerDelegate, MWPhotoBrowserDelegate, DefaultViewProtocol, UINavigationControllerDelegate>
 
 @end

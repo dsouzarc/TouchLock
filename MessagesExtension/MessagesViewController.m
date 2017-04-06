@@ -16,6 +16,9 @@
 
 @property (strong, nonatomic) QBImagePickerController *imagePickerController;
 
+@property (strong, nonatomic) MWPhotoBrowser *photoBrowserViewController;
+@property (strong, nonatomic) NSMutableArray *receivingMediaArray;
+
 @end
 
 @implementation MessagesViewController
@@ -23,6 +26,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if(!self) {
+        self.receivingMediaArray = [[NSMutableArray alloc] init];
+    }
     
     [self showCompactDefaultView];
 }
@@ -397,55 +404,137 @@
         int numberOfImages = (int) [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:currentImagesFolder error:&error] count];
         int numberOfVideos = (int) [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:currentVideosFolder error:&error] count];
         
-        NSLog(@"RECEIVED: %d\t%d", numberOfImages, numberOfVideos);
+        self.receivingMediaArray = [[NSMutableArray alloc] init];
+        
+        NSArray *receivedImages = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:currentImagesFolder error:&error];
+        NSArray *receivedVideos = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:currentVideosFolder error:&error];
         
         
-        //  Code for loading image by decryption
-       /* NSString  *imagePath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/encryptedImage.pdf"];
-        NSError *error;
-        
-        NSData *encryptedData = [NSData dataWithContentsOfFile:imagePath];
-        NSData *decryptedData = [RNDecryptor decryptData:encryptedData
-                                            withPassword:encryptionKey
-                                                   error:&error];
-        
-        if(error) {
-            NSLog(@"ERROR DECRYPTING IMAGE: %@", [error description]);
-            return;
-        }
-        
-        UIImage *image = [UIImage imageWithData:decryptedData];
-
-        if(image) {
-            NSLog(@"RECREATED IMAGE SUCCESSFULLY");
-        }
-        
-        
-        MSMessageTemplateLayout *messageLayout = [[MSMessageTemplateLayout alloc] init];
-        messageLayout.image = image; //originalImage;
-        messageLayout.imageTitle = @"Reply iMessage extension";
-        messageLayout.caption = @"Reply Hello World!";
-        messageLayout.subcaption = @"Reply Sent by Ryan!";
-        
-        
-        MSSession *messageSession = [[MSSession alloc] init];
-        message = [[MSMessage alloc] initWithSession:messageSession];
-        //messageLayout.mediaFileURL = imageSavePath;
-        message.layout = messageLayout;
-        message.URL = urlComponents.URL;
-        message.summaryText = @"Summary!";
-        
-        
-        [self.activeConversation insertMessage:message completionHandler:^(NSError *error) {
-            if(error) {
-                NSLog(@"ERROR SENDING HERE: %@", [error localizedDescription]);
-            } else {
-                NSLog(@"REPLY IS GUCCI");
+        if(receivedImages) {
+            for(NSString *fileName in receivedImages) {
+                if(![fileName isEqualToString:@".DS_Store"]) {
+                    NSString *filePath = [currentImagesFolder stringByAppendingPathComponent:fileName];
+                    
+                    NSLog(@"GOING THROUGH PHOTO: %@", filePath);
+                    
+                    //MWPhoto *photo = [MWPhoto photoWithURL:[NSURL fileURLWithPath:filePath]];
+                    MWPhoto *photo = [MWPhoto photoWithImage:[UIImage imageWithContentsOfFile:filePath]];
+                    
+                    if([UIImage imageWithContentsOfFile:filePath] && photo) {
+                        NSLog(@"CREATED ");
+                    } else {
+                        NSLog(@"ERROR CREATING");
+                    }
+                    
+                    [self.receivingMediaArray addObject:photo];
+                }
             }
-        }];*/
+        }
+        
+        if(receivedVideos) {
+            for(NSString *fileName in receivedVideos) {
+                
+                if(![fileName isEqualToString:@".DS_Store"]) {
+                    
+                    NSString *filePath = [currentVideosFolder stringByAppendingPathComponent:fileName];
+                    
+                    
+                    NSLog(@"GOING THROUGH VIDEO: %@", filePath);
+                    
+                    NSURL *videoFilePath = [NSURL fileURLWithPath:filePath];
+                    
+                    UIImage *firstFrame = [MessagesViewController thumbnailImageForVideo:videoFilePath atTime:0.1];
+                    
+                    MWPhoto *video = [MWPhoto photoWithImage:firstFrame];
+                    video.videoURL = videoFilePath;
+                    video.isVideo = YES;
+                    
+                    [self.receivingMediaArray addObject:video];
+                }
+            }
+        }
+        
+        NSLog(@"RECEIVING MEDIA ARRAY SIZE: %ld", [self.receivingMediaArray count]);
+        
+        NSLog(@"RECEIVED: %d\t%d", numberOfImages, numberOfVideos);
+       
+        
+        self.photoBrowserViewController = [[MWPhotoBrowser alloc] initWithPhotos:self.receivingMediaArray];
+        self.photoBrowserViewController.delegate = self;
+        
+        // Set options
+        self.photoBrowserViewController.displayActionButton = YES;
+        self.photoBrowserViewController.displayNavArrows = YES;
+        self.photoBrowserViewController.displaySelectionButtons = NO;
+        self.photoBrowserViewController.zoomPhotosToFill = YES;
+        self.photoBrowserViewController.alwaysShowControls = YES;
+        self.photoBrowserViewController.enableGrid = YES;
+        self.photoBrowserViewController.startOnGrid = YES;
+        self.photoBrowserViewController.autoPlayOnAppear = NO;
+        
+        CGRect newSize = CGRectMake(0, self.topLayoutGuide.length, self.view.frame.size.width, self.view.frame.size.height - self.topLayoutGuide.length);
+        
+        [[self.photoBrowserViewController view] setFrame:newSize];
+        [self.view addSubview:[self.photoBrowserViewController view]];
+        
+        
+        // Manipulate
+        [self.photoBrowserViewController showNextPhotoAnimated:YES];
+        [self.photoBrowserViewController showPreviousPhotoAnimated:YES];
         
     }
     
+}
+
+-(id <MWPhoto>) photoBrowser:(MWPhotoBrowser *)photoBrowser thumbPhotoAtIndex:(NSUInteger)index{
+    NSLog(@"Thumb Delegate Called!");
+    if(index < [self.receivingMediaArray count]) {
+        return [self.receivingMediaArray objectAtIndex:index];
+    }
+    return nil;
+}
+
+- (NSUInteger)numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser {
+    return [self.receivingMediaArray count];
+}
+
+- (id <MWPhoto>)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
+    NSLog(@"CHECKING INDEX: %ld", index);
+    
+    if (index < [self.receivingMediaArray count]) {
+        return [self.receivingMediaArray objectAtIndex:index];
+    }
+    return nil;
+}
+
+
++ (UIImage *)thumbnailImageForVideo:(NSURL *)videoURL
+                             atTime:(NSTimeInterval)time
+{
+    
+    AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:videoURL options:nil];
+    NSParameterAssert(asset);
+    AVAssetImageGenerator *assetIG =
+    [[AVAssetImageGenerator alloc] initWithAsset:asset];
+    assetIG.appliesPreferredTrackTransform = YES;
+    assetIG.apertureMode = AVAssetImageGeneratorApertureModeEncodedPixels;
+    
+    CGImageRef thumbnailImageRef = NULL;
+    CFTimeInterval thumbnailImageTime = time;
+    NSError *igError = nil;
+    thumbnailImageRef =
+    [assetIG copyCGImageAtTime:CMTimeMake(thumbnailImageTime, 60)
+                    actualTime:NULL
+                         error:&igError];
+    
+    if (!thumbnailImageRef)
+        NSLog(@"thumbnailImageGenerationError %@", igError );
+    
+    UIImage *thumbnailImage = thumbnailImageRef
+    ? [[UIImage alloc] initWithCGImage:thumbnailImageRef]
+    : nil;
+    
+    return thumbnailImage;
 }
 
 -(void)willResignActiveWithConversation:(MSConversation *)conversation
