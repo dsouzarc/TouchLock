@@ -1,4 +1,4 @@
-##Written by Ryan D'souza
+## Written by Ryan D'souza
 
 An iOS Messages Extension that I wrote for fun to securely send information like photos, videos, and text.
 
