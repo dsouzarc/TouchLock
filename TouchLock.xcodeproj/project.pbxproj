@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2020E94E3671D4CEE76A864F /* libPods-MessagesExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A11B09CED37A248174234A4 /* libPods-MessagesExtension.a */; };
+		930922193DF4A69D7FCAD807 /* libPods-TouchLock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE1F77B4BBB7EDEE2CF61050 /* libPods-TouchLock.a */; };
 		940ECCFC1E9461D100178CB9 /* ViewMediaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 940ECCFB1E9461D100178CB9 /* ViewMediaViewController.m */; };
 		940ECD241E9464AE00178CB9 /* aescrypt.c in Sources */ = {isa = PBXBuildFile; fileRef = 940ECD011E9464AE00178CB9 /* aescrypt.c */; };
 		940ECD251E9464AE00178CB9 /* aeskey.c in Sources */ = {isa = PBXBuildFile; fileRef = 940ECD021E9464AE00178CB9 /* aeskey.c */; };
@@ -82,6 +84,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3D0167A7807D4FB93971B1C0 /* Pods-MessagesExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MessagesExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-MessagesExtension/Pods-MessagesExtension.release.xcconfig"; sourceTree = "<group>"; };
+		4A11B09CED37A248174234A4 /* libPods-MessagesExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MessagesExtension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6A64DDAFF6AFA50ED45728B5 /* Pods-TouchLock.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TouchLock.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TouchLock/Pods-TouchLock.debug.xcconfig"; sourceTree = "<group>"; };
+		78832AC274A43D94D19BC944 /* Pods-MessagesExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MessagesExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MessagesExtension/Pods-MessagesExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		940ECCFA1E9461D100178CB9 /* ViewMediaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewMediaViewController.h; sourceTree = "<group>"; };
 		940ECCFB1E9461D100178CB9 /* ViewMediaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewMediaViewController.m; sourceTree = "<group>"; };
 		940ECCFF1E9464AE00178CB9 /* aes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aes.h; sourceTree = "<group>"; };
@@ -188,6 +194,8 @@
 		94F7D7521E58D3A200CB1B9E /* ExpandedDefaultView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpandedDefaultView.h; sourceTree = "<group>"; };
 		94F7D7531E58D3A200CB1B9E /* ExpandedDefaultView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpandedDefaultView.m; sourceTree = "<group>"; };
 		94F7D8001E58EECE00CB1B9E /* MessagesExtension-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MessagesExtension-Bridging-Header.h"; sourceTree = "<group>"; };
+		CE1F77B4BBB7EDEE2CF61050 /* libPods-TouchLock.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TouchLock.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA687C94D01C9FCC4AF30A34 /* Pods-TouchLock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TouchLock.release.xcconfig"; path = "Pods/Target Support Files/Pods-TouchLock/Pods-TouchLock.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,6 +205,7 @@
 			files = (
 				940ECD3A1E94773C00178CB9 /* libz.tbd in Frameworks */,
 				940ECD391E94770300178CB9 /* libz.1.dylib in Frameworks */,
+				930922193DF4A69D7FCAD807 /* libPods-TouchLock.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -206,6 +215,7 @@
 			files = (
 				940ECD3B1E94774300178CB9 /* libz.tbd in Frameworks */,
 				94F7D72E1E58BF9300CB1B9E /* Messages.framework in Frameworks */,
+				2020E94E3671D4CEE76A864F /* libPods-MessagesExtension.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,6 +340,7 @@
 				94F7D72F1E58BF9300CB1B9E /* MessagesExtension */,
 				94F7D72C1E58BF9300CB1B9E /* Frameworks */,
 				94F7D71F1E58BF9300CB1B9E /* Products */,
+				E0AA90F6B793E19DFCFCAB88 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -363,6 +374,8 @@
 				940ECD341E9464CE00178CB9 /* libz.tbd */,
 				94689D511E91D38B00372712 /* QBImagePickerController.framework */,
 				94F7D72D1E58BF9300CB1B9E /* Messages.framework */,
+				4A11B09CED37A248174234A4 /* libPods-MessagesExtension.a */,
+				CE1F77B4BBB7EDEE2CF61050 /* libPods-TouchLock.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -439,6 +452,17 @@
 			name = Constants;
 			sourceTree = "<group>";
 		};
+		E0AA90F6B793E19DFCFCAB88 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				78832AC274A43D94D19BC944 /* Pods-MessagesExtension.debug.xcconfig */,
+				3D0167A7807D4FB93971B1C0 /* Pods-MessagesExtension.release.xcconfig */,
+				6A64DDAFF6AFA50ED45728B5 /* Pods-TouchLock.debug.xcconfig */,
+				DA687C94D01C9FCC4AF30A34 /* Pods-TouchLock.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -446,9 +470,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 94F7D73F1E58BF9300CB1B9E /* Build configuration list for PBXNativeTarget "TouchLock" */;
 			buildPhases = (
+				E8D1E61593E945CAD4F44E57 /* [CP] Check Pods Manifest.lock */,
 				94F7D71C1E58BF9300CB1B9E /* Resources */,
 				94F7D73E1E58BF9300CB1B9E /* Embed App Extensions */,
 				7AA28EA50067A672FAB23D6A /* Frameworks */,
+				A85ECBBE6CD2028DB191CFAE /* [CP] Embed Pods Frameworks */,
+				ECA05314730AD77F9294E3AD /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -464,9 +491,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 94F7D73B1E58BF9300CB1B9E /* Build configuration list for PBXNativeTarget "MessagesExtension" */;
 			buildPhases = (
+				2B82343A4AB5C1BDFBE02AE8 /* [CP] Check Pods Manifest.lock */,
 				94F7D7241E58BF9300CB1B9E /* Sources */,
 				94F7D7251E58BF9300CB1B9E /* Frameworks */,
 				94F7D7261E58BF9300CB1B9E /* Resources */,
+				7C4BB0D4B1EC0FFD16E89FDB /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -555,6 +584,84 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2B82343A4AB5C1BDFBE02AE8 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		7C4BB0D4B1EC0FFD16E89FDB /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MessagesExtension/Pods-MessagesExtension-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A85ECBBE6CD2028DB191CFAE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TouchLock/Pods-TouchLock-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E8D1E61593E945CAD4F44E57 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		ECA05314730AD77F9294E3AD /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TouchLock/Pods-TouchLock-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		94F7D7241E58BF9300CB1B9E /* Sources */ = {
@@ -723,6 +830,7 @@
 		};
 		94F7D73C1E58BF9300CB1B9E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 78832AC274A43D94D19BC944 /* Pods-MessagesExtension.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
 				CLANG_ENABLE_MODULES = YES;
@@ -744,6 +852,7 @@
 		};
 		94F7D73D1E58BF9300CB1B9E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3D0167A7807D4FB93971B1C0 /* Pods-MessagesExtension.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
 				CLANG_ENABLE_MODULES = YES;
@@ -764,6 +873,7 @@
 		};
 		94F7D7401E58BF9300CB1B9E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6A64DDAFF6AFA50ED45728B5 /* Pods-TouchLock.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEFINES_MODULE = YES;
@@ -782,6 +892,7 @@
 		};
 		94F7D7411E58BF9300CB1B9E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DA687C94D01C9FCC4AF30A34 /* Pods-TouchLock.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEFINES_MODULE = YES;
