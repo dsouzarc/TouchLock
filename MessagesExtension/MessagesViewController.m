@@ -472,15 +472,22 @@
         self.photoBrowserViewController.startOnGrid = YES;
         self.photoBrowserViewController.autoPlayOnAppear = NO;
         
-        CGRect newSize = CGRectMake(0, self.topLayoutGuide.length, self.view.frame.size.width, self.view.frame.size.height - self.topLayoutGuide.length);
+        CGRect newSize = CGRectMake(0, self.topLayoutGuide.length * 2, self.view.frame.size.width, self.view.frame.size.height - (self.topLayoutGuide.length * 2));
         
-        [[self.photoBrowserViewController view] setFrame:newSize];
-        [self.view addSubview:[self.photoBrowserViewController view]];
+        UIView *v = [self.photoBrowserViewController view];
+        [v setFrame:newSize];
+        [self.view addSubview:v];
+        [v setFrame:CGRectMake(0, 80, self.view.frame.size.width, self.view.frame.size.height - 80)];
+        [v setClipsToBounds:YES];
+        
+        [v sizeToFit];
+        
+        [self.view setAutoresizesSubviews:YES];
         
         
         // Manipulate
-        [self.photoBrowserViewController showNextPhotoAnimated:YES];
-        [self.photoBrowserViewController showPreviousPhotoAnimated:YES];
+        //[self.photoBrowserViewController showNextPhotoAnimated:YES];
+        //[self.photoBrowserViewController showPreviousPhotoAnimated:YES];
         
     }
     
