@@ -370,8 +370,7 @@
 		94F7D72F1E58BF9300CB1B9E /* MessagesExtension */ = {
 			isa = PBXGroup;
 			children = (
-				942EE1031E94B7C900E113E0 /* Constants.h */,
-				942EE1041E94B7C900E113E0 /* Constants.m */,
+				94FB16A51E96018E0001D943 /* Constants */,
 				94F7D7301E58BF9300CB1B9E /* MessagesViewController.h */,
 				94F7D7311E58BF9300CB1B9E /* MessagesViewController.m */,
 				940ECCFD1E9464AE00178CB9 /* SSZipArchive */,
@@ -429,6 +428,15 @@
 				940ECCFB1E9461D100178CB9 /* ViewMediaViewController.m */,
 			);
 			name = "Default Views";
+			sourceTree = "<group>";
+		};
+		94FB16A51E96018E0001D943 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				942EE1031E94B7C900E113E0 /* Constants.h */,
+				942EE1041E94B7C900E113E0 /* Constants.m */,
+			);
+			name = Constants;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

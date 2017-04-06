@@ -147,7 +147,8 @@
         
         //Since we can't load videos synchronously, wait for the rest to finish
         while((numberOfOtherMediaSaved + numberOfVideosSaved) < totalNumberOfItems) {
-            sleep(100); //100 milliseconds
+            sleep(1); //100 milliseconds
+            NSLog(@"Sleeping while waiting to process");
         }
         
         
@@ -176,7 +177,10 @@
         NSURLComponents *urlComponents = [[NSURLComponents alloc] init];
         NSURLQueryItem *encryptionItem = [[NSURLQueryItem alloc] initWithName:@"encryption_key" value:encryptionKey];
         NSURLQueryItem *sendNameItem = [[NSURLQueryItem alloc] initWithName:@"send_name" value:currentSendName];
-        [urlComponents setQueryItems:@[encryptionItem, sendNameItem]];
+        NSURLQueryItem *messageIDItem = [[NSURLQueryItem alloc] initWithName:@"message_id" value:[[NSUUID UUID] UUIDString]];
+        NSLog(@"MESSAGE ID: %@", [messageIDItem value]);
+        
+        [urlComponents setQueryItems:@[encryptionItem, sendNameItem, messageIDItem]];
         
         NSLog(@"SEND ZIP: %@", currentSendZIPPath);
         
@@ -348,16 +352,12 @@
         NSError *error;
         
         MSMessage *message = [conversation selectedMessage];
-        MSMessageTemplateLayout *messageLayout = (MSMessageTemplateLayout*) [message layout];
-        
-        NSURL *zipFileURL = receivedURL; //[messageLayout mediaFileURL];
-        
-        NSLog(@"RECEIVED ZIP FILE URL: %@", [zipFileURL path]);
-        
         NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:[message URL] resolvingAgainstBaseURL:NO];
         
         NSString *encryptionKey = @"";
         NSString *fileName = @"";
+        NSString *messageID = @"";
+        
         for(NSURLQueryItem *queryItem in [urlComponents queryItems]) {
             if([[queryItem name] isEqualToString:@"encryption_key"]) {
                 encryptionKey = [queryItem value];
@@ -366,39 +366,33 @@
             else if([[queryItem name] isEqualToString:@"send_name"]) {
                 fileName = [queryItem value];
             }
+            
+            else if([[queryItem name] isEqualToString:@"message_id"]) {
+                messageID = [queryItem value];
+                NSLog(@"IN ACTIVE WITH ID: %@", messageID);
+            }
         }
-        
+    
         NSString *documentsDirectory = [Constants getDocumentsDirectory];
-        
         NSString *zippedFilePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.zip", fileName]];
         NSString *unzippedFolderPath = [documentsDirectory stringByAppendingPathComponent:fileName];
         
-        if([NSData dataWithContentsOfURL:zipFileURL]) {
-            NSLog(@"RECEIVED ENCRYPTED DATA: %@\t%@\t%@", zipFileURL.path, zippedFilePath, unzippedFolderPath);
-            
-        }
-
+        NSString *currentImagesFolder = [unzippedFolderPath stringByAppendingPathComponent:@"images"];
+        NSString *currentVideosFolder = [unzippedFolderPath stringByAppendingPathComponent:@"videos"];
+        
+        NSURL *zipFileURL = [NSURL fileURLWithPath:[[NSUserDefaults standardUserDefaults] objectForKey:messageID]];
         NSData *decryptedData = [RNDecryptor decryptData:[NSData dataWithContentsOfURL:zipFileURL]
                                             withPassword:encryptionKey
                                                    error:&error];
         
         if(error || !decryptedData) {
             NSLog(@"ERROR DECRYPTING: %@", [error description]);
-        } else {
-            NSLog(@"DECRYPTED SUCCESSFULLY");
         }
         
         [decryptedData writeToFile:zippedFilePath atomically:YES];
         decryptedData = nil;
         
         [SSZipArchive unzipFileAtPath:zippedFilePath toDestination:unzippedFolderPath];
-        
-        NSString *currentImagesFolder = [unzippedFolderPath stringByAppendingPathComponent:@"images"];
-        NSString *currentVideosFolder = [unzippedFolderPath stringByAppendingPathComponent:@"videos"];
-        
-        if([[NSFileManager defaultManager] fileExistsAtPath:currentVideosFolder]) {
-            NSLog(@"FOUND IMAGES!!!!");
-        }
         
         int numberOfImages = (int) [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:currentImagesFolder error:&error] count];
         int numberOfVideos = (int) [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:currentVideosFolder error:&error] count];
@@ -464,6 +458,7 @@
     // and store enough state information to restore your extension to its current state
     // in case it is terminated later.
 }
+
 static NSURL *receivedURL;
 
 -(void)didReceiveMessage:(MSMessage *)message conversation:(MSConversation *)conversation
@@ -475,13 +470,20 @@ static NSURL *receivedURL;
     
     NSLog(@"RECEIVED MESSAGE");
     
-    MSMessageTemplateLayout *templateLayout = (MSMessageTemplateLayout*) message.layout;
+    NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:[message URL] resolvingAgainstBaseURL:NO];
     
-    NSLog(@"%@", templateLayout ? @"GOT TEMPLATE" : @"NO TEMPLATE");
-    receivedURL = [templateLayout mediaFileURL];
-    if([[NSFileManager defaultManager] fileExistsAtPath:[[templateLayout mediaFileURL] path]]) {
-        NSLog(@"GOT IT!!L :%@", [[templateLayout mediaFileURL] path]);
+    NSString *messageID = @"";
+    for(NSURLQueryItem *queryItem in [urlComponents queryItems]) {
+        if([[queryItem name] isEqualToString:@"message_id"]) {
+            messageID = [queryItem value];
+        }
     }
+
+    MSMessageTemplateLayout *templateLayout = (MSMessageTemplateLayout*) message.layout;
+    receivedURL = [templateLayout mediaFileURL];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:[receivedURL path] forKey:messageID];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void) didStartSendingMessage:(MSMessage *)message conversation:(MSConversation *)conversation
