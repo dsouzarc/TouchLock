@@ -13,6 +13,7 @@
 
 #import "QBImagePickerController.h"
 #import "MWPhotoBrowser.h"
+#import "MBProgressHUD.h"
 
 #import "CompactDefaultView.h"
 #import "ExpandedDefaultView.h"

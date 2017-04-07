@@ -14,6 +14,8 @@
 @property (strong, nonatomic) CompactDefaultView *compactDefaultView;
 @property (strong, nonatomic) ExpandedDefaultView *expandedDefaultView;
 
+@property (strong, nonatomic) MBProgressHUD *loadingHUD;
+
 @property (strong, nonatomic) QBImagePickerController *imagePickerController;
 
 @property (strong, nonatomic) MWPhotoBrowser *photoBrowserViewController;
@@ -41,6 +43,9 @@
 
 - (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didFinishPickingAssets:(NSArray *)assets
 {
+    const int totalNumberOfItems = (int) [assets count];
+    
+    [self showLoadingHUDWithText:[NSString stringWithFormat:@"Compressing & Encrypting %d objects", totalNumberOfItems]];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(void) {
         
@@ -56,7 +61,6 @@
         
         __block int numberOfVideosSaved = 0;
         __block int numberOfOtherMediaSaved = 0;
-        const int totalNumberOfItems = (int) [assets count];
         
         //Set up folders for temporarily saving everything
         NSError *error;
@@ -77,7 +81,7 @@
         
         
         //Let's save all the photos and videos to this temporary directory
-    
+        
         for(PHAsset *asset in assets) {
             
             NSLog(@"Going through asset");
@@ -85,19 +89,19 @@
             if([asset mediaType] == PHAssetMediaTypeImage) {
                 
                 [photoManager requestImageForAsset:asset
-                                   targetSize:PHImageManagerMaximumSize
-                                  contentMode:PHImageContentModeDefault
-                                      options:photoRequestOptions
-                                resultHandler:^(UIImage *originalImage, NSDictionary *info) {
-                                    
-                                    NSString *imageFileName = [NSString stringWithFormat:@"%@.png", [[NSUUID UUID] UUIDString]];
-                                    NSData *pngImageData = UIImagePNGRepresentation(originalImage);
-                                    [pngImageData writeToFile:[currentSendImagesFolder stringByAppendingPathComponent:imageFileName] atomically:YES];
-                                    
-                                    NSLog(@"Finished photo");
-                                    
-                                    numberOfOtherMediaSaved++;
-                                }
+                                        targetSize:PHImageManagerMaximumSize
+                                       contentMode:PHImageContentModeDefault
+                                           options:photoRequestOptions
+                                     resultHandler:^(UIImage *originalImage, NSDictionary *info) {
+                                         
+                                         NSString *imageFileName = [NSString stringWithFormat:@"%@.png", [[NSUUID UUID] UUIDString]];
+                                         NSData *pngImageData = UIImagePNGRepresentation(originalImage);
+                                         [pngImageData writeToFile:[currentSendImagesFolder stringByAppendingPathComponent:imageFileName] atomically:YES];
+                                         
+                                         NSLog(@"Finished photo");
+                                         
+                                         numberOfOtherMediaSaved++;
+                                     }
                  ];
             }
             
@@ -125,21 +129,21 @@
                 
                 
                 /*[photoManager requestExportSessionForVideo:asset
-                                                   options:videoRequestOptions
-                                              exportPreset:AVAssetExportPreset3840x2160
-                                             resultHandler:^(AVAssetExportSession * _Nullable exportSession, NSDictionary * _Nullable info) {
-                                                 
-                                                 NSString *videoFileName = [NSString stringWithFormat:@"%@.MOV", [[NSUUID UUID] UUIDString]];
-                                                 NSURL *videoFilePath = [NSURL fileURLWithPath:[currentSendVideosFolder stringByAppendingPathComponent:videoFileName]];
-                                                 
-                                                 exportSession.outputFileType = AVFileTypeQuickTimeMovie;
-                                                 exportSession.outputURL = videoFilePath;
-                                                 
-                                                 [exportSession exportAsynchronouslyWithCompletionHandler:^{
-                                                     
-                                                 }];
-                                                 
-                                             }
+                 options:videoRequestOptions
+                 exportPreset:AVAssetExportPreset3840x2160
+                 resultHandler:^(AVAssetExportSession * _Nullable exportSession, NSDictionary * _Nullable info) {
+                 
+                 NSString *videoFileName = [NSString stringWithFormat:@"%@.MOV", [[NSUUID UUID] UUIDString]];
+                 NSURL *videoFilePath = [NSURL fileURLWithPath:[currentSendVideosFolder stringByAppendingPathComponent:videoFileName]];
+                 
+                 exportSession.outputFileType = AVFileTypeQuickTimeMovie;
+                 exportSession.outputURL = videoFilePath;
+                 
+                 [exportSession exportAsynchronouslyWithCompletionHandler:^{
+                 
+                 }];
+                 
+                 }
                  ];*/
             }
             
@@ -197,7 +201,7 @@
         message.layout = messageLayout;
         message.URL = urlComponents.URL;
         message.summaryText = @"Summary!";
-
+        
         dispatch_async(dispatch_get_main_queue(), ^(void) {
             
             [self.activeConversation insertMessage:message
@@ -207,22 +211,20 @@
                                      }
                                      
                                      dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(void) {
-                                        
+                                         
                                          NSError *deleteError;
                                          [fileManager removeItemAtPath:currentSendZIPPath error:&deleteError];
                                      });
                                  }
              ];
             
+            [self hideLoadingHUD];
             [[self.imagePickerController view] removeFromSuperview];
             
         });
         
         [fileManager removeItemAtPath:currentSendFolder error:&error];
-        
     });
-
-    [[self.imagePickerController view] removeFromSuperview];
 }
 
 - (void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController
@@ -335,8 +337,6 @@
 - (void) willSelectMessage:(MSMessage *)message conversation:(MSConversation *)conversation
 {
     NSLog(@"ABOUT TO SELECT MESSAGE!!");
-    
-    
 }
 
 
@@ -354,7 +354,6 @@
     NSLog(@"ACTIVE NOW");
     
     if([conversation selectedMessage]) {
-        NSLog(@"FOUND MESSAGE");
         
         NSError *error;
         
@@ -379,7 +378,7 @@
                 NSLog(@"IN ACTIVE WITH ID: %@", messageID);
             }
         }
-    
+        
         NSString *documentsDirectory = [Constants getDocumentsDirectory];
         NSString *zippedFilePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.zip", fileName]];
         NSString *unzippedFolderPath = [documentsDirectory stringByAppendingPathComponent:fileName];
@@ -387,7 +386,14 @@
         NSString *currentImagesFolder = [unzippedFolderPath stringByAppendingPathComponent:@"images"];
         NSString *currentVideosFolder = [unzippedFolderPath stringByAppendingPathComponent:@"videos"];
         
-        NSURL *zipFileURL = [NSURL fileURLWithPath:[[NSUserDefaults standardUserDefaults] objectForKey:messageID]];
+        NSString *zipFilePath = [[NSUserDefaults standardUserDefaults] objectForKey:messageID];
+        while(!zipFilePath) {
+            NSLog(@"Tried to get zipped file. Now waiting");
+            sleep(1);
+            zipFilePath = [[NSUserDefaults standardUserDefaults] objectForKey:messageID];
+        }
+        
+        NSURL *zipFileURL = [NSURL fileURLWithPath:zipFilePath];
         NSData *decryptedData = [RNDecryptor decryptData:[NSData dataWithContentsOfURL:zipFileURL]
                                             withPassword:encryptionKey
                                                    error:&error];
@@ -408,7 +414,6 @@
         
         NSArray *receivedImages = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:currentImagesFolder error:&error];
         NSArray *receivedVideos = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:currentVideosFolder error:&error];
-        
         
         if(receivedImages) {
             for(NSString *fileName in receivedImages) {
@@ -457,7 +462,6 @@
         NSLog(@"RECEIVING MEDIA ARRAY SIZE: %ld", [self.receivingMediaArray count]);
         
         NSLog(@"RECEIVED: %d\t%d", numberOfImages, numberOfVideos);
-       
         
         self.photoBrowserViewController = [[MWPhotoBrowser alloc] initWithPhotos:self.receivingMediaArray];
         self.photoBrowserViewController.delegate = self;
@@ -473,9 +477,9 @@
         self.photoBrowserViewController.autoPlayOnAppear = NO;
         
         UIView *photoBrowserView = [self.photoBrowserViewController view];
-    
+        
         [self.view addSubview:photoBrowserView];
-        [photoBrowserView setFrame:CGRectMake(0, 80, self.view.frame.size.width, self.view.frame.size.height - 80)];
+        [photoBrowserView setFrame:CGRectMake(0, 80, self.view.frame.size.width, self.view.frame.size.height - 120)];
         [photoBrowserView setClipsToBounds:YES];
         [photoBrowserView sizeToFit];
         [self.view setAutoresizesSubviews:YES];
@@ -570,7 +574,7 @@ static NSURL *receivedURL;
             messageID = [queryItem value];
         }
     }
-
+    
     MSMessageTemplateLayout *templateLayout = (MSMessageTemplateLayout*) message.layout;
     receivedURL = [templateLayout mediaFileURL];
     
@@ -581,7 +585,7 @@ static NSURL *receivedURL;
 - (void) didStartSendingMessage:(MSMessage *)message conversation:(MSConversation *)conversation
 {
     // Called when the user taps the send button.
-
+    
     [super didStartSendingMessage:message conversation:conversation];
     
 }
@@ -606,6 +610,46 @@ static NSURL *receivedURL;
         NSLog(@"TRANSITIONING TO SHOW COMPACT");
         [self showCompactDefaultView];
     }
+}
+
+/****************************************************************
+ *
+ *              Loading HUD
+ *
+ *****************************************************************/
+
+# pragma mark Loading HUD
+
+- (void) showLoadingHUD
+{
+    [self showLoadingHUDWithText:@"Loading"];
+}
+
+- (void) showLoadingHUDWithText:(NSString*)text
+{
+    if(self.loadingHUD) {
+        [self.loadingHUD removeFromSuperview];
+    }
+    
+    
+    self.loadingHUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    self.loadingHUD.mode = MBProgressHUDModeIndeterminate;
+    [self.loadingHUD setLabelText:text];
+    [self.loadingHUD show:YES];
+    //[self.loadingHUD showAnimated:YES whileExecutingBlock:nil];
+    [self.loadingHUD setRemoveFromSuperViewOnHide:YES];
+}
+
+- (void) hideLoadingHUD
+{
+    if(!self.loadingHUD) {
+        return;
+    }
+    
+    [self.loadingHUD setRemoveFromSuperViewOnHide:YES];
+    [self.loadingHUD hide:YES];
+    
+    self.loadingHUD = nil;
 }
 
 @end
