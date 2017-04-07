@@ -11,6 +11,8 @@
 
 @interface Constants : NSObject
 
++ (UIImage*) thumbnailImageForVideo:(NSURL *)videoURL atTime:(NSTimeInterval)time;
+
 + (NSArray*) getPHAssetCollectionSubtypes;
 
 + (NSString*) getDocumentsDirectory;
