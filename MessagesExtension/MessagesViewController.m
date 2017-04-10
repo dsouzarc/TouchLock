@@ -173,7 +173,8 @@
         NSURLQueryItem *encryptionItem = [[NSURLQueryItem alloc] initWithName:@"encryption_key" value:encryptionKey];
         NSURLQueryItem *sendNameItem = [[NSURLQueryItem alloc] initWithName:@"send_name" value:currentSendName];
         NSURLQueryItem *messageIDItem = [[NSURLQueryItem alloc] initWithName:@"message_id" value:[[NSUUID UUID] UUIDString]];
-        [urlComponents setQueryItems:@[encryptionItem, sendNameItem, messageIDItem]];
+        NSURLQueryItem *numberOfItems = [[NSURLQueryItem alloc] initWithName:@"num_attachments" value:[NSString stringWithFormat:@"%d", totalNumberOfItems]];
+        [urlComponents setQueryItems:@[encryptionItem, sendNameItem, messageIDItem, numberOfItems]];
         
         NSLog(@"SEND ZIP: %@", messageAttachments.pathToZippedAttachment);
         
@@ -399,7 +400,7 @@
     NSLog(@"DID SELECT - ANALYZING NOW");
 }
 
--(void)didBecomeActiveWithConversation:(MSConversation *)conversation
+- (void) didBecomeActiveWithConversation:(MSConversation *)conversation
 {
     // Called when the extension is about to move from the inactive to active state.
     // This will happen when the extension is about to present UI.
@@ -409,14 +410,13 @@
     
     if([conversation selectedMessage]) {
         
-        NSError *error;
-        
         MSMessage *message = [conversation selectedMessage];
         NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:[message URL] resolvingAgainstBaseURL:NO];
         
         NSString *encryptionKey = @"";
         NSString *fileName = @"";
         NSString *messageID = @"";
+        int numberOfAttachments = 0;
         
         for(NSURLQueryItem *queryItem in [urlComponents queryItems]) {
             if([[queryItem name] isEqualToString:@"encryption_key"]) {
@@ -429,122 +429,134 @@
             
             else if([[queryItem name] isEqualToString:@"message_id"]) {
                 messageID = [queryItem value];
-                NSLog(@"IN ACTIVE WITH ID: %@", messageID);
+            }
+            
+            else if([[queryItem name] isEqualToString:@"num_attachments"]) {
+                numberOfAttachments = [[queryItem value] intValue];
             }
         }
         
-        NSString *zipFilePath = [[NSUserDefaults standardUserDefaults] objectForKey:messageID];
-        while(!zipFilePath) {
-            NSLog(@"Tried to get zipped file. Now waiting");
-            sleep(1);
-            zipFilePath = [[NSUserDefaults standardUserDefaults] objectForKey:messageID];
+        if(numberOfAttachments == 1) {
+            [self showLoadingHUDWithText:@"Decrypting 1 Attachment"];
+        } else {
+            [self showLoadingHUDWithText:[NSString stringWithFormat:@"Decrypting %d Attachments", numberOfAttachments]];
         }
-        
-        NSURL *zipFileURL = [NSURL fileURLWithPath:zipFilePath];
-        NSData *decryptedData = [RNDecryptor decryptData:[NSData dataWithContentsOfURL:zipFileURL]
-                                            withPassword:encryptionKey
-                                                   error:&error];
-        
-        if(error || !decryptedData) {
-            NSLog(@"ERROR DECRYPTING: %@", [error description]);
-        }
-        
-        self.currentlyOpenMessageAttachment = [[MessageAttachments alloc] initWithAttachmentName:fileName];
-        
-        [decryptedData writeToFile:self.currentlyOpenMessageAttachment.pathToZippedAttachment atomically:YES];
-        decryptedData = nil;
-        
-        [SSZipArchive unzipFileAtPath:self.currentlyOpenMessageAttachment.pathToZippedAttachment toDestination:self.currentlyOpenMessageAttachment.pathToUnzippedAttachment];
-        
-        //Delete the ".zip" file
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
-            [[NSFileManager defaultManager] removeItemAtPath:self.currentlyOpenMessageAttachment.pathToZippedAttachment error:nil];
-        });
-        
-        int numberOfImages = (int) [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:self.currentlyOpenMessageAttachment.pathToImagesFolder error:&error] count];
-        int numberOfVideos = (int) [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:self.currentlyOpenMessageAttachment.pathToVideosFolder error:&error] count];
         
         self.receivingMediaArray = [[NSMutableArray alloc] init];
         
-        NSArray *receivedImages = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:self.currentlyOpenMessageAttachment.pathToImagesFolder error:&error];
-        NSArray *receivedVideos = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:self.currentlyOpenMessageAttachment.pathToVideosFolder error:&error];
-        
-        if(receivedImages) {
-            for(NSString *fileName in receivedImages) {
-                if(![fileName isEqualToString:@".DS_Store"]) {
-                    NSString *filePath = [self.currentlyOpenMessageAttachment.pathToImagesFolder stringByAppendingPathComponent:fileName];
-                    
-                    NSLog(@"GOING THROUGH PHOTO: %@", filePath);
-                    
-                    //MWPhoto *photo = [MWPhoto photoWithURL:[NSURL fileURLWithPath:filePath]];
-                    MWPhoto *photo = [MWPhoto photoWithImage:[UIImage imageWithContentsOfFile:filePath]];
-                    
-                    if([UIImage imageWithContentsOfFile:filePath] && photo) {
-                        NSLog(@"CREATED ");
-                    } else {
-                        NSLog(@"ERROR CREATING");
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(void) {
+            
+            NSError *error;
+            
+            NSString *zipFilePath = [[NSUserDefaults standardUserDefaults] objectForKey:messageID];
+            while(!zipFilePath) {
+                NSLog(@"Tried to get zipped file. Now waiting");
+                sleep(0.5);
+                zipFilePath = [[NSUserDefaults standardUserDefaults] objectForKey:messageID];
+            }
+            
+            NSURL *zipFileURL = [NSURL fileURLWithPath:zipFilePath];
+            NSData *decryptedData = [RNDecryptor decryptData:[NSData dataWithContentsOfURL:zipFileURL]
+                                                withPassword:encryptionKey
+                                                       error:&error];
+            
+            if(error || !decryptedData) {
+                NSLog(@"ERROR DECRYPTING: %@", [error description]);
+            }
+            
+            self.currentlyOpenMessageAttachment = [[MessageAttachments alloc] initWithAttachmentName:fileName];
+            
+            [decryptedData writeToFile:self.currentlyOpenMessageAttachment.pathToZippedAttachment atomically:YES];
+            decryptedData = nil;
+            
+            [SSZipArchive unzipFileAtPath:self.currentlyOpenMessageAttachment.pathToZippedAttachment toDestination:self.currentlyOpenMessageAttachment.pathToUnzippedAttachment];
+            
+            //Delete the ".zip" file
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
+                [[NSFileManager defaultManager] removeItemAtPath:self.currentlyOpenMessageAttachment.pathToZippedAttachment error:nil];
+            });
+            
+            int numberOfImages = (int) [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:self.currentlyOpenMessageAttachment.pathToImagesFolder error:&error] count];
+            int numberOfVideos = (int) [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:self.currentlyOpenMessageAttachment.pathToVideosFolder error:&error] count];
+            
+            NSArray *receivedImages = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:self.currentlyOpenMessageAttachment.pathToImagesFolder error:&error];
+            NSArray *receivedVideos = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:self.currentlyOpenMessageAttachment.pathToVideosFolder error:&error];
+            
+            if(receivedImages) {
+                for(NSString *fileName in receivedImages) {
+                    if(![fileName isEqualToString:@".DS_Store"]) {
+                        NSString *filePath = [self.currentlyOpenMessageAttachment.pathToImagesFolder stringByAppendingPathComponent:fileName];
+                        
+                        NSLog(@"GOING THROUGH PHOTO: %@", filePath);
+                        
+                        //MWPhoto *photo = [MWPhoto photoWithURL:[NSURL fileURLWithPath:filePath]];
+                        MWPhoto *photo = [MWPhoto photoWithImage:[UIImage imageWithContentsOfFile:filePath]];
+                        
+                        if([UIImage imageWithContentsOfFile:filePath] && photo) {
+                            NSLog(@"CREATED ");
+                        } else {
+                            NSLog(@"ERROR CREATING");
+                        }
+                        
+                        [self.receivingMediaArray addObject:photo];
                     }
-                    
-                    [self.receivingMediaArray addObject:photo];
                 }
             }
-        }
-        
-        if(receivedVideos) {
-            for(NSString *fileName in receivedVideos) {
+            
+            if(receivedVideos) {
+                for(NSString *fileName in receivedVideos) {
+                    
+                    if(![fileName isEqualToString:@".DS_Store"]) {
+                        
+                        NSString *filePath = [self.currentlyOpenMessageAttachment.pathToVideosFolder stringByAppendingPathComponent:fileName];
+                        
+                        
+                        NSLog(@"GOING THROUGH VIDEO: %@", filePath);
+                        
+                        NSURL *videoFilePath = [NSURL fileURLWithPath:filePath];
+                        
+                        UIImage *firstFrame = [Constants thumbnailImageForVideo:videoFilePath atTime:0.1];
+                        
+                        MWPhoto *video = [MWPhoto photoWithImage:firstFrame];
+                        video.videoURL = videoFilePath;
+                        video.isVideo = YES;
+                        
+                        [self.receivingMediaArray addObject:video];
+                    }
+                }
+            }
+            
+            NSLog(@"RECEIVING MEDIA ARRAY SIZE: %ld", [self.receivingMediaArray count]);
+            
+            NSLog(@"RECEIVED: %d\t%d", numberOfImages, numberOfVideos);
+            
+            dispatch_async(dispatch_get_main_queue(), ^(void) {
                 
-                if(![fileName isEqualToString:@".DS_Store"]) {
-                    
-                    NSString *filePath = [self.currentlyOpenMessageAttachment.pathToVideosFolder stringByAppendingPathComponent:fileName];
-                    
-                    
-                    NSLog(@"GOING THROUGH VIDEO: %@", filePath);
-                    
-                    NSURL *videoFilePath = [NSURL fileURLWithPath:filePath];
-                    
-                    UIImage *firstFrame = [Constants thumbnailImageForVideo:videoFilePath atTime:0.1];
-                    
-                    MWPhoto *video = [MWPhoto photoWithImage:firstFrame];
-                    video.videoURL = videoFilePath;
-                    video.isVideo = YES;
-                    
-                    [self.receivingMediaArray addObject:video];
-                }
-            }
-        }
-        
-        NSLog(@"RECEIVING MEDIA ARRAY SIZE: %ld", [self.receivingMediaArray count]);
-        
-        NSLog(@"RECEIVED: %d\t%d", numberOfImages, numberOfVideos);
-        
-        self.photoBrowserViewController = [[MWPhotoBrowser alloc] initWithPhotos:self.receivingMediaArray];
-        self.photoBrowserViewController.delegate = self;
-        
-        // Set options
-        self.photoBrowserViewController.displayActionButton = YES;
-        self.photoBrowserViewController.displayNavArrows = YES;
-        self.photoBrowserViewController.displaySelectionButtons = NO;
-        self.photoBrowserViewController.zoomPhotosToFill = YES;
-        self.photoBrowserViewController.alwaysShowControls = YES;
-        self.photoBrowserViewController.enableGrid = YES;
-        self.photoBrowserViewController.startOnGrid = YES;
-        self.photoBrowserViewController.autoPlayOnAppear = NO;
-        
-        UIView *photoBrowserView = [self.photoBrowserViewController view];
-        
-        [self.view addSubview:photoBrowserView];
-        [photoBrowserView setFrame:CGRectMake(0, 80, self.view.frame.size.width, self.view.frame.size.height - 120)];
-        [photoBrowserView setClipsToBounds:YES];
-        [photoBrowserView sizeToFit];
-        [self.view setAutoresizesSubviews:YES];
-        
-        
-        // Manipulate
-        //[self.photoBrowserViewController showNextPhotoAnimated:YES];
-        //[self.photoBrowserViewController showPreviousPhotoAnimated:YES];
-        
+                self.photoBrowserViewController = [[MWPhotoBrowser alloc] initWithPhotos:self.receivingMediaArray];
+                self.photoBrowserViewController.delegate = self;
+                
+                // Set options
+                self.photoBrowserViewController.displayActionButton = YES;
+                self.photoBrowserViewController.displayNavArrows = YES;
+                self.photoBrowserViewController.displaySelectionButtons = NO;
+                self.photoBrowserViewController.zoomPhotosToFill = YES;
+                self.photoBrowserViewController.alwaysShowControls = YES;
+                self.photoBrowserViewController.enableGrid = YES;
+                self.photoBrowserViewController.startOnGrid = YES;
+                self.photoBrowserViewController.autoPlayOnAppear = NO;
+                
+                UIView *photoBrowserView = [self.photoBrowserViewController view];
+                
+                [self.view addSubview:photoBrowserView];
+                [photoBrowserView setFrame:CGRectMake(0, 80, self.view.frame.size.width, self.view.frame.size.height - 120)];
+                [photoBrowserView setClipsToBounds:YES];
+                [photoBrowserView sizeToFit];
+                [self.view setAutoresizesSubviews:YES];
+                
+                [self hideLoadingHUD];
+            });
+        });
     }
-    
 }
 
 - (void) willResignActiveWithConversation:(MSConversation *)conversation
