@@ -299,22 +299,25 @@
         self.cameraPickerController = [[UIImagePickerController alloc]init];
         self.cameraPickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
         self.cameraPickerController.delegate = self;
-        self.cameraPickerController.allowsEditing = YES;
+        self.cameraPickerController.allowsEditing = NO;
+        self.cameraPickerController.videoQuality = UIImagePickerControllerQualityTypeHigh;
         
         NSArray *mediaTypes = @[(NSString*) kUTTypeMovie, (NSString*) kUTTypeImage];
         self.cameraPickerController.mediaTypes = mediaTypes;
         
-        [self presentViewController:self.cameraPickerController animated:YES completion:nil];
+        UIView *cameraPickerView = [self.cameraPickerController view];
         
+        [cameraPickerView setFrame:CGRectMake(0, 80, self.view.frame.size.width, self.view.frame.size.height - 120)];
+        [cameraPickerView setClipsToBounds:YES];
+        [cameraPickerView sizeToFit];
+        [self.view setAutoresizesSubviews:YES];
+        
+        [self.view addSubview:cameraPickerView];
     }
     
     else {
         NSLog(@"NO CAMERA");
-        
-        //UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"I'm afraid there's no camera on this device!" delegate:nil cancelButtonTitle:@"Dang!" otherButtonTitles:nil, nil];
-        //[alertView show];
     }
-    
 }
 
 
@@ -333,8 +336,47 @@
 
 - (void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    // grab our movie URL
-    NSURL *chosenMovie = [info objectForKey:UIImagePickerControllerMediaURL];
+    
+    MessageAttachments *messageAttachment = [[MessageAttachments alloc] init];
+    
+    [self showLoadingHUDWithText:@"Compressing attachment"];
+    
+    [[self.imagePickerController view] removeFromSuperview];
+    self.imagePickerController = nil;
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(void) {
+        
+        NSURL *attachmentURL = [info objectForKey:UIImagePickerControllerMediaURL];
+        
+        //Dealing with an image
+        if([[info objectForKey:UIImagePickerControllerMediaType] isEqualToString:(NSString*) kUTTypeImage]) {
+            
+            UIImage *image = [UIImage imageWithContentsOfFile:[attachmentURL path]];
+            NSData *pngImageData = UIImagePNGRepresentation(image);
+            
+            NSString *imageFileName = [NSString stringWithFormat:@"%@.png", [[NSUUID UUID] UUIDString]];
+            NSString *imageFilePath = [messageAttachment.pathToImagesFolder stringByAppendingString:imageFileName];
+            
+            [pngImageData writeToFile:imageFilePath atomically:YES];
+        }
+        
+        //Dealing with a movie
+        else if([[info objectForKey:UIImagePickerControllerMediaType] isEqualToString: (NSString*) kUTTypeMovie]) {
+            
+            NSData *videoData = [NSData dataWithContentsOfURL:attachmentURL];
+            
+            NSString *videofileName = [NSString stringWithFormat:@"%@.mov", [[NSUUID UUID] UUIDString]];
+            NSString *videoFilePath = [messageAttachment.pathToVideosFolder stringByAppendingString:videofileName];
+            
+            [videoData writeToFile:videoFilePath atomically:YES];
+        }
+        
+        NSString *encryptionKey = [Constants generateEncryptionKey];
+        
+        [self sendMessageWithAttachments:messageAttachment encryptionKey:encryptionKey totalNumberOfItems:1];
+        
+    });
+    
     
     // save it to the documents directory (option 1)
     /*NSURL *fileURL = [self grabFileURL:@"video.mov"];
