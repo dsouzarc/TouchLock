@@ -15,11 +15,14 @@
 @property (strong, nonatomic) ExpandedDefaultView *expandedDefaultView;
 
 @property (strong, nonatomic) MBProgressHUD *loadingHUD;
-
 @property (strong, nonatomic) QBImagePickerController *imagePickerController;
 
 @property (strong, nonatomic) MWPhotoBrowser *photoBrowserViewController;
 @property (strong, nonatomic) NSMutableArray *receivingMediaArray;
+
+@property (strong, nonatomic) UIImagePickerController *cameraPickerController;
+
+@property (strong, nonatomic) MessageAttachments *currentlyOpenMessageAttachment;
 
 @end
 
@@ -42,6 +45,7 @@
     
     [self showLoadingHUDWithText:[NSString stringWithFormat:@"Compressing & Encrypting %d objects", totalNumberOfItems]];
     
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(void) {
         
         //Managers
@@ -57,26 +61,10 @@
         __block int numberOfVideosSaved = 0;
         __block int numberOfOtherMediaSaved = 0;
         
-        //Set up folders for temporarily saving everything
-        NSError *error;
-        
-        NSString *documentsDirectory = [Constants getDocumentsDirectory];
         NSString *currentSendName = [Constants getSendFormatUsingCurrentDate];
-        
-        NSString *currentSendZIPPath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.zip", currentSendName]];
-        
-        NSString *currentSendFolder = [documentsDirectory stringByAppendingPathComponent:currentSendName];
-        [fileManager createDirectoryAtPath:currentSendFolder withIntermediateDirectories:YES attributes:nil error:&error];
-        
-        NSString *currentSendImagesFolder = [currentSendFolder stringByAppendingPathComponent:@"images"];
-        [fileManager createDirectoryAtPath:currentSendImagesFolder withIntermediateDirectories:YES attributes:nil error:&error];
-        
-        NSString *currentSendVideosFolder = [currentSendFolder stringByAppendingPathComponent:@"videos"];
-        [fileManager createDirectoryAtPath:currentSendVideosFolder withIntermediateDirectories:YES attributes:nil error:&error];
-        
+        MessageAttachments *messageAttachments = [[MessageAttachments alloc] initWithAttachmentName:currentSendName];
         
         //Let's save all the photos and videos to this temporary directory
-        
         for(PHAsset *asset in assets) {
             
             NSLog(@"Going through asset");
@@ -91,7 +79,7 @@
                                          
                                          NSString *imageFileName = [NSString stringWithFormat:@"%@.png", [[NSUUID UUID] UUIDString]];
                                          NSData *pngImageData = UIImagePNGRepresentation(originalImage);
-                                         [pngImageData writeToFile:[currentSendImagesFolder stringByAppendingPathComponent:imageFileName] atomically:YES];
+                                         [pngImageData writeToFile:[messageAttachments.pathToImagesFolder stringByAppendingPathComponent:imageFileName] atomically:YES];
                                          
                                          NSLog(@"Finished photo");
                                          
@@ -107,7 +95,7 @@
                                        resultHandler:^(AVAsset * _Nullable asset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info) {
                                            
                                            NSString *videoFileName = [NSString stringWithFormat:@"%@.MOV", [[NSUUID UUID] UUIDString]];
-                                           NSURL *videoFileURL = [NSURL fileURLWithPath:[currentSendVideosFolder stringByAppendingPathComponent:videoFileName]];
+                                           NSURL *videoFileURL = [NSURL fileURLWithPath:[messageAttachments.pathToVideosFolder stringByAppendingPathComponent:videoFileName]];
                                            
                                            NSError *error;
                                            AVURLAsset *videoURLAsset = (AVURLAsset*) asset;
@@ -158,9 +146,10 @@
         }
         
         
-        [SSZipArchive createZipFileAtPath:currentSendZIPPath withContentsOfDirectory:currentSendFolder];
+        [SSZipArchive createZipFileAtPath:messageAttachments.pathToZippedAttachment withContentsOfDirectory:messageAttachments.pathToUnzippedAttachment];
         
-        NSData *encryptedData = [RNEncryptor encryptData:[NSData dataWithContentsOfFile:currentSendZIPPath]
+        NSError *error;
+        NSData *encryptedData = [RNEncryptor encryptData:[NSData dataWithContentsOfFile:messageAttachments.pathToZippedAttachment]
                                             withSettings:kRNCryptorAES256Settings
                                                 password:encryptionKey
                                                    error:&error];
@@ -169,7 +158,7 @@
             NSLog(@"ERROR ENCRYPTING MESSAGE: %@: ", [error description]);
         }
         
-        [encryptedData writeToFile:currentSendZIPPath atomically:YES];
+        [encryptedData writeToFile:messageAttachments.pathToZippedAttachment atomically:YES];
         encryptedData = nil;
         
         UIImage *defaultImage = [UIImage imageNamed:@"default_blurred_image.jpg"];
@@ -184,15 +173,13 @@
         NSURLQueryItem *encryptionItem = [[NSURLQueryItem alloc] initWithName:@"encryption_key" value:encryptionKey];
         NSURLQueryItem *sendNameItem = [[NSURLQueryItem alloc] initWithName:@"send_name" value:currentSendName];
         NSURLQueryItem *messageIDItem = [[NSURLQueryItem alloc] initWithName:@"message_id" value:[[NSUUID UUID] UUIDString]];
-        NSLog(@"MESSAGE ID: %@", [messageIDItem value]);
-        
         [urlComponents setQueryItems:@[encryptionItem, sendNameItem, messageIDItem]];
         
-        NSLog(@"SEND ZIP: %@", currentSendZIPPath);
+        NSLog(@"SEND ZIP: %@", messageAttachments.pathToZippedAttachment);
         
         MSSession *messageSession = [[MSSession alloc] init];
         MSMessage *message = [[MSMessage alloc] initWithSession:messageSession];
-        messageLayout.mediaFileURL = [NSURL fileURLWithPath:currentSendZIPPath];
+        messageLayout.mediaFileURL = [NSURL fileURLWithPath:messageAttachments.pathToZippedAttachment];
         message.layout = messageLayout;
         message.URL = urlComponents.URL;
         message.summaryText = @"Summary!";
@@ -208,7 +195,7 @@
                                      dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(void) {
                                          
                                          NSError *deleteError;
-                                         [fileManager removeItemAtPath:currentSendZIPPath error:&deleteError];
+                                         [fileManager removeItemAtPath:messageAttachments.pathToZippedAttachment error:&deleteError];
                                      });
                                  }
              ];
@@ -218,7 +205,7 @@
             
         });
         
-        [fileManager removeItemAtPath:currentSendFolder error:&error];
+        [fileManager removeItemAtPath:messageAttachments.pathToUnzippedAttachment error:&error];
     });
 }
 
@@ -296,6 +283,60 @@
 - (void) pressedTakePhotoButton
 {
     NSLog(@"TAKE PHOTO");
+    
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        
+        self.cameraPickerController = [[UIImagePickerController alloc]init];
+        self.cameraPickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+        self.cameraPickerController.delegate = self;
+        self.cameraPickerController.allowsEditing = YES;
+        
+        NSArray *mediaTypes = @[(NSString*) kUTTypeMovie, (NSString*) kUTTypeImage];
+        self.cameraPickerController.mediaTypes = mediaTypes;
+        
+        [self presentViewController:self.cameraPickerController animated:YES completion:nil];
+        
+    }
+    
+    else {
+        NSLog(@"NO CAMERA");
+        
+        //UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"I'm afraid there's no camera on this device!" delegate:nil cancelButtonTitle:@"Dang!" otherButtonTitles:nil, nil];
+        //[alertView show];
+    }
+    
+}
+
+
+/****************************************************************
+ *
+ *              UIImagePickerController Delegate
+ *
+ *****************************************************************/
+
+# pragma mark UIImagePickerController Delegate
+
+- (void) imagePickerControllerDidCancel:(UIImagePickerController*)picker
+{
+    [self.cameraPickerController dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    // grab our movie URL
+    NSURL *chosenMovie = [info objectForKey:UIImagePickerControllerMediaURL];
+    
+    // save it to the documents directory (option 1)
+    /*NSURL *fileURL = [self grabFileURL:@"video.mov"];
+    NSData *movieData = [NSData dataWithContentsOfURL:chosenMovie];
+    [movieData writeToURL:fileURL atomically:YES];
+    
+    // save it to the Camera Roll (option 2)
+    UISaveVideoAtPathToSavedPhotosAlbum([chosenMovie path], nil, nil, nil);
+    
+    // and dismiss the picker
+    [self dismissViewControllerAnimated:YES completion:nil]; */
+    
 }
 
 
@@ -392,13 +433,6 @@
             }
         }
         
-        NSString *documentsDirectory = [Constants getDocumentsDirectory];
-        NSString *zippedFilePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.zip", fileName]];
-        NSString *unzippedFolderPath = [documentsDirectory stringByAppendingPathComponent:fileName];
-        
-        NSString *currentImagesFolder = [unzippedFolderPath stringByAppendingPathComponent:@"images"];
-        NSString *currentVideosFolder = [unzippedFolderPath stringByAppendingPathComponent:@"videos"];
-        
         NSString *zipFilePath = [[NSUserDefaults standardUserDefaults] objectForKey:messageID];
         while(!zipFilePath) {
             NSLog(@"Tried to get zipped file. Now waiting");
@@ -415,23 +449,30 @@
             NSLog(@"ERROR DECRYPTING: %@", [error description]);
         }
         
-        [decryptedData writeToFile:zippedFilePath atomically:YES];
+        self.currentlyOpenMessageAttachment = [[MessageAttachments alloc] initWithAttachmentName:fileName];
+        
+        [decryptedData writeToFile:self.currentlyOpenMessageAttachment.pathToZippedAttachment atomically:YES];
         decryptedData = nil;
         
-        [SSZipArchive unzipFileAtPath:zippedFilePath toDestination:unzippedFolderPath];
+        [SSZipArchive unzipFileAtPath:self.currentlyOpenMessageAttachment.pathToZippedAttachment toDestination:self.currentlyOpenMessageAttachment.pathToUnzippedAttachment];
         
-        int numberOfImages = (int) [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:currentImagesFolder error:&error] count];
-        int numberOfVideos = (int) [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:currentVideosFolder error:&error] count];
+        //Delete the ".zip" file
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
+            [[NSFileManager defaultManager] removeItemAtPath:self.currentlyOpenMessageAttachment.pathToZippedAttachment error:nil];
+        });
+        
+        int numberOfImages = (int) [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:self.currentlyOpenMessageAttachment.pathToImagesFolder error:&error] count];
+        int numberOfVideos = (int) [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:self.currentlyOpenMessageAttachment.pathToVideosFolder error:&error] count];
         
         self.receivingMediaArray = [[NSMutableArray alloc] init];
         
-        NSArray *receivedImages = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:currentImagesFolder error:&error];
-        NSArray *receivedVideos = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:currentVideosFolder error:&error];
+        NSArray *receivedImages = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:self.currentlyOpenMessageAttachment.pathToImagesFolder error:&error];
+        NSArray *receivedVideos = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:self.currentlyOpenMessageAttachment.pathToVideosFolder error:&error];
         
         if(receivedImages) {
             for(NSString *fileName in receivedImages) {
                 if(![fileName isEqualToString:@".DS_Store"]) {
-                    NSString *filePath = [currentImagesFolder stringByAppendingPathComponent:fileName];
+                    NSString *filePath = [self.currentlyOpenMessageAttachment.pathToImagesFolder stringByAppendingPathComponent:fileName];
                     
                     NSLog(@"GOING THROUGH PHOTO: %@", filePath);
                     
@@ -454,7 +495,7 @@
                 
                 if(![fileName isEqualToString:@".DS_Store"]) {
                     
-                    NSString *filePath = [currentVideosFolder stringByAppendingPathComponent:fileName];
+                    NSString *filePath = [self.currentlyOpenMessageAttachment.pathToVideosFolder stringByAppendingPathComponent:fileName];
                     
                     
                     NSLog(@"GOING THROUGH VIDEO: %@", filePath);
@@ -608,6 +649,26 @@ static NSURL *receivedURL;
     }
     
     return nil;
+}
+
+- (void) photoBrowserDidFinishModalPresentation:(MWPhotoBrowser *)photoBrowser
+{
+    if(self.currentlyOpenMessageAttachment) {
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
+            
+            NSFileManager *defaultManager = [NSFileManager defaultManager];
+            NSError *error;
+        
+            if([defaultManager fileExistsAtPath:self.currentlyOpenMessageAttachment.pathToUnzippedAttachment]) {
+                [defaultManager removeItemAtPath:self.currentlyOpenMessageAttachment.pathToUnzippedAttachment error:&error];
+            }
+            
+            if([defaultManager fileExistsAtPath:self.currentlyOpenMessageAttachment.pathToZippedAttachment]) {
+                [defaultManager removeItemAtPath:self.currentlyOpenMessageAttachment.pathToZippedAttachment error:&error];
+            }
+        });
+    }
 }
 
 

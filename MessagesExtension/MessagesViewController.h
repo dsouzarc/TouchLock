@@ -20,10 +20,12 @@
 
 #import "DefaultViewProtocol.h"
 #import "Constants.h"
+#import "MessageAttachments.h"
+
 #import "RNEncryptor.h"
 #import "RNDecryptor.h"
 #import "SSZipArchive.h"
 
-@interface MessagesViewController : MSMessagesAppViewController<QBImagePickerControllerDelegate, MWPhotoBrowserDelegate, DefaultViewProtocol, UINavigationControllerDelegate>
+@interface MessagesViewController : MSMessagesAppViewController<QBImagePickerControllerDelegate, MWPhotoBrowserDelegate, DefaultViewProtocol, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @end
