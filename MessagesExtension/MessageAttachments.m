@@ -33,6 +33,7 @@
         NSString *documentsDirectory = [Constants getDocumentsDirectory];
         
         //Zipped and Unzipped path locations
+        self.attachmentName = attachmentName;
         self.pathToUnzippedAttachment = [documentsDirectory stringByAppendingPathComponent:attachmentName];
         self.pathToZippedAttachment = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.zip", attachmentName]];
         

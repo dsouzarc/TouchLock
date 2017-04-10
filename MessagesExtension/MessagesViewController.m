@@ -141,72 +141,81 @@
         
         //Since we can't load videos synchronously, wait for the rest to finish
         while((numberOfOtherMediaSaved + numberOfVideosSaved) < totalNumberOfItems) {
-            sleep(1); //100 milliseconds
+            sleep(0.5); //Half a second
             NSLog(@"Sleeping while waiting to process");
         }
         
+        [self sendMessageWithAttachments:messageAttachments encryptionKey:encryptionKey totalNumberOfItems:totalNumberOfItems];
+    });
+}
+
+//SHOULD BE CALLED ON A SIDE THREAD
+- (void) sendMessageWithAttachments:(MessageAttachments*)messageAttachments encryptionKey:(NSString*)encryptionKey totalNumberOfItems:(int)totalNumberOfItems
+{
+    
+    [SSZipArchive createZipFileAtPath:messageAttachments.pathToZippedAttachment withContentsOfDirectory:messageAttachments.pathToUnzippedAttachment];
+    
+    NSError *error;
+    NSData *encryptedData = [RNEncryptor encryptData:[NSData dataWithContentsOfFile:messageAttachments.pathToZippedAttachment]
+                                        withSettings:kRNCryptorAES256Settings
+                                            password:encryptionKey
+                                               error:&error];
+    
+    if(error) {
+        NSLog(@"ERROR ENCRYPTING MESSAGE: %@: ", [error description]);
+    }
+    
+    [encryptedData writeToFile:messageAttachments.pathToZippedAttachment atomically:YES];
+    encryptedData = nil;
+    
+    UIImage *defaultImage = [UIImage imageNamed:@"default_blurred_image.jpg"];
+    
+    MSMessageTemplateLayout *messageLayout = [[MSMessageTemplateLayout alloc] init];
+    //TODO: Implement //messageLayout.image = defaultImage;
+    messageLayout.imageTitle = @"iMessage extension";
+    messageLayout.caption = @"Hello World!";
+    messageLayout.subcaption = @"Sent by Ryan!";
+    
+    NSURLComponents *urlComponents = [[NSURLComponents alloc] init];
+    NSURLQueryItem *encryptionItem = [[NSURLQueryItem alloc] initWithName:@"encryption_key" value:encryptionKey];
+    NSURLQueryItem *sendNameItem = [[NSURLQueryItem alloc] initWithName:@"send_name" value:messageAttachments.attachmentName];
+    NSURLQueryItem *messageIDItem = [[NSURLQueryItem alloc] initWithName:@"message_id" value:[[NSUUID UUID] UUIDString]];
+    NSURLQueryItem *numberOfItems = [[NSURLQueryItem alloc] initWithName:@"num_attachments" value:[NSString stringWithFormat:@"%d", totalNumberOfItems]];
+    [urlComponents setQueryItems:@[encryptionItem, sendNameItem, messageIDItem, numberOfItems]];
+    
+    NSLog(@"SEND ZIP: %@", messageAttachments.pathToZippedAttachment);
+    
+    MSSession *messageSession = [[MSSession alloc] init];
+    MSMessage *message = [[MSMessage alloc] initWithSession:messageSession];
+    messageLayout.mediaFileURL = [NSURL fileURLWithPath:messageAttachments.pathToZippedAttachment];
+    message.layout = messageLayout;
+    message.URL = urlComponents.URL;
+    message.summaryText = @"Summary!";
+    
+    dispatch_async(dispatch_get_main_queue(), ^(void) {
         
-        [SSZipArchive createZipFileAtPath:messageAttachments.pathToZippedAttachment withContentsOfDirectory:messageAttachments.pathToUnzippedAttachment];
-        
-        NSError *error;
-        NSData *encryptedData = [RNEncryptor encryptData:[NSData dataWithContentsOfFile:messageAttachments.pathToZippedAttachment]
-                                            withSettings:kRNCryptorAES256Settings
-                                                password:encryptionKey
-                                                   error:&error];
-        
-        if(error) {
-            NSLog(@"ERROR ENCRYPTING MESSAGE: %@: ", [error description]);
-        }
-        
-        [encryptedData writeToFile:messageAttachments.pathToZippedAttachment atomically:YES];
-        encryptedData = nil;
-        
-        UIImage *defaultImage = [UIImage imageNamed:@"default_blurred_image.jpg"];
-        
-        MSMessageTemplateLayout *messageLayout = [[MSMessageTemplateLayout alloc] init];
-        //TODO: Implement //messageLayout.image = defaultImage;
-        messageLayout.imageTitle = @"iMessage extension";
-        messageLayout.caption = @"Hello World!";
-        messageLayout.subcaption = @"Sent by Ryan!";
-        
-        NSURLComponents *urlComponents = [[NSURLComponents alloc] init];
-        NSURLQueryItem *encryptionItem = [[NSURLQueryItem alloc] initWithName:@"encryption_key" value:encryptionKey];
-        NSURLQueryItem *sendNameItem = [[NSURLQueryItem alloc] initWithName:@"send_name" value:currentSendName];
-        NSURLQueryItem *messageIDItem = [[NSURLQueryItem alloc] initWithName:@"message_id" value:[[NSUUID UUID] UUIDString]];
-        NSURLQueryItem *numberOfItems = [[NSURLQueryItem alloc] initWithName:@"num_attachments" value:[NSString stringWithFormat:@"%d", totalNumberOfItems]];
-        [urlComponents setQueryItems:@[encryptionItem, sendNameItem, messageIDItem, numberOfItems]];
-        
-        NSLog(@"SEND ZIP: %@", messageAttachments.pathToZippedAttachment);
-        
-        MSSession *messageSession = [[MSSession alloc] init];
-        MSMessage *message = [[MSMessage alloc] initWithSession:messageSession];
-        messageLayout.mediaFileURL = [NSURL fileURLWithPath:messageAttachments.pathToZippedAttachment];
-        message.layout = messageLayout;
-        message.URL = urlComponents.URL;
-        message.summaryText = @"Summary!";
-        
-        dispatch_async(dispatch_get_main_queue(), ^(void) {
-            
-            [self.activeConversation insertMessage:message
-                                 completionHandler:^(NSError *error) {
-                                     if(error) {
-                                         NSLog(@"ERROR SENDING HERE: %@", [error localizedDescription]);
-                                     }
-                                     
-                                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(void) {
-                                         
-                                         NSError *deleteError;
-                                         [fileManager removeItemAtPath:messageAttachments.pathToZippedAttachment error:&deleteError];
-                                     });
+        [self.activeConversation insertMessage:message
+                             completionHandler:^(NSError *error) {
+                                 if(error) {
+                                     NSLog(@"ERROR SENDING HERE: %@", [error localizedDescription]);
                                  }
-             ];
-            
-            [self hideLoadingHUD];
-            [[self.imagePickerController view] removeFromSuperview];
-            
-        });
+                                 
+                                 //Delete the zipped/unzipped files after sending
+                                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(void) {
+                                     
+                                     NSError *deleteError;
+                                     [[NSFileManager defaultManager] removeItemAtPath:messageAttachments.pathToZippedAttachment error:&deleteError];
+                                     [[NSFileManager defaultManager] removeItemAtPath:messageAttachments.pathToZippedAttachment error:&deleteError];
+                                 });
+                             }
+         ];
         
-        [fileManager removeItemAtPath:messageAttachments.pathToUnzippedAttachment error:&error];
+        [self hideLoadingHUD];
+        
+        if(self.imagePickerController) {
+            [[self.imagePickerController view] removeFromSuperview];
+            self.imagePickerController = nil;
+        }
     });
 }
 

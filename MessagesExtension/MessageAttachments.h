@@ -20,8 +20,9 @@
 - (instancetype) init;
 - (instancetype) initWithAttachmentName:(NSString*)attachmentName;
 
-@property (strong, nonatomic) NSString *pathToUnzippedAttachment;
+@property (strong, nonatomic) NSString *attachmentName;
 @property (strong, nonatomic) NSString *pathToZippedAttachment;
+@property (strong, nonatomic) NSString *pathToUnzippedAttachment;
 
 @property (strong, nonatomic) NSString *pathToImagesFolder;
 @property (strong, nonatomic) NSString *pathToVideosFolder;
