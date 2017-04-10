@@ -10,7 +10,15 @@
 
 #import "Constants.h"
 
+/**
+ Represents the attributes of a Message Attachment
+ Like the file locations of various media
+ */
+
 @interface MessageAttachments : NSObject
+
+- (instancetype) init;
+- (instancetype) initWithAttachmentName:(NSString*)attachmentName;
 
 @property (strong, nonatomic) NSString *pathToUnzippedAttachment;
 @property (strong, nonatomic) NSString *pathToZippedAttachment;
@@ -18,9 +26,5 @@
 @property (strong, nonatomic) NSString *pathToImagesFolder;
 @property (strong, nonatomic) NSString *pathToVideosFolder;
 @property (strong, nonatomic) NSString *pathToTextFilesFolder;
-
-- (instancetype) init;
-- (instancetype) initWithAttachmentName:(NSString*)attachmentName;
-
 
 @end

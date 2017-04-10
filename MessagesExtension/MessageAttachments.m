@@ -6,6 +6,12 @@
 //  Copyright © 2017 Ryan D'souza. All rights reserved.
 //
 
+/**
+ Represents the attributes of a Message Attachment
+ Like the file locations of various media
+ */
+
+
 #import "MessageAttachments.h"
 
 @implementation MessageAttachments
@@ -26,9 +32,11 @@
         
         NSString *documentsDirectory = [Constants getDocumentsDirectory];
         
+        //Zipped and Unzipped path locations
         self.pathToUnzippedAttachment = [documentsDirectory stringByAppendingPathComponent:attachmentName];
         self.pathToZippedAttachment = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.zip", attachmentName]];
         
+        //To specific media
         self.pathToImagesFolder = [self.pathToUnzippedAttachment stringByAppendingPathComponent:@"images"];
         self.pathToVideosFolder = [self.pathToUnzippedAttachment stringByAppendingPathComponent:@"videos"];
         self.pathToTextFilesFolder = [self.pathToUnzippedAttachment stringByAppendingString:@"text"];
