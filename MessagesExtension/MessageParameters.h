@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+/**
+ Represents the parameters that get sent with each Messge
+*/
+
 @interface MessageParameters : NSObject
 
 - (instancetype) initWithNSURLComponents:(NSURLComponents*)urlComponents;
