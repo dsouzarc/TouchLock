@@ -22,6 +22,8 @@
 
 @property (strong, nonatomic) UIImagePickerController *cameraPickerController;
 
+@property (strong, nonatomic) PrivateTextViewController *privateTextViewController;
+
 @property (strong, nonatomic) MessageAttachments *currentlyOpenMessageAttachment;
 
 @end
@@ -221,6 +223,16 @@
 
 - (void) pressedSendTextButton
 {
+    
+    if([self presentationStyle] == MSMessagesAppPresentationStyleCompact) {
+        [self requestPresentationStyle:MSMessagesAppPresentationStyleExpanded];
+    }
+    
+    self.privateTextViewController = [[PrivateTextViewController alloc] initWithNibName:@"PrivateTextViewController" bundle:[NSBundle mainBundle] messageAttachment:self.currentlyOpenMessageAttachment isOutgoing:YES];
+    
+    [self presentViewController:self.privateTextViewController animated:YES completion:nil];
+    
+    NSLog(@"SHOULD'VE PRESENTD");
     
 }
 

@@ -46,6 +46,9 @@
 		942EE1051E94B7C900E113E0 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 942EE1041E94B7C900E113E0 /* Constants.m */; };
 		94480F591E91B1D5009C0C71 /* secure_text_photo.png in Resources */ = {isa = PBXBuildFile; fileRef = 94480F581E91B1D5009C0C71 /* secure_text_photo.png */; };
 		94A23EBF1E9D5C5D00176FBB /* MessageParameters.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A23EBE1E9D5C5D00176FBB /* MessageParameters.m */; };
+		94A23EC31E9D823E00176FBB /* UIFloatLabelTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A23EC21E9D823E00176FBB /* UIFloatLabelTextView.m */; };
+		94A23ECC1E9D82EE00176FBB /* PrivateTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A23ECA1E9D82EE00176FBB /* PrivateTextViewController.m */; };
+		94A23ECD1E9D82EE00176FBB /* PrivateTextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94A23ECB1E9D82EE00176FBB /* PrivateTextViewController.xib */; };
 		94EE21911E9BE80500DFBBED /* MessageAttachments.m in Sources */ = {isa = PBXBuildFile; fileRef = 94EE21901E9BE80500DFBBED /* MessageAttachments.m */; };
 		94F7D7221E58BF9300CB1B9E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94F7D7211E58BF9300CB1B9E /* Assets.xcassets */; };
 		94F7D7291E58BF9300CB1B9E /* MessagesExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 94F7D7281E58BF9300CB1B9E /* MessagesExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -179,6 +182,11 @@
 		94689D511E91D38B00372712 /* QBImagePickerController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QBImagePickerController.framework; path = "Pods/../build/Debug-iphoneos/QBImagePickerController/QBImagePickerController.framework"; sourceTree = "<group>"; };
 		94A23EBD1E9D5C5D00176FBB /* MessageParameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageParameters.h; sourceTree = "<group>"; };
 		94A23EBE1E9D5C5D00176FBB /* MessageParameters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageParameters.m; sourceTree = "<group>"; };
+		94A23EC11E9D823E00176FBB /* UIFloatLabelTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIFloatLabelTextView.h; sourceTree = "<group>"; };
+		94A23EC21E9D823E00176FBB /* UIFloatLabelTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIFloatLabelTextView.m; sourceTree = "<group>"; };
+		94A23EC91E9D82EE00176FBB /* PrivateTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrivateTextViewController.h; sourceTree = "<group>"; };
+		94A23ECA1E9D82EE00176FBB /* PrivateTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrivateTextViewController.m; sourceTree = "<group>"; };
+		94A23ECB1E9D82EE00176FBB /* PrivateTextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrivateTextViewController.xib; sourceTree = "<group>"; };
 		94EE218F1E9BE80500DFBBED /* MessageAttachments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageAttachments.h; sourceTree = "<group>"; };
 		94EE21901E9BE80500DFBBED /* MessageAttachments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageAttachments.m; sourceTree = "<group>"; };
 		94F7D71E1E58BF9300CB1B9E /* TouchLock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TouchLock.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -339,7 +347,7 @@
 			path = RNCryptor;
 			sourceTree = "<group>";
 		};
-		94A23EBC1E9BEE2400176FBB /* Message Attachments */ = {
+		94A23EBC1E9BEE2400176FBB /* Message Objects */ = {
 			isa = PBXGroup;
 			children = (
 				94EE218F1E9BE80500DFBBED /* MessageAttachments.h */,
@@ -347,7 +355,16 @@
 				94A23EBD1E9D5C5D00176FBB /* MessageParameters.h */,
 				94A23EBE1E9D5C5D00176FBB /* MessageParameters.m */,
 			);
-			name = "Message Attachments";
+			name = "Message Objects";
+			sourceTree = "<group>";
+		};
+		94A23EC01E9D823E00176FBB /* UIFloatLabelTextView */ = {
+			isa = PBXGroup;
+			children = (
+				94A23EC11E9D823E00176FBB /* UIFloatLabelTextView.h */,
+				94A23EC21E9D823E00176FBB /* UIFloatLabelTextView.m */,
+			);
+			path = UIFloatLabelTextView;
 			sourceTree = "<group>";
 		};
 		94F7D7171E58BF9300CB1B9E = {
@@ -400,17 +417,18 @@
 		94F7D72F1E58BF9300CB1B9E /* MessagesExtension */ = {
 			isa = PBXGroup;
 			children = (
-				94A23EBC1E9BEE2400176FBB /* Message Attachments */,
-				94FB16A51E96018E0001D943 /* Constants */,
 				94F7D7301E58BF9300CB1B9E /* MessagesViewController.h */,
 				94F7D7311E58BF9300CB1B9E /* MessagesViewController.m */,
+				94A23EC01E9D823E00176FBB /* UIFloatLabelTextView */,
+				94A23EBC1E9BEE2400176FBB /* Message Objects */,
+				94FB16A51E96018E0001D943 /* Constants */,
+				94F7D7571E58D42E00CB1B9E /* Default Views */,
+				94F7D7331E58BF9300CB1B9E /* MainInterface.storyboard */,
+				94F7D7461E58C4E800CB1B9E /* icons */,
 				940ECCFD1E9464AE00178CB9 /* SSZipArchive */,
 				94231EA21E91F19300214BCF /* RNCryptor iOS */,
 				94231EA51E91F19300214BCF /* RNCryptor */,
 				94231E651E91D3E200214BCF /* QBImagePicker */,
-				94F7D7571E58D42E00CB1B9E /* Default Views */,
-				94F7D7331E58BF9300CB1B9E /* MainInterface.storyboard */,
-				94F7D7461E58C4E800CB1B9E /* icons */,
 				94F7D7381E58BF9300CB1B9E /* Info.plist */,
 				94F7D8001E58EECE00CB1B9E /* MessagesExtension-Bridging-Header.h */,
 			);
@@ -453,6 +471,9 @@
 			isa = PBXGroup;
 			children = (
 				94480F5A1E91C28F009C0C71 /* DefaultViewProtocol.h */,
+				94A23EC91E9D82EE00176FBB /* PrivateTextViewController.h */,
+				94A23ECA1E9D82EE00176FBB /* PrivateTextViewController.m */,
+				94A23ECB1E9D82EE00176FBB /* PrivateTextViewController.xib */,
 				94F7D7561E58D42800CB1B9E /* Expanded */,
 				94F7D7551E58D42100CB1B9E /* Compact */,
 				940ECCFA1E9461D100178CB9 /* ViewMediaViewController.h */,
@@ -593,6 +614,7 @@
 				94F7D7511E58D24500CB1B9E /* ExpandedDefaultView.xib in Resources */,
 				94F7D74C1E58CD7900CB1B9E /* CompactDefaultView.xib in Resources */,
 				94231EA11E91E82300214BCF /* default_blurred_image.jpg in Resources */,
+				94A23ECD1E9D82EE00176FBB /* PrivateTextViewController.xib in Resources */,
 				94231E811E91D3E200214BCF /* QBImagePicker.strings in Resources */,
 				94480F591E91B1D5009C0C71 /* secure_text_photo.png in Resources */,
 				94F7D7351E58BF9300CB1B9E /* MainInterface.storyboard in Resources */,
@@ -696,6 +718,7 @@
 				940ECD261E9464AE00178CB9 /* aestab.c in Sources */,
 				94231EB21E91F19300214BCF /* RNDecryptor.m in Sources */,
 				94231E831E91D3E200214BCF /* QBAlbumsViewController.m in Sources */,
+				94A23EC31E9D823E00176FBB /* UIFloatLabelTextView.m in Sources */,
 				94231E8A1E91D3E200214BCF /* QBVideoIconView.m in Sources */,
 				940ECD2A1E9464AE00178CB9 /* prng.c in Sources */,
 				94F7D7541E58D3A200CB1B9E /* ExpandedDefaultView.m in Sources */,
@@ -718,6 +741,7 @@
 				94EE21911E9BE80500DFBBED /* MessageAttachments.m in Sources */,
 				940ECD241E9464AE00178CB9 /* aescrypt.c in Sources */,
 				94231E8B1E91D3E200214BCF /* QBVideoIndicatorView.m in Sources */,
+				94A23ECC1E9D82EE00176FBB /* PrivateTextViewController.m in Sources */,
 				940ECD271E9464AE00178CB9 /* entropy.c in Sources */,
 				94A23EBF1E9D5C5D00176FBB /* MessageParameters.m in Sources */,
 			);

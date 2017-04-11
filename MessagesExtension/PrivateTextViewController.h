@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+#import "UIFloatLabelTextView.h"
+
+#import "MessageAttachments.h"
+
+
 @interface PrivateTextViewController : UIViewController
+
+- (instancetype) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil messageAttachment:(MessageAttachments*)messageAttachment isOutgoing:(BOOL)isOutgoing;
+
 
 @end

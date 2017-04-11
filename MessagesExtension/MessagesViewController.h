@@ -15,6 +15,7 @@
 #import "MWPhotoBrowser.h"
 #import "MBProgressHUD.h"
 
+#import "PrivateTextViewController.h"
 #import "CompactDefaultView.h"
 #import "ExpandedDefaultView.h"
 

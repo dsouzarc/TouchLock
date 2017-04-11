@@ -1,7 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -14,7 +18,35 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="arQ-yX-pUe" customClass="UIFloatLabelTextView">
+                    <rect key="frame" x="16" y="146" width="343" height="497"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
+                <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dmb-fI-xGl">
+                    <rect key="frame" x="0.0" y="86" width="375" height="44"/>
+                    <items>
+                        <navigationItem title="Title" id="Gh1-SD-xBc">
+                            <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="5ZK-Vc-bLt"/>
+                            <barButtonItem key="rightBarButtonItem" title="Send" id="eKy-XX-V8I"/>
+                        </navigationItem>
+                    </items>
+                </navigationBar>
+            </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="arQ-yX-pUe" secondAttribute="bottom" constant="24" id="36T-ik-3ya"/>
+                <constraint firstAttribute="trailing" secondItem="arQ-yX-pUe" secondAttribute="trailing" constant="16" id="GD7-hd-m87"/>
+                <constraint firstItem="arQ-yX-pUe" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="Lc8-Iv-XnJ"/>
+                <constraint firstItem="Dmb-fI-xGl" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="86" id="Ptb-E3-6op"/>
+                <constraint firstItem="Dmb-fI-xGl" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Z6a-DI-a07"/>
+                <constraint firstItem="arQ-yX-pUe" firstAttribute="top" secondItem="Dmb-fI-xGl" secondAttribute="bottom" constant="16" id="a9q-FM-hsa"/>
+                <constraint firstAttribute="trailing" secondItem="Dmb-fI-xGl" secondAttribute="trailing" id="fhN-m2-OrG"/>
+            </constraints>
+            <point key="canvasLocation" x="25.5" y="52.5"/>
         </view>
     </objects>
 </document>
