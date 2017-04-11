@@ -28,4 +28,6 @@
 @property (strong, nonatomic) NSString *pathToVideosFolder;
 @property (strong, nonatomic) NSString *pathToTextFilesFolder;
 
+@property BOOL isOutgoing;
+
 @end

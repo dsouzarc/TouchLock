@@ -30,10 +30,11 @@
     
     if(self) {
         
-        NSString *documentsDirectory = [Constants getDocumentsDirectory];
+        self.attachmentName = attachmentName;
+        self.isOutgoing = NO;
         
         //Zipped and Unzipped path locations
-        self.attachmentName = attachmentName;
+        NSString *documentsDirectory = [Constants getDocumentsDirectory];
         self.pathToUnzippedAttachment = [documentsDirectory stringByAppendingPathComponent:attachmentName];
         self.pathToZippedAttachment = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.zip", attachmentName]];
         
