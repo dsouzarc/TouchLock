@@ -45,6 +45,7 @@
 		94231EB31E91F19300214BCF /* RNEncryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 94231EAF1E91F19300214BCF /* RNEncryptor.m */; };
 		942EE1051E94B7C900E113E0 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 942EE1041E94B7C900E113E0 /* Constants.m */; };
 		94480F591E91B1D5009C0C71 /* secure_text_photo.png in Resources */ = {isa = PBXBuildFile; fileRef = 94480F581E91B1D5009C0C71 /* secure_text_photo.png */; };
+		94A23EBF1E9D5C5D00176FBB /* MessageParameters.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A23EBE1E9D5C5D00176FBB /* MessageParameters.m */; };
 		94EE21911E9BE80500DFBBED /* MessageAttachments.m in Sources */ = {isa = PBXBuildFile; fileRef = 94EE21901E9BE80500DFBBED /* MessageAttachments.m */; };
 		94F7D7221E58BF9300CB1B9E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94F7D7211E58BF9300CB1B9E /* Assets.xcassets */; };
 		94F7D7291E58BF9300CB1B9E /* MessagesExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 94F7D7281E58BF9300CB1B9E /* MessagesExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -176,6 +177,8 @@
 		94480F581E91B1D5009C0C71 /* secure_text_photo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = secure_text_photo.png; sourceTree = "<group>"; };
 		94480F5A1E91C28F009C0C71 /* DefaultViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultViewProtocol.h; sourceTree = "<group>"; };
 		94689D511E91D38B00372712 /* QBImagePickerController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QBImagePickerController.framework; path = "Pods/../build/Debug-iphoneos/QBImagePickerController/QBImagePickerController.framework"; sourceTree = "<group>"; };
+		94A23EBD1E9D5C5D00176FBB /* MessageParameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageParameters.h; sourceTree = "<group>"; };
+		94A23EBE1E9D5C5D00176FBB /* MessageParameters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageParameters.m; sourceTree = "<group>"; };
 		94EE218F1E9BE80500DFBBED /* MessageAttachments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageAttachments.h; sourceTree = "<group>"; };
 		94EE21901E9BE80500DFBBED /* MessageAttachments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageAttachments.m; sourceTree = "<group>"; };
 		94F7D71E1E58BF9300CB1B9E /* TouchLock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TouchLock.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -341,6 +344,8 @@
 			children = (
 				94EE218F1E9BE80500DFBBED /* MessageAttachments.h */,
 				94EE21901E9BE80500DFBBED /* MessageAttachments.m */,
+				94A23EBD1E9D5C5D00176FBB /* MessageParameters.h */,
+				94A23EBE1E9D5C5D00176FBB /* MessageParameters.m */,
 			);
 			name = "Message Attachments";
 			sourceTree = "<group>";
@@ -714,6 +719,7 @@
 				940ECD241E9464AE00178CB9 /* aescrypt.c in Sources */,
 				94231E8B1E91D3E200214BCF /* QBVideoIndicatorView.m in Sources */,
 				940ECD271E9464AE00178CB9 /* entropy.c in Sources */,
+				94A23EBF1E9D5C5D00176FBB /* MessageParameters.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
