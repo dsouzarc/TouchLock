@@ -458,34 +458,12 @@
         
         MSMessage *message = [conversation selectedMessage];
         NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:[message URL] resolvingAgainstBaseURL:NO];
+        MessageParameters *messageParameters = [[MessageParameters alloc] initWithNSURLComponents:urlComponents];
         
-        NSString *encryptionKey = @"";
-        NSString *fileName = @"";
-        NSString *messageID = @"";
-        int numberOfAttachments = 0;
-        
-        for(NSURLQueryItem *queryItem in [urlComponents queryItems]) {
-            if([[queryItem name] isEqualToString:@"encryption_key"]) {
-                encryptionKey = [queryItem value];
-            }
-            
-            else if([[queryItem name] isEqualToString:@"send_name"]) {
-                fileName = [queryItem value];
-            }
-            
-            else if([[queryItem name] isEqualToString:@"message_id"]) {
-                messageID = [queryItem value];
-            }
-            
-            else if([[queryItem name] isEqualToString:@"num_attachments"]) {
-                numberOfAttachments = [[queryItem value] intValue];
-            }
-        }
-        
-        if(numberOfAttachments == 1) {
+        if(messageParameters.numberOfItems == 1) {
             [self showLoadingHUDWithText:@"Decrypting 1 Attachment"];
         } else {
-            [self showLoadingHUDWithText:[NSString stringWithFormat:@"Decrypting %d Attachments", numberOfAttachments]];
+            [self showLoadingHUDWithText:[NSString stringWithFormat:@"Decrypting %d Attachments", messageParameters.numberOfItems]];
         }
         
         self.receivingMediaArray = [[NSMutableArray alloc] init];
@@ -493,24 +471,24 @@
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(void) {
             
             NSError *error;
-            NSString *zipFilePath = [[NSUserDefaults standardUserDefaults] objectForKey:messageID];
+            NSString *zipFilePath = [[NSUserDefaults standardUserDefaults] objectForKey:messageParameters.messageID];
             
             while(!zipFilePath) {
                 NSLog(@"Tried to get zipped file. Now waiting");
                 sleep(0.5);
-                zipFilePath = [[NSUserDefaults standardUserDefaults] objectForKey:messageID];
+                zipFilePath = [[NSUserDefaults standardUserDefaults] objectForKey:messageParameters.messageID];
             }
             
             NSURL *zipFileURL = [NSURL fileURLWithPath:zipFilePath];
             NSData *decryptedData = [RNDecryptor decryptData:[NSData dataWithContentsOfURL:zipFileURL]
-                                                withPassword:encryptionKey
+                                                withPassword:messageParameters.encryptionKey
                                                        error:&error];
             
             if(error || !decryptedData) {
                 NSLog(@"ERROR DECRYPTING: %@", [error description]);
             }
             
-            self.currentlyOpenMessageAttachment = [[MessageAttachments alloc] initWithAttachmentName:fileName];
+            self.currentlyOpenMessageAttachment = [[MessageAttachments alloc] initWithAttachmentName:messageParameters.attachmentName];
             
             [decryptedData writeToFile:self.currentlyOpenMessageAttachment.pathToZippedAttachment atomically:YES];
             decryptedData = nil;
