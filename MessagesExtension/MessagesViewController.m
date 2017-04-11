@@ -300,6 +300,7 @@
         self.cameraPickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
         self.cameraPickerController.delegate = self;
         self.cameraPickerController.allowsEditing = NO;
+        self.cameraPickerController.videoMaximumDuration = 60 * 60; //>60 minutes
         self.cameraPickerController.videoQuality = UIImagePickerControllerQualityTypeHigh;
         
         NSArray *mediaTypes = @[(NSString*) kUTTypeMovie, (NSString*) kUTTypeImage];
@@ -336,7 +337,6 @@
 
 - (void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    
     MessageAttachments *messageAttachment = [[MessageAttachments alloc] init];
     
     [self showLoadingHUDWithText:@"Compressing attachment"];
@@ -346,29 +346,29 @@
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(void) {
         
-        NSURL *attachmentURL = [info objectForKey:UIImagePickerControllerMediaURL];
-        
         //Dealing with an image
         if([[info objectForKey:UIImagePickerControllerMediaType] isEqualToString:(NSString*) kUTTypeImage]) {
             
-            UIImage *image = [UIImage imageWithContentsOfFile:[attachmentURL path]];
-            NSData *pngImageData = UIImagePNGRepresentation(image);
+            UIImage *originalImage = (UIImage*) [info objectForKey:UIImagePickerControllerOriginalImage];
+            NSData *pngImageData = UIImagePNGRepresentation(originalImage);
             
             NSString *imageFileName = [NSString stringWithFormat:@"%@.png", [[NSUUID UUID] UUIDString]];
-            NSString *imageFilePath = [messageAttachment.pathToImagesFolder stringByAppendingString:imageFileName];
+            NSString *imageFilePath = [messageAttachment.pathToImagesFolder stringByAppendingPathComponent:imageFileName];
             
             [pngImageData writeToFile:imageFilePath atomically:YES];
         }
         
         //Dealing with a movie
-        else if([[info objectForKey:UIImagePickerControllerMediaType] isEqualToString: (NSString*) kUTTypeMovie]) {
+        else if([[info objectForKey:UIImagePickerControllerMediaType] isEqualToString:(NSString*) kUTTypeMovie]) {
             
-            NSData *videoData = [NSData dataWithContentsOfURL:attachmentURL];
+            NSString *recordedMoviePath = [[info objectForKey:UIImagePickerControllerMediaURL] path];
+    
+            NSString *sendVideofileName = [NSString stringWithFormat:@"%@.mov", [[NSUUID UUID] UUIDString]];
+            NSString *sendVideoFilePath = [messageAttachment.pathToVideosFolder stringByAppendingPathComponent:sendVideofileName];
             
-            NSString *videofileName = [NSString stringWithFormat:@"%@.mov", [[NSUUID UUID] UUIDString]];
-            NSString *videoFilePath = [messageAttachment.pathToVideosFolder stringByAppendingString:videofileName];
+            NSError *copyError;
             
-            [videoData writeToFile:videoFilePath atomically:YES];
+            [[NSFileManager defaultManager] copyItemAtPath:recordedMoviePath toPath:sendVideoFilePath error:&copyError];
         }
         
         NSString *encryptionKey = [Constants generateEncryptionKey];
