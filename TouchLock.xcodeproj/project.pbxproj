@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		2020E94E3671D4CEE76A864F /* libPods-MessagesExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A11B09CED37A248174234A4 /* libPods-MessagesExtension.a */; };
 		930922193DF4A69D7FCAD807 /* libPods-TouchLock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE1F77B4BBB7EDEE2CF61050 /* libPods-TouchLock.a */; };
-		940ECCFC1E9461D100178CB9 /* ViewMediaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 940ECCFB1E9461D100178CB9 /* ViewMediaViewController.m */; };
 		940ECD241E9464AE00178CB9 /* aescrypt.c in Sources */ = {isa = PBXBuildFile; fileRef = 940ECD011E9464AE00178CB9 /* aescrypt.c */; };
 		940ECD251E9464AE00178CB9 /* aeskey.c in Sources */ = {isa = PBXBuildFile; fileRef = 940ECD021E9464AE00178CB9 /* aeskey.c */; };
 		940ECD261E9464AE00178CB9 /* aestab.c in Sources */ = {isa = PBXBuildFile; fileRef = 940ECD041E9464AE00178CB9 /* aestab.c */; };
@@ -93,8 +92,6 @@
 		4A11B09CED37A248174234A4 /* libPods-MessagesExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MessagesExtension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A64DDAFF6AFA50ED45728B5 /* Pods-TouchLock.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TouchLock.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TouchLock/Pods-TouchLock.debug.xcconfig"; sourceTree = "<group>"; };
 		78832AC274A43D94D19BC944 /* Pods-MessagesExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MessagesExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MessagesExtension/Pods-MessagesExtension.debug.xcconfig"; sourceTree = "<group>"; };
-		940ECCFA1E9461D100178CB9 /* ViewMediaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewMediaViewController.h; sourceTree = "<group>"; };
-		940ECCFB1E9461D100178CB9 /* ViewMediaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewMediaViewController.m; sourceTree = "<group>"; };
 		940ECCFF1E9464AE00178CB9 /* aes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aes.h; sourceTree = "<group>"; };
 		940ECD001E9464AE00178CB9 /* aes_via_ace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aes_via_ace.h; sourceTree = "<group>"; };
 		940ECD011E9464AE00178CB9 /* aescrypt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aescrypt.c; sourceTree = "<group>"; };
@@ -350,10 +347,8 @@
 		94A23EBC1E9BEE2400176FBB /* Message Objects */ = {
 			isa = PBXGroup;
 			children = (
-				94EE218F1E9BE80500DFBBED /* MessageAttachments.h */,
-				94EE21901E9BE80500DFBBED /* MessageAttachments.m */,
-				94A23EBD1E9D5C5D00176FBB /* MessageParameters.h */,
-				94A23EBE1E9D5C5D00176FBB /* MessageParameters.m */,
+				94A23ED31E9DF37200176FBB /* Attachments */,
+				94A23ED41E9DF37A00176FBB /* Parameters */,
 			);
 			name = "Message Objects";
 			sourceTree = "<group>";
@@ -365,6 +360,44 @@
 				94A23EC21E9D823E00176FBB /* UIFloatLabelTextView.m */,
 			);
 			path = UIFloatLabelTextView;
+			sourceTree = "<group>";
+		};
+		94A23ED21E9DF34300176FBB /* Private Text */ = {
+			isa = PBXGroup;
+			children = (
+				94A23EC91E9D82EE00176FBB /* PrivateTextViewController.h */,
+				94A23ECA1E9D82EE00176FBB /* PrivateTextViewController.m */,
+				94A23ECB1E9D82EE00176FBB /* PrivateTextViewController.xib */,
+			);
+			name = "Private Text";
+			sourceTree = "<group>";
+		};
+		94A23ED31E9DF37200176FBB /* Attachments */ = {
+			isa = PBXGroup;
+			children = (
+				94EE218F1E9BE80500DFBBED /* MessageAttachments.h */,
+				94EE21901E9BE80500DFBBED /* MessageAttachments.m */,
+			);
+			name = Attachments;
+			sourceTree = "<group>";
+		};
+		94A23ED41E9DF37A00176FBB /* Parameters */ = {
+			isa = PBXGroup;
+			children = (
+				94A23EBD1E9D5C5D00176FBB /* MessageParameters.h */,
+				94A23EBE1E9D5C5D00176FBB /* MessageParameters.m */,
+			);
+			name = Parameters;
+			sourceTree = "<group>";
+		};
+		94A23ED51E9DF38D00176FBB /* Miscellaneous */ = {
+			isa = PBXGroup;
+			children = (
+				94F7D7331E58BF9300CB1B9E /* MainInterface.storyboard */,
+				94F7D7381E58BF9300CB1B9E /* Info.plist */,
+				94F7D8001E58EECE00CB1B9E /* MessagesExtension-Bridging-Header.h */,
+			);
+			name = Miscellaneous;
 			sourceTree = "<group>";
 		};
 		94F7D7171E58BF9300CB1B9E = {
@@ -419,18 +452,16 @@
 			children = (
 				94F7D7301E58BF9300CB1B9E /* MessagesViewController.h */,
 				94F7D7311E58BF9300CB1B9E /* MessagesViewController.m */,
-				94A23EC01E9D823E00176FBB /* UIFloatLabelTextView */,
 				94A23EBC1E9BEE2400176FBB /* Message Objects */,
 				94FB16A51E96018E0001D943 /* Constants */,
-				94F7D7571E58D42E00CB1B9E /* Default Views */,
-				94F7D7331E58BF9300CB1B9E /* MainInterface.storyboard */,
+				94F7D7571E58D42E00CB1B9E /* Main Views */,
+				94A23ED51E9DF38D00176FBB /* Miscellaneous */,
 				94F7D7461E58C4E800CB1B9E /* icons */,
+				94A23EC01E9D823E00176FBB /* UIFloatLabelTextView */,
 				940ECCFD1E9464AE00178CB9 /* SSZipArchive */,
 				94231EA21E91F19300214BCF /* RNCryptor iOS */,
 				94231EA51E91F19300214BCF /* RNCryptor */,
 				94231E651E91D3E200214BCF /* QBImagePicker */,
-				94F7D7381E58BF9300CB1B9E /* Info.plist */,
-				94F7D8001E58EECE00CB1B9E /* MessagesExtension-Bridging-Header.h */,
 			);
 			path = MessagesExtension;
 			sourceTree = "<group>";
@@ -467,19 +498,15 @@
 			name = Expanded;
 			sourceTree = "<group>";
 		};
-		94F7D7571E58D42E00CB1B9E /* Default Views */ = {
+		94F7D7571E58D42E00CB1B9E /* Main Views */ = {
 			isa = PBXGroup;
 			children = (
 				94480F5A1E91C28F009C0C71 /* DefaultViewProtocol.h */,
-				94A23EC91E9D82EE00176FBB /* PrivateTextViewController.h */,
-				94A23ECA1E9D82EE00176FBB /* PrivateTextViewController.m */,
-				94A23ECB1E9D82EE00176FBB /* PrivateTextViewController.xib */,
 				94F7D7561E58D42800CB1B9E /* Expanded */,
 				94F7D7551E58D42100CB1B9E /* Compact */,
-				940ECCFA1E9461D100178CB9 /* ViewMediaViewController.h */,
-				940ECCFB1E9461D100178CB9 /* ViewMediaViewController.m */,
+				94A23ED21E9DF34300176FBB /* Private Text */,
 			);
-			name = "Default Views";
+			name = "Main Views";
 			sourceTree = "<group>";
 		};
 		94FB16A51E96018E0001D943 /* Constants */ = {
@@ -733,7 +760,6 @@
 				94231E841E91D3E200214BCF /* QBAssetCell.m in Sources */,
 				940ECD2F1E9464AE00178CB9 /* mztools.c in Sources */,
 				94F7D74F1E58D10100CB1B9E /* CompactDefaultView.m in Sources */,
-				940ECCFC1E9461D100178CB9 /* ViewMediaViewController.m in Sources */,
 				94231EB11E91F19300214BCF /* RNCryptorEngine.m in Sources */,
 				940ECD251E9464AE00178CB9 /* aeskey.c in Sources */,
 				94F7D7321E58BF9300CB1B9E /* MessagesViewController.m in Sources */,

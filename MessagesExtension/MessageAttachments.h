@@ -47,6 +47,8 @@ static NSString *MEDIA_TYPE_KEY = @"mediaTypeKey";
 - (int) numberOfVideosInMetaFileList;
 - (int) numberOfPrivateTextFilesInMetaFileList;
 
+- (NSString*) getAttachmentsDescriptiveString;
+
 - (void) saveMetaFileListToFile;
 - (void) loadMetaFileListFromFile;
 

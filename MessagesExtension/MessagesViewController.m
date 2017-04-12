@@ -69,33 +69,26 @@
 
 - (void) pressedTakePhotoButton
 {
-    NSLog(@"TAKE PHOTO");
-    
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        
-        self.cameraPickerController = [[UIImagePickerController alloc]init];
-        self.cameraPickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
-        self.cameraPickerController.delegate = self;
-        self.cameraPickerController.allowsEditing = NO;
-        self.cameraPickerController.videoMaximumDuration = 60 * 60; //>60 minutes
-        self.cameraPickerController.videoQuality = UIImagePickerControllerQualityTypeHigh;
-        
-        NSArray *mediaTypes = @[(NSString*) kUTTypeMovie, (NSString*) kUTTypeImage];
-        self.cameraPickerController.mediaTypes = mediaTypes;
-        
-        UIView *cameraPickerView = [self.cameraPickerController view];
-        
-        [cameraPickerView setFrame:CGRectMake(0, 80, self.view.frame.size.width, self.view.frame.size.height - 120)];
-        [cameraPickerView setClipsToBounds:YES];
-        [cameraPickerView sizeToFit];
-        [self.view setAutoresizesSubviews:YES];
-        
-        [self.view addSubview:cameraPickerView];
+    if(![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        NSLog(@"NO CAMERA IN TAKE PHOTO");
+        return;
     }
     
-    else {
-        NSLog(@"NO CAMERA");
-    }
+    self.cameraPickerController = [[UIImagePickerController alloc]init];
+    self.cameraPickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+    self.cameraPickerController.delegate = self;
+    self.cameraPickerController.allowsEditing = NO;
+    self.cameraPickerController.videoMaximumDuration = 60 * 60; //>60 minutes
+    self.cameraPickerController.videoQuality = UIImagePickerControllerQualityTypeHigh;
+    self.cameraPickerController.mediaTypes = @[(NSString*) kUTTypeMovie, (NSString*) kUTTypeImage];
+    
+    UIView *cameraPickerView = [self.cameraPickerController view];
+    [cameraPickerView setFrame:CGRectMake(0, 80, self.view.frame.size.width, self.view.frame.size.height - 120)];
+    [cameraPickerView setClipsToBounds:YES];
+    [cameraPickerView sizeToFit];
+    
+    [self.view setAutoresizesSubviews:YES];
+    [self.view addSubview:cameraPickerView];
 }
 
 - (void) pressedChoosePhotoButton
@@ -154,7 +147,12 @@
 {
     const int totalNumberOfItems = (int) [assets count];
     
-    if(totalNumberOfItems == 1) {
+    if(totalNumberOfItems == 0) {
+        [[self.imagePickerController view] removeFromSuperview];
+        self.imagePickerController = nil;
+    }
+    
+    else if(totalNumberOfItems == 1) {
         [self showLoadingHUDWithText:@"Compressing & Encrypting 1 object"];
     }
     
@@ -164,7 +162,6 @@
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(void) {
         
-        //Managers
         NSFileManager *fileManager = [NSFileManager defaultManager];
         PHImageManager *photoManager = [PHImageManager defaultManager];
         
@@ -256,7 +253,7 @@
         
         //Since we can't load videos synchronously, wait for the rest to finish
         while((numberOfOtherMediaSaved + numberOfVideosSaved) < totalNumberOfItems) {
-            sleep(0.5); //Half a second
+            sleep(0.5); //Wait half a second
             NSLog(@"Sleeping while waiting to process");
         }
         
@@ -267,6 +264,7 @@
 - (void) qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController
 {
     [[self.imagePickerController view] removeFromSuperview];
+    self.imagePickerController = nil;
 }
 
 
@@ -282,15 +280,17 @@
 {
     self.privateTextData = messageTextData;
     
+    [self showLoadingHUDWithText:@"Encrypting text file"];
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(void) {
         
         NSString *currentSendName = [Constants getSendFormatUsingCurrentDate];
         MessageAttachments *messageAttachments = [[MessageAttachments alloc] initWithAttachmentName:currentSendName];
         
-        NSString *fileName = [NSString stringWithFormat:@"%@.txt", [[NSUUID UUID] UUIDString]];
+        NSString *fileName = [NSString stringWithFormat:@"%@.out", [[NSUUID UUID] UUIDString]];
         [messageAttachments addPrivateTextFileWithNameToMetaFile:fileName];
-        NSString *filePath = [messageAttachments.pathToUnzippedAttachment stringByAppendingPathComponent:fileName];
         
+        NSString *filePath = [messageAttachments.pathToUnzippedAttachment stringByAppendingPathComponent:fileName];
         [self.privateTextData writeToFile:filePath atomically:YES];
         
         NSString *encryptionKey = [Constants generateEncryptionKey];
@@ -323,9 +323,10 @@
 
 - (void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    MessageAttachments *messageAttachment = [[MessageAttachments alloc] init];
     
     [self showLoadingHUDWithText:@"Compressing attachment"];
+    
+    MessageAttachments *messageAttachment = [[MessageAttachments alloc] init];
     
     [[self.imagePickerController view] removeFromSuperview];
     self.imagePickerController = nil;
@@ -356,14 +357,12 @@
             NSString *sendVideoFilePath = [messageAttachment.pathToUnzippedAttachment stringByAppendingPathComponent:sendVideofileName];
             
             NSError *copyError;
-            
             [[NSFileManager defaultManager] copyItemAtPath:recordedMoviePath toPath:sendVideoFilePath error:&copyError];
         }
         
         NSString *encryptionKey = [Constants generateEncryptionKey];
         
         [self sendMessageWithAttachments:messageAttachment encryptionKey:encryptionKey];
-        
     });
 }
 
@@ -438,8 +437,14 @@
         NSLog(@"ACTIVE NOW AND SELECTED");
         
         MSMessage *message = [conversation selectedMessage];
+        
         NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:[message URL] resolvingAgainstBaseURL:NO];
         MessageParameters *messageParameters = [[MessageParameters alloc] initWithNSURLComponents:urlComponents];
+        
+        if(messageParameters.numberOfItems == 0) {
+            NSLog(@"0 ITEMS IN MESSAGE PARAMETERS FOR: %@", messageParameters.messageID);
+            return;
+        }
         
         if(messageParameters.numberOfItems == 1) {
             [self showLoadingHUDWithText:@"Decrypting 1 Attachment"];
@@ -488,8 +493,6 @@
             //Dealing with textfiles
             if(numberOfPrivateTextFiles > 0) {
                 
-                NSLog(@"SHOWING TEXTFILE");
-                
                 NSString *textFileName;
                 for(NSMutableDictionary *fileAttributes in self.currentlyOpenMessageAttachment.metaFileList) {
                     if([[fileAttributes valueForKey:MEDIA_TYPE_KEY] isEqualToString:PRIVATE_TEXTFILE_IDENTIFIER]) {
@@ -517,6 +520,8 @@
             
             else {
                 
+                NSLog(@"GOING THROUGH MEDIA: %d", [self.currentlyOpenMessageAttachment totalNumberOfAttachments]);
+                
                 for(NSMutableDictionary *fileAttributes in self.currentlyOpenMessageAttachment.metaFileList) {
                     
                     if([[fileAttributes valueForKey:MEDIA_TYPE_KEY] isEqualToString:IMAGE_IDENTIFIER]) {
@@ -525,11 +530,9 @@
                         
                         MWPhoto *photo = [MWPhoto photoWithURL:[NSURL fileURLWithPath:filePath]];
                         [self.receivingMediaArray addObject:photo];
-                        
                     }
                     
                     else if([[fileAttributes valueForKey:MEDIA_TYPE_KEY] isEqualToString:VIDEO_IDENTIFIER]) {
-                        
                         NSString *fileName = [fileAttributes valueForKey:FILE_NAME_KEY];
                         NSString *filePath = [self.currentlyOpenMessageAttachment.pathToUnzippedAttachment stringByAppendingPathComponent:fileName];
                         
@@ -542,7 +545,6 @@
                         video.isVideo = YES;
                         
                         [self.receivingMediaArray addObject:video];
-                        
                     }
                 }
                 
@@ -564,11 +566,11 @@
                     self.photoBrowserViewController.autoPlayOnAppear = NO;
                     
                     UIView *photoBrowserView = [self.photoBrowserViewController view];
-                    
-                    [self.view addSubview:photoBrowserView];
                     [photoBrowserView setFrame:CGRectMake(0, 80, self.view.frame.size.width, self.view.frame.size.height - 120)];
                     [photoBrowserView setClipsToBounds:YES];
                     [photoBrowserView sizeToFit];
+                    
+                    [self.view addSubview:photoBrowserView];
                     [self.view setAutoresizesSubviews:YES];
                     
                     [self hideLoadingHUD];
@@ -593,6 +595,8 @@ static NSURL *receivedURL;
     MSMessageTemplateLayout *templateLayout = (MSMessageTemplateLayout*) message.layout;
     receivedURL = [templateLayout mediaFileURL];
     
+    NSLog(@"RECEIVED MESSAGE WITH ATTACHMENTS: %d\tID: %@", messageParameters.numberOfItems, messageParameters.messageID);
+    
     [[NSUserDefaults standardUserDefaults] setObject:[receivedURL path] forKey:messageParameters.messageID];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
@@ -615,7 +619,7 @@ static NSURL *receivedURL;
             NSError *error;
             [[NSFileManager defaultManager] removeItemAtPath:[self.currentlyOpenMessageAttachment pathToUnzippedAttachment]
                                                        error:&error];
-            
+            NSLog(@"DELETED IN CANCEL");
         });
     }
     
@@ -711,12 +715,10 @@ static NSURL *receivedURL;
         [self.loadingHUD removeFromSuperview];
     }
     
-    
     self.loadingHUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    self.loadingHUD.mode = MBProgressHUDModeIndeterminate;
+    [self.loadingHUD setMode:MBProgressHUDModeIndeterminate];
     [self.loadingHUD setLabelText:text];
     [self.loadingHUD show:YES];
-    //[self.loadingHUD showAnimated:YES whileExecutingBlock:nil];
     [self.loadingHUD setRemoveFromSuperViewOnHide:YES];
 }
 
@@ -783,9 +785,9 @@ static NSURL *receivedURL;
     
     MSMessageTemplateLayout *messageLayout = [[MSMessageTemplateLayout alloc] init];
     //TODO: Implement messageLayout.image = defaultImage;
-    messageLayout.imageTitle = @"iMessage extension";
-    messageLayout.caption = @"Hello World!";
-    messageLayout.subcaption = @"Sent by Ryan!";
+    //messageLayout.imageTitle = @"iMessage extension";
+    messageLayout.caption = @"Encrypted Message";
+    messageLayout.subcaption = [messageAttachments getAttachmentsDescriptiveString];
     messageLayout.mediaFileURL = [NSURL fileURLWithPath:messageAttachments.pathToZippedAttachment];
     
     MessageParameters *messageParameters = [[MessageParameters alloc] initWithEncryptionKey:encryptionKey
@@ -797,9 +799,6 @@ static NSURL *receivedURL;
     MSMessage *message = [[MSMessage alloc] initWithSession:messageSession];
     [message setLayout:messageLayout];
     [message setURL:[[messageParameters generateURLComponents] URL]];
-    message.layout = messageLayout;
-    message.URL = [[messageParameters generateURLComponents] URL];
-    message.summaryText = @"Summary!";
     
     dispatch_async(dispatch_get_main_queue(), ^(void) {
         
@@ -814,7 +813,7 @@ static NSURL *receivedURL;
                                  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(void) {
                                      
                                      NSError *deleteError;
-                                     [[NSFileManager defaultManager] removeItemAtPath:messageAttachments.pathToZippedAttachment error:&deleteError];
+                                     [[NSFileManager defaultManager] removeItemAtPath:messageAttachments.pathToUnzippedAttachment error:&deleteError];
                                      [[NSFileManager defaultManager] removeItemAtPath:messageAttachments.pathToZippedAttachment error:&deleteError];
                                  });
                              }

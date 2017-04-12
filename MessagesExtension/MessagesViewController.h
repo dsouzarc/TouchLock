@@ -6,6 +6,10 @@
 //  Copyright © 2017 Ryan D'souza. All rights reserved.
 //
 
+/**
+ Main View Controller and entry point for MessagesExtension
+*/
+
 #import <Messages/Messages.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <Photos/Photos.h>

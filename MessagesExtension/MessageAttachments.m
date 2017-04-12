@@ -111,6 +111,51 @@
     return counter;
 }
 
+- (NSString*) getAttachmentsDescriptiveString
+{
+    int numVideos = 0;
+    int numPrivateTextFiles = 0;
+    int numImages = 0;
+    
+    for(NSMutableDictionary *fileAttributes in self.metaFileList) {
+        
+        if([[fileAttributes valueForKey:MEDIA_TYPE_KEY] isEqualToString:VIDEO_IDENTIFIER]) {
+            numVideos++;
+        }
+        
+        else if([[fileAttributes valueForKey:MEDIA_TYPE_KEY] isEqualToString:PRIVATE_TEXTFILE_IDENTIFIER]) {
+            numPrivateTextFiles++;
+        }
+        
+        else if([[fileAttributes valueForKey:MEDIA_TYPE_KEY] isEqualToString:IMAGE_IDENTIFIER]) {
+            numImages++;
+        }
+        
+    }
+    
+    NSMutableString *descriptiveString = [[NSMutableString alloc] init];
+    
+    if(numImages == 1) {
+        [descriptiveString appendString:@"1 Image, "];
+    } else {
+        [descriptiveString appendString:[NSString stringWithFormat:@"%d Images, ", numImages]];
+    }
+    
+    if(numVideos == 1) {
+        [descriptiveString appendString:@"1 Video, "];
+    } else {
+        [descriptiveString appendString:[NSString stringWithFormat:@"%d Videos, ", numVideos]];
+    }
+    
+    if(numPrivateTextFiles == 1) {
+        [descriptiveString appendString:@"1 Private TextFile, "];
+    } else {
+        [descriptiveString appendString:[NSString stringWithFormat:@"%d Private TextFiles, ", numPrivateTextFiles]];
+    }
+    
+    return descriptiveString;
+}
+
 - (void) saveMetaFileListToFile
 {
     [self.metaFileList writeToFile:self.pathToMetaFile atomically:YES];
