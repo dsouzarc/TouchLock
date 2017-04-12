@@ -183,8 +183,10 @@
                                      resultHandler:^(UIImage *originalImage, NSDictionary *info) {
                                          
                                          NSString *imageFileName = [NSString stringWithFormat:@"%@.png", [[NSUUID UUID] UUIDString]];
+                                         [messageAttachments addImageWithNameToMetaFile:imageFileName];
+                                         
                                          NSData *pngImageData = UIImagePNGRepresentation(originalImage);
-                                         [pngImageData writeToFile:[messageAttachments.pathToImagesFolder stringByAppendingPathComponent:imageFileName] atomically:YES];
+                                         [pngImageData writeToFile:[messageAttachments.pathToUnzippedAttachment stringByAppendingPathComponent:imageFileName] atomically:YES];
                                          
                                          NSLog(@"Finished photo");
                                          
@@ -200,7 +202,9 @@
                                        resultHandler:^(AVAsset * _Nullable asset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info) {
                                            
                                            NSString *videoFileName = [NSString stringWithFormat:@"%@.MOV", [[NSUUID UUID] UUIDString]];
-                                           NSURL *videoFileURL = [NSURL fileURLWithPath:[messageAttachments.pathToVideosFolder stringByAppendingPathComponent:videoFileName]];
+                                           [messageAttachments addVideoWithNameToMetaFile:videoFileName];
+                                           
+                                           NSURL *videoFileURL = [NSURL fileURLWithPath:[messageAttachments.pathToUnzippedAttachment stringByAppendingPathComponent:videoFileName]];
                                            
                                            NSError *error;
                                            AVURLAsset *videoURLAsset = (AVURLAsset*) asset;
@@ -278,7 +282,8 @@
         MessageAttachments *messageAttachments = [[MessageAttachments alloc] initWithAttachmentName:currentSendName];
         
         NSString *fileName = [NSString stringWithFormat:@"%@.txt", [[NSUUID UUID] UUIDString]];
-        NSString *filePath = [messageAttachments.pathToTextFilesFolder stringByAppendingPathComponent:fileName];
+        [messageAttachments addPrivateTextFileWithNameToMetaFile:fileName];
+        NSString *filePath = [messageAttachments.pathToUnzippedAttachment stringByAppendingPathComponent:fileName];
         
         [self.privateTextData writeToFile:filePath atomically:YES];
         
@@ -328,8 +333,9 @@
             NSData *pngImageData = UIImagePNGRepresentation(originalImage);
             
             NSString *imageFileName = [NSString stringWithFormat:@"%@.png", [[NSUUID UUID] UUIDString]];
-            NSString *imageFilePath = [messageAttachment.pathToImagesFolder stringByAppendingPathComponent:imageFileName];
+            [messageAttachment addImageWithNameToMetaFile:imageFileName];
             
+            NSString *imageFilePath = [messageAttachment.pathToUnzippedAttachment stringByAppendingPathComponent:imageFileName];
             [pngImageData writeToFile:imageFilePath atomically:YES];
         }
         
@@ -339,7 +345,9 @@
             NSString *recordedMoviePath = [[info objectForKey:UIImagePickerControllerMediaURL] path];
     
             NSString *sendVideofileName = [NSString stringWithFormat:@"%@.mov", [[NSUUID UUID] UUIDString]];
-            NSString *sendVideoFilePath = [messageAttachment.pathToVideosFolder stringByAppendingPathComponent:sendVideofileName];
+            [messageAttachment addImageWithNameToMetaFile:sendVideofileName];
+            
+            NSString *sendVideoFilePath = [messageAttachment.pathToUnzippedAttachment stringByAppendingPathComponent:sendVideofileName];
             
             NSError *copyError;
             
@@ -351,19 +359,6 @@
         [self sendMessageWithAttachments:messageAttachment encryptionKey:encryptionKey totalNumberOfItems:1];
         
     });
-    
-    
-    // save it to the documents directory (option 1)
-    /*NSURL *fileURL = [self grabFileURL:@"video.mov"];
-    NSData *movieData = [NSData dataWithContentsOfURL:chosenMovie];
-    [movieData writeToURL:fileURL atomically:YES];
-    
-    // save it to the Camera Roll (option 2)
-    UISaveVideoAtPathToSavedPhotosAlbum([chosenMovie path], nil, nil, nil);
-    
-    // and dismiss the picker
-    [self dismissViewControllerAnimated:YES completion:nil]; */
-    
 }
 
 
@@ -479,6 +474,9 @@
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
                 [[NSFileManager defaultManager] removeItemAtPath:self.currentlyOpenMessageAttachment.pathToZippedAttachment error:nil];
             });
+            
+            [self.currentlyOpenMessageAttachment loadMetaFileListFromFile];
+            
             
             
             NSArray *receivedImages = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:self.currentlyOpenMessageAttachment.pathToImagesFolder error:&error];

@@ -24,10 +24,20 @@
 @property (strong, nonatomic) NSString *pathToZippedAttachment;
 @property (strong, nonatomic) NSString *pathToUnzippedAttachment;
 
-@property (strong, nonatomic) NSString *pathToImagesFolder;
-@property (strong, nonatomic) NSString *pathToVideosFolder;
-@property (strong, nonatomic) NSString *pathToTextFilesFolder;
+@property (strong, nonatomic) NSString *pathToMetaFile;
+@property (strong, nonatomic) NSMutableArray<NSMutableDictionary*> *metaFileList;
 
-@property BOOL isOutgoing;
+@property BOOL isOutgoingMessage;
+
+- (void) addImageWithNameToMetaFile:(NSString*)imageName;
+- (void) addVideoWithNameToMetaFile:(NSString*)videoName;
+- (void) addPrivateTextFileWithNameToMetaFile:(NSString*)privateTextFileName;
+
+- (int) numberOfImagesInMetaFileList;
+- (int) numberOfVideosInMetaFileList;
+- (int) numberOfPrivateTextFilesInMetaFileList;
+
+- (void) saveMetaFileListToFile;
+- (void) loadMetaFileListFromFile;
 
 @end

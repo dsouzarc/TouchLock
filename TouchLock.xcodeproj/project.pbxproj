@@ -49,7 +49,6 @@
 		94A23EC31E9D823E00176FBB /* UIFloatLabelTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A23EC21E9D823E00176FBB /* UIFloatLabelTextView.m */; };
 		94A23ECC1E9D82EE00176FBB /* PrivateTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A23ECA1E9D82EE00176FBB /* PrivateTextViewController.m */; };
 		94A23ECD1E9D82EE00176FBB /* PrivateTextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94A23ECB1E9D82EE00176FBB /* PrivateTextViewController.xib */; };
-		94A23ED01E9DDD6300176FBB /* OrderedDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A23ECF1E9DDD6300176FBB /* OrderedDictionary.m */; };
 		94EE21911E9BE80500DFBBED /* MessageAttachments.m in Sources */ = {isa = PBXBuildFile; fileRef = 94EE21901E9BE80500DFBBED /* MessageAttachments.m */; };
 		94F7D7221E58BF9300CB1B9E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94F7D7211E58BF9300CB1B9E /* Assets.xcassets */; };
 		94F7D7291E58BF9300CB1B9E /* MessagesExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 94F7D7281E58BF9300CB1B9E /* MessagesExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -188,8 +187,6 @@
 		94A23EC91E9D82EE00176FBB /* PrivateTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrivateTextViewController.h; sourceTree = "<group>"; };
 		94A23ECA1E9D82EE00176FBB /* PrivateTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrivateTextViewController.m; sourceTree = "<group>"; };
 		94A23ECB1E9D82EE00176FBB /* PrivateTextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrivateTextViewController.xib; sourceTree = "<group>"; };
-		94A23ECE1E9DDD6300176FBB /* OrderedDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderedDictionary.h; sourceTree = "<group>"; };
-		94A23ECF1E9DDD6300176FBB /* OrderedDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderedDictionary.m; sourceTree = "<group>"; };
 		94EE218F1E9BE80500DFBBED /* MessageAttachments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageAttachments.h; sourceTree = "<group>"; };
 		94EE21901E9BE80500DFBBED /* MessageAttachments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageAttachments.m; sourceTree = "<group>"; };
 		94F7D71E1E58BF9300CB1B9E /* TouchLock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TouchLock.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -370,15 +367,6 @@
 			path = UIFloatLabelTextView;
 			sourceTree = "<group>";
 		};
-		94A23ED11E9DDD6800176FBB /* Ordered Dictionary */ = {
-			isa = PBXGroup;
-			children = (
-				94A23ECE1E9DDD6300176FBB /* OrderedDictionary.h */,
-				94A23ECF1E9DDD6300176FBB /* OrderedDictionary.m */,
-			);
-			name = "Ordered Dictionary";
-			sourceTree = "<group>";
-		};
 		94F7D7171E58BF9300CB1B9E = {
 			isa = PBXGroup;
 			children = (
@@ -429,7 +417,6 @@
 		94F7D72F1E58BF9300CB1B9E /* MessagesExtension */ = {
 			isa = PBXGroup;
 			children = (
-				94A23ED11E9DDD6800176FBB /* Ordered Dictionary */,
 				94F7D7301E58BF9300CB1B9E /* MessagesViewController.h */,
 				94F7D7311E58BF9300CB1B9E /* MessagesViewController.m */,
 				94A23EC01E9D823E00176FBB /* UIFloatLabelTextView */,
@@ -725,7 +712,6 @@
 				940ECD291E9464AE00178CB9 /* hmac.c in Sources */,
 				940ECD301E9464AE00178CB9 /* unzip.c in Sources */,
 				942EE1051E94B7C900E113E0 /* Constants.m in Sources */,
-				94A23ED01E9DDD6300176FBB /* OrderedDictionary.m in Sources */,
 				940ECD311E9464AE00178CB9 /* zip.c in Sources */,
 				940ECD331E9464AE00178CB9 /* SSZipArchive.m in Sources */,
 				94231E821E91D3E200214BCF /* QBAlbumCell.m in Sources */,
