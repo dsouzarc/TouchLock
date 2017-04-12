@@ -298,12 +298,12 @@
     });
     
     [self privateTextViewController:privateTextViewController didExit:YES];
-    [self requestPresentationStyle:MSMessagesAppPresentationStyleCompact];
 }
 
 - (void) privateTextViewController:(id)privateTextViewController didExit:(BOOL)didExit
 {
     [self.privateTextViewController dismissViewControllerAnimated:YES completion:nil];
+    [self requestPresentationStyle:MSMessagesAppPresentationStyleCompact];
     self.privateTextViewController = nil;
 }
 
@@ -510,7 +510,7 @@
                         self.privateTextViewController.delegate = self;
                         
                         [self presentViewController:self.privateTextViewController animated:YES completion:nil];
-                        
+                        [self hideLoadingHUD];
                     });
                 }
             }
@@ -545,35 +545,35 @@
                         
                     }
                 }
+                
+                NSLog(@"RECEIVING MEDIA ARRAY SIZE: %ld", [self.receivingMediaArray count]);
+                
+                dispatch_async(dispatch_get_main_queue(), ^(void) {
+                    
+                    self.photoBrowserViewController = [[MWPhotoBrowser alloc] initWithPhotos:self.receivingMediaArray];
+                    self.photoBrowserViewController.delegate = self;
+                    
+                    // Set options
+                    self.photoBrowserViewController.displayActionButton = YES;
+                    self.photoBrowserViewController.displayNavArrows = YES;
+                    self.photoBrowserViewController.displaySelectionButtons = NO;
+                    self.photoBrowserViewController.zoomPhotosToFill = YES;
+                    self.photoBrowserViewController.alwaysShowControls = YES;
+                    self.photoBrowserViewController.enableGrid = YES;
+                    self.photoBrowserViewController.startOnGrid = YES;
+                    self.photoBrowserViewController.autoPlayOnAppear = NO;
+                    
+                    UIView *photoBrowserView = [self.photoBrowserViewController view];
+                    
+                    [self.view addSubview:photoBrowserView];
+                    [photoBrowserView setFrame:CGRectMake(0, 80, self.view.frame.size.width, self.view.frame.size.height - 120)];
+                    [photoBrowserView setClipsToBounds:YES];
+                    [photoBrowserView sizeToFit];
+                    [self.view setAutoresizesSubviews:YES];
+                    
+                    [self hideLoadingHUD];
+                });
             }
-            
-            NSLog(@"RECEIVING MEDIA ARRAY SIZE: %ld", [self.receivingMediaArray count]);
-            
-            dispatch_async(dispatch_get_main_queue(), ^(void) {
-                
-                self.photoBrowserViewController = [[MWPhotoBrowser alloc] initWithPhotos:self.receivingMediaArray];
-                self.photoBrowserViewController.delegate = self;
-                
-                // Set options
-                self.photoBrowserViewController.displayActionButton = YES;
-                self.photoBrowserViewController.displayNavArrows = YES;
-                self.photoBrowserViewController.displaySelectionButtons = NO;
-                self.photoBrowserViewController.zoomPhotosToFill = YES;
-                self.photoBrowserViewController.alwaysShowControls = YES;
-                self.photoBrowserViewController.enableGrid = YES;
-                self.photoBrowserViewController.startOnGrid = YES;
-                self.photoBrowserViewController.autoPlayOnAppear = NO;
-                
-                UIView *photoBrowserView = [self.photoBrowserViewController view];
-                
-                [self.view addSubview:photoBrowserView];
-                [photoBrowserView setFrame:CGRectMake(0, 80, self.view.frame.size.width, self.view.frame.size.height - 120)];
-                [photoBrowserView setClipsToBounds:YES];
-                [photoBrowserView sizeToFit];
-                [self.view setAutoresizesSubviews:YES];
-                
-                [self hideLoadingHUD];
-            });
         });
     }
 }

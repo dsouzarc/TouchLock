@@ -71,6 +71,10 @@
             
             [self.privateMessageTextView setAttributedText:noTextFound];
         }
+        
+        [self.privateMessageTextView setEditable:FALSE];
+        [self.privateMessageTextView setSelectEnabled:[NSNumber numberWithBool:YES]];
+        [self.privateMessageTextView setCopyingEnabled:[NSNumber numberWithBool:YES]];
     }
     
     else {
