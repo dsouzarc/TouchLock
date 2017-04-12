@@ -25,6 +25,7 @@
 @property (strong, nonatomic) NSString *encryptionKey;
 @property (strong, nonatomic) NSString *attachmentName;
 @property (strong, nonatomic) NSString *messageID;
+
 @property int numberOfItems;
 
 @end
