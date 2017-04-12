@@ -42,6 +42,15 @@
     [self showCompactDefaultView];
 }
 
+
+/****************************************************************
+ *
+ *              Button Listeners
+ *
+ *****************************************************************/
+
+# pragma mark Button Listeners
+
 - (void) pressedSendTextButton
 {
     if([self presentationStyle] == MSMessagesAppPresentationStyleCompact) {
@@ -57,18 +66,88 @@
     [self presentViewController:self.privateTextViewController animated:YES completion:nil];
 }
 
-- (void) privateTextViewController:(id)privateTextViewController exitedEditorWithMessageTextData:(NSData *)messageTextData
+- (void) pressedTakePhotoButton
 {
-    self.privateTextData = messageTextData;
-    [self privateTextViewController:privateTextViewController didExit:YES];
+    NSLog(@"TAKE PHOTO");
+    
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        
+        self.cameraPickerController = [[UIImagePickerController alloc]init];
+        self.cameraPickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+        self.cameraPickerController.delegate = self;
+        self.cameraPickerController.allowsEditing = NO;
+        self.cameraPickerController.videoMaximumDuration = 60 * 60; //>60 minutes
+        self.cameraPickerController.videoQuality = UIImagePickerControllerQualityTypeHigh;
+        
+        NSArray *mediaTypes = @[(NSString*) kUTTypeMovie, (NSString*) kUTTypeImage];
+        self.cameraPickerController.mediaTypes = mediaTypes;
+        
+        UIView *cameraPickerView = [self.cameraPickerController view];
+        
+        [cameraPickerView setFrame:CGRectMake(0, 80, self.view.frame.size.width, self.view.frame.size.height - 120)];
+        [cameraPickerView setClipsToBounds:YES];
+        [cameraPickerView sizeToFit];
+        [self.view setAutoresizesSubviews:YES];
+        
+        [self.view addSubview:cameraPickerView];
+    }
+    
+    else {
+        NSLog(@"NO CAMERA");
+    }
 }
 
-- (void) privateTextViewController:(id)privateTextViewController didExit:(BOOL)didExit
+- (void) pressedChoosePhotoButton
 {
-    [self.privateTextViewController dismissViewControllerAnimated:YES completion:nil];
-    self.privateTextViewController = nil;
-    [self requestPresentationStyle:MSMessagesAppPresentationStyleCompact];
+    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+        NSLog(@"ERROR ACCESSING PHOTO LIBRARY");
+        return;
+    }
+    
+    PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
+    
+    if (status == PHAuthorizationStatusAuthorized) {
+        NSLog(@"AUTHORIZED");
+        [self showQBImagePickerController];
+    }
+    
+    else if (status == PHAuthorizationStatusDenied) {
+        NSLog(@"DENIED");
+    }
+    
+    else if (status == PHAuthorizationStatusNotDetermined) {
+        
+        NSLog(@"NOT DETERMINED");
+        
+        // Access has not been determined.
+        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+            
+            if (status == PHAuthorizationStatusAuthorized) {
+                NSLog(@"NOW AUTHORIZED");
+                [self showQBImagePickerController];
+            }
+            
+            else {
+                NSLog(@"NOW DENIED");
+                // Access has been denied.
+            }
+        }];
+    }
+    
+    else if (status == PHAuthorizationStatusRestricted) {
+        // Restricted access - normally won't happen.
+        NSLog(@"RESTRICTED");
+    }
 }
+
+
+/****************************************************************
+ *
+ *              QBImagePickerController Delegate
+ *
+ *****************************************************************/
+
+# pragma mark QBImagePickerController Delegate
 
 - (void) qb_imagePickerController:(QBImagePickerController *)imagePickerController didFinishPickingAssets:(NSArray *)assets
 {
@@ -175,171 +254,46 @@
     });
 }
 
-//SHOULD BE CALLED ON A SIDE THREAD
-- (void) sendMessageWithAttachments:(MessageAttachments*)messageAttachments encryptionKey:(NSString*)encryptionKey totalNumberOfItems:(int)totalNumberOfItems
-{
-    self.currentlyOpenMessageAttachment = messageAttachments;
-    self.currentlyOpenMessageAttachment.isOutgoing = YES;
-    
-    [SSZipArchive createZipFileAtPath:messageAttachments.pathToZippedAttachment
-              withContentsOfDirectory:messageAttachments.pathToUnzippedAttachment];
-    
-    NSError *error;
-    NSData *encryptedData = [RNEncryptor encryptData:[NSData dataWithContentsOfFile:messageAttachments.pathToZippedAttachment]
-                                        withSettings:kRNCryptorAES256Settings
-                                            password:encryptionKey
-                                               error:&error];
-    
-    if(error) {
-        NSLog(@"ERROR ENCRYPTING MESSAGE: %@: ", [error description]);
-    }
-    
-    [encryptedData writeToFile:messageAttachments.pathToZippedAttachment atomically:YES];
-    encryptedData = nil;
-    
-    MSMessageTemplateLayout *messageLayout = [[MSMessageTemplateLayout alloc] init];
-    //TODO: Implement messageLayout.image = defaultImage;
-    messageLayout.imageTitle = @"iMessage extension";
-    messageLayout.caption = @"Hello World!";
-    messageLayout.subcaption = @"Sent by Ryan!";
-    messageLayout.mediaFileURL = [NSURL fileURLWithPath:messageAttachments.pathToZippedAttachment];
-    
-    MessageParameters *messageParameters = [[MessageParameters alloc] initWithEncryptionKey:encryptionKey
-                                                                             attachmentName:messageAttachments.attachmentName
-                                                                                  messageID:[[NSUUID UUID] UUIDString]
-                                                                              numberOfItems:totalNumberOfItems];
-
-    MSSession *messageSession = [[MSSession alloc] init];
-    MSMessage *message = [[MSMessage alloc] initWithSession:messageSession];
-    [message setLayout:messageLayout];
-    [message setURL:[[messageParameters generateURLComponents] URL]];
-    message.layout = messageLayout;
-    message.URL = [[messageParameters generateURLComponents] URL];
-    message.summaryText = @"Summary!";
-    
-    dispatch_async(dispatch_get_main_queue(), ^(void) {
-        
-        [self.activeConversation insertMessage:message
-                             completionHandler:^(NSError *error) {
-                                 
-                                 if(error) {
-                                     NSLog(@"ERROR SENDING HERE: %@", [error localizedDescription]);
-                                 }
-                                 
-                                 //Delete the zipped/unzipped files after sending
-                                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(void) {
-                                     
-                                     NSError *deleteError;
-                                     [[NSFileManager defaultManager] removeItemAtPath:messageAttachments.pathToZippedAttachment error:&deleteError];
-                                     [[NSFileManager defaultManager] removeItemAtPath:messageAttachments.pathToZippedAttachment error:&deleteError];
-                                 });
-                             }
-         ];
-        
-        [self hideLoadingHUD];
-        
-        if(self.imagePickerController) {
-            [[self.imagePickerController view] removeFromSuperview];
-            self.imagePickerController = nil;
-        }
-    });
-}
-
 - (void) qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController
 {
     [[self.imagePickerController view] removeFromSuperview];
 }
 
-- (void) pressedChoosePhotoButton
+
+/****************************************************************
+ *
+ *              PrivateTextViewController Delegate
+ *
+ *****************************************************************/
+
+# pragma mark PrivateTextViewController Delegate
+
+- (void) privateTextViewController:(id)privateTextViewController exitedEditorWithMessageTextData:(NSData *)messageTextData
 {
-    if ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypePhotoLibrary]) {
-        NSLog(@"AVAILABLE");
-    }
-    else {
-        NSLog(@"ERROR HERE");
-        return;
-    }
+    self.privateTextData = messageTextData;
     
-    PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
-    
-    if (status == PHAuthorizationStatusAuthorized) {
-        NSLog(@"AUTHORIZED");
-        // Access has been granted.
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(void) {
         
-        self.imagePickerController = [QBImagePickerController new];
-        self.imagePickerController.delegate = self;
-        self.imagePickerController.allowsMultipleSelection = YES;
-        self.imagePickerController.maximumNumberOfSelection = 10;
-        self.imagePickerController.showsNumberOfSelectedAssets = YES;
-        self.imagePickerController.mediaType = QBImagePickerMediaTypeAny;
-        self.imagePickerController.prompt = @"Select the Photos And Videos to Securely Send";
-        self.imagePickerController.assetCollectionSubtypes = [Constants getPHAssetCollectionSubtypes];
+        NSString *currentSendName = [Constants getSendFormatUsingCurrentDate];
+        MessageAttachments *messageAttachments = [[MessageAttachments alloc] initWithAttachmentName:currentSendName];
         
-        CGRect newSize = CGRectMake(0, self.topLayoutGuide.length, self.view.frame.size.width, self.view.frame.size.height - self.topLayoutGuide.length);
-        [[self.imagePickerController view] setFrame:newSize];
-        [self.view addSubview:[self.imagePickerController view]];
-    }
-    
-    else if (status == PHAuthorizationStatusDenied) {
-        NSLog(@"DENIED");
-        // Access has been denied.
-    }
-    
-    else if (status == PHAuthorizationStatusNotDetermined) {
+        NSString *fileName = [NSString stringWithFormat:@"%@.txt", [[NSUUID UUID] UUIDString]];
+        NSString *filePath = [messageAttachments.pathToTextFilesFolder stringByAppendingPathComponent:fileName];
         
-        NSLog(@"NOT DETERMINED");
+        [self.privateTextData writeToFile:filePath atomically:YES];
         
-        // Access has not been determined.
-        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
-            
-            if (status == PHAuthorizationStatusAuthorized) {
-                
-                NSLog(@"NOW AUTHORIZED");
-                
-            }
-            
-            else {
-                NSLog(@"NOW DENIED");
-                // Access has been denied.
-            }
-        }];
-    }
+        NSString *encryptionKey = [Constants generateEncryptionKey];
+        [self sendMessageWithAttachments:messageAttachments encryptionKey:encryptionKey totalNumberOfItems:1];
+    });
     
-    else if (status == PHAuthorizationStatusRestricted) {
-        // Restricted access - normally won't happen.
-        NSLog(@"RESTRICTED");
-    }
+    [self privateTextViewController:privateTextViewController didExit:YES];
+    [self requestPresentationStyle:MSMessagesAppPresentationStyleCompact];
 }
 
-- (void) pressedTakePhotoButton
+- (void) privateTextViewController:(id)privateTextViewController didExit:(BOOL)didExit
 {
-    NSLog(@"TAKE PHOTO");
-    
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        
-        self.cameraPickerController = [[UIImagePickerController alloc]init];
-        self.cameraPickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
-        self.cameraPickerController.delegate = self;
-        self.cameraPickerController.allowsEditing = NO;
-        self.cameraPickerController.videoMaximumDuration = 60 * 60; //>60 minutes
-        self.cameraPickerController.videoQuality = UIImagePickerControllerQualityTypeHigh;
-        
-        NSArray *mediaTypes = @[(NSString*) kUTTypeMovie, (NSString*) kUTTypeImage];
-        self.cameraPickerController.mediaTypes = mediaTypes;
-        
-        UIView *cameraPickerView = [self.cameraPickerController view];
-        
-        [cameraPickerView setFrame:CGRectMake(0, 80, self.view.frame.size.width, self.view.frame.size.height - 120)];
-        [cameraPickerView setClipsToBounds:YES];
-        [cameraPickerView sizeToFit];
-        [self.view setAutoresizesSubviews:YES];
-        
-        [self.view addSubview:cameraPickerView];
-    }
-    
-    else {
-        NSLog(@"NO CAMERA");
-    }
+    [self.privateTextViewController dismissViewControllerAnimated:YES completion:nil];
+    self.privateTextViewController = nil;
 }
 
 
@@ -619,16 +573,20 @@ static NSURL *receivedURL;
 {
     [super didStartSendingMessage:message conversation:conversation];
     self.currentlyOpenMessageAttachment.isOutgoing = NO;
+    self.privateTextData = nil;
 }
 
 - (void) didCancelSendingMessage:(MSMessage *)message conversation:(MSConversation *)conversation
 {
+    self.privateTextData = nil;
+    
     if(self.currentlyOpenMessageAttachment && [self.currentlyOpenMessageAttachment isOutgoing]) {
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(void) {
             
             NSError *error;
-            [[NSFileManager defaultManager] removeItemAtPath:[self.currentlyOpenMessageAttachment pathToUnzippedAttachment] error:&error];
+            [[NSFileManager defaultManager] removeItemAtPath:[self.currentlyOpenMessageAttachment pathToUnzippedAttachment]
+                                                       error:&error];
             
         });
     }
@@ -744,6 +702,100 @@ static NSURL *receivedURL;
     [self.loadingHUD hide:YES];
     
     self.loadingHUD = nil;
+}
+
+/****************************************************************
+ *
+ *              Miscellaneous Helper Methods
+ *
+ *****************************************************************/
+
+# pragma mark Miscellaneous Helper Methods
+
+- (void) showQBImagePickerController
+{
+    self.imagePickerController = [QBImagePickerController new];
+    self.imagePickerController.delegate = self;
+    self.imagePickerController.allowsMultipleSelection = YES;
+    self.imagePickerController.maximumNumberOfSelection = 10;
+    self.imagePickerController.showsNumberOfSelectedAssets = YES;
+    self.imagePickerController.mediaType = QBImagePickerMediaTypeAny;
+    self.imagePickerController.prompt = @"Select the Photos And Videos to Securely Send";
+    self.imagePickerController.assetCollectionSubtypes = [Constants getPHAssetCollectionSubtypes];
+    
+    CGRect newSize = CGRectMake(0, self.topLayoutGuide.length, self.view.frame.size.width, self.view.frame.size.height - self.topLayoutGuide.length);
+    [[self.imagePickerController view] setFrame:newSize];
+    [self.view addSubview:[self.imagePickerController view]];
+}
+
+/** CALL THIS FROM A SEPARATE THREAD - handles actually sending the message*/
+- (void) sendMessageWithAttachments:(MessageAttachments*)messageAttachments encryptionKey:(NSString*)encryptionKey totalNumberOfItems:(int)totalNumberOfItems
+{
+    self.currentlyOpenMessageAttachment = messageAttachments;
+    self.currentlyOpenMessageAttachment.isOutgoing = YES;
+    
+    [SSZipArchive createZipFileAtPath:messageAttachments.pathToZippedAttachment
+              withContentsOfDirectory:messageAttachments.pathToUnzippedAttachment];
+    
+    NSError *error;
+    NSData *encryptedData = [RNEncryptor encryptData:[NSData dataWithContentsOfFile:messageAttachments.pathToZippedAttachment]
+                                        withSettings:kRNCryptorAES256Settings
+                                            password:encryptionKey
+                                               error:&error];
+    
+    if(error) {
+        NSLog(@"ERROR ENCRYPTING MESSAGE: %@: ", [error description]);
+    }
+    
+    [encryptedData writeToFile:messageAttachments.pathToZippedAttachment atomically:YES];
+    encryptedData = nil;
+    
+    MSMessageTemplateLayout *messageLayout = [[MSMessageTemplateLayout alloc] init];
+    //TODO: Implement messageLayout.image = defaultImage;
+    messageLayout.imageTitle = @"iMessage extension";
+    messageLayout.caption = @"Hello World!";
+    messageLayout.subcaption = @"Sent by Ryan!";
+    messageLayout.mediaFileURL = [NSURL fileURLWithPath:messageAttachments.pathToZippedAttachment];
+    
+    MessageParameters *messageParameters = [[MessageParameters alloc] initWithEncryptionKey:encryptionKey
+                                                                             attachmentName:messageAttachments.attachmentName
+                                                                                  messageID:[[NSUUID UUID] UUIDString]
+                                                                              numberOfItems:totalNumberOfItems];
+    
+    MSSession *messageSession = [[MSSession alloc] init];
+    MSMessage *message = [[MSMessage alloc] initWithSession:messageSession];
+    [message setLayout:messageLayout];
+    [message setURL:[[messageParameters generateURLComponents] URL]];
+    message.layout = messageLayout;
+    message.URL = [[messageParameters generateURLComponents] URL];
+    message.summaryText = @"Summary!";
+    
+    dispatch_async(dispatch_get_main_queue(), ^(void) {
+        
+        [self.activeConversation insertMessage:message
+                             completionHandler:^(NSError *error) {
+                                 
+                                 if(error) {
+                                     NSLog(@"ERROR SENDING HERE: %@", [error localizedDescription]);
+                                 }
+                                 
+                                 //Delete the zipped/unzipped files after sending
+                                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(void) {
+                                     
+                                     NSError *deleteError;
+                                     [[NSFileManager defaultManager] removeItemAtPath:messageAttachments.pathToZippedAttachment error:&deleteError];
+                                     [[NSFileManager defaultManager] removeItemAtPath:messageAttachments.pathToZippedAttachment error:&deleteError];
+                                 });
+                             }
+         ];
+        
+        [self hideLoadingHUD];
+        
+        if(self.imagePickerController) {
+            [[self.imagePickerController view] removeFromSuperview];
+            self.imagePickerController = nil;
+        }
+    });
 }
 
 @end

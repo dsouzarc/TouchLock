@@ -10,8 +10,6 @@
 
 #import "UIFloatLabelTextView.h"
 
-#import "MessageAttachments.h"
-
 @protocol PrivateTextViewControllerDelegate <NSObject>
 
 - (void) privateTextViewController:(id)privateTextViewController

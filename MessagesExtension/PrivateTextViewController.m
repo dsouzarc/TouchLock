@@ -79,11 +79,11 @@
 - (IBAction) pressedCancelButton:(id)sender
 {
     if(self.isOutgoing) {
-        
-        NSAttributedString *privateText = [self.privateMessageTextView attributedText];
+        [self.delegate privateTextViewController:self didExit:YES];
+        /*NSAttributedString *privateText = [self.privateMessageTextView attributedText];
         NSData *privateTextData = [NSKeyedArchiver archivedDataWithRootObject:privateText];
         
-        [self.delegate privateTextViewController:self exitedEditorWithMessageTextData:privateTextData];
+        [self.delegate privateTextViewController:self exitedEditorWithMessageTextData:privateTextData];*/
     }
     
     else {
