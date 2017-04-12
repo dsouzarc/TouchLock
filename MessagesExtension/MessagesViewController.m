@@ -29,6 +29,7 @@
 
 @end
 
+
 @implementation MessagesViewController
 
 - (void) viewDidLoad
@@ -153,8 +154,13 @@
 {
     const int totalNumberOfItems = (int) [assets count];
     
-    [self showLoadingHUDWithText:[NSString stringWithFormat:@"Compressing & Encrypting %d objects", totalNumberOfItems]];
+    if(totalNumberOfItems == 1) {
+        [self showLoadingHUDWithText:@"Compressing & Encrypting 1 object"];
+    }
     
+    else {
+        [self showLoadingHUDWithText:[NSString stringWithFormat:@"Compressing & Encrypting %d objects", totalNumberOfItems]];
+    }
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(void) {
         
@@ -482,6 +488,31 @@
             //Dealing with textfiles
             if(numberOfPrivateTextFiles > 0) {
                 
+                NSLog(@"SHOWING TEXTFILE");
+                
+                NSString *textFileName;
+                for(NSMutableDictionary *fileAttributes in self.currentlyOpenMessageAttachment.metaFileList) {
+                    if([[fileAttributes valueForKey:MEDIA_TYPE_KEY] isEqualToString:PRIVATE_TEXTFILE_IDENTIFIER]) {
+                        textFileName = [fileAttributes valueForKey:FILE_NAME_KEY];
+                    }
+                }
+                
+                if(textFileName) {
+                    NSString *textFilePath = [self.currentlyOpenMessageAttachment.pathToUnzippedAttachment stringByAppendingPathComponent:textFileName];
+                    NSData *textFileData = [NSData dataWithContentsOfFile:textFilePath];
+                    
+                    NSLog(@"SHOWING TEXTFILE AT: %@", textFilePath);
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^(void) {
+                        
+                        self.privateTextViewController = [[PrivateTextViewController alloc] initWithNibName:@"PrivateTextViewController" bundle:[NSBundle mainBundle] isOutgoing:FALSE messageTextData:textFileData];
+                        
+                        self.privateTextViewController.delegate = self;
+                        
+                        [self presentViewController:self.privateTextViewController animated:YES completion:nil];
+                        
+                    });
+                }
             }
             
             else {

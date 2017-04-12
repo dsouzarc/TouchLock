@@ -58,6 +58,19 @@
         
         [self.titleNavigationItem setTitle:@"Received Message"];
         self.privateMessageTextView.placeholder = @"Received message";
+        
+        if(self.messageTextData && [self.messageTextData length] > 0) {
+            NSAttributedString *messageText = [NSKeyedUnarchiver unarchiveObjectWithData:self.messageTextData];
+            [self.privateMessageTextView setAttributedText:messageText];
+        }
+        
+        else {
+            
+            NSDictionary *italicsAttribute = @{NSFontAttributeName: [UIFont italicSystemFontOfSize:[UIFont systemFontSize]]};
+            NSAttributedString *noTextFound = [[NSAttributedString alloc] initWithString:@"Received a blank or invalid textfile" attributes:italicsAttribute];
+            
+            [self.privateMessageTextView setAttributedText:noTextFound];
+        }
     }
     
     else {
