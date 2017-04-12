@@ -99,7 +99,7 @@
 
 - (void) pressedChoosePhotoButton
 {
-    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+    if(![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
         NSLog(@"ERROR ACCESSING PHOTO LIBRARY");
         return;
     }
@@ -254,7 +254,7 @@
             NSLog(@"Sleeping while waiting to process");
         }
         
-        [self sendMessageWithAttachments:messageAttachments encryptionKey:encryptionKey totalNumberOfItems:totalNumberOfItems];
+        [self sendMessageWithAttachments:messageAttachments encryptionKey:encryptionKey];
     });
 }
 
@@ -288,7 +288,7 @@
         [self.privateTextData writeToFile:filePath atomically:YES];
         
         NSString *encryptionKey = [Constants generateEncryptionKey];
-        [self sendMessageWithAttachments:messageAttachments encryptionKey:encryptionKey totalNumberOfItems:1];
+        [self sendMessageWithAttachments:messageAttachments encryptionKey:encryptionKey];
     });
     
     [self privateTextViewController:privateTextViewController didExit:YES];
@@ -356,7 +356,7 @@
         
         NSString *encryptionKey = [Constants generateEncryptionKey];
         
-        [self sendMessageWithAttachments:messageAttachment encryptionKey:encryptionKey totalNumberOfItems:1];
+        [self sendMessageWithAttachments:messageAttachment encryptionKey:encryptionKey];
         
     });
 }
@@ -415,7 +415,6 @@
     NSLog(@"ABOUT TO SELECT MESSAGE!!");
 }
 
-
 - (void) didSelectMessage:(MSMessage *)message conversation:(MSConversation *)conversation
 {
     NSLog(@"DID SELECT - ANALYZING NOW");
@@ -427,9 +426,10 @@
     // This will happen when the extension is about to present UI.
     
     // Use this method to configure the extension and restore previously stored state.
-    NSLog(@"ACTIVE NOW");
     
     if([conversation selectedMessage]) {
+        
+        NSLog(@"ACTIVE NOW AND SELECTED");
         
         MSMessage *message = [conversation selectedMessage];
         NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:[message URL] resolvingAgainstBaseURL:NO];
@@ -477,47 +477,46 @@
             
             [self.currentlyOpenMessageAttachment loadMetaFileListFromFile];
             
+            const int numberOfPrivateTextFiles = [self.currentlyOpenMessageAttachment numberOfPrivateTextFilesInMetaFileList];
             
+            //Dealing with textfiles
+            if(numberOfPrivateTextFiles > 0) {
+                
+            }
             
-            NSArray *receivedImages = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:self.currentlyOpenMessageAttachment.pathToImagesFolder error:&error];
-            NSArray *receivedVideos = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:self.currentlyOpenMessageAttachment.pathToVideosFolder error:&error];
-            
-            int numberOfImages = (int) [receivedImages count];
-            int numberOfVideos = (int) [receivedVideos count];
-            
-            if(receivedImages) {
-    
-                for(NSString *fileName in receivedImages) {
-                    if(![fileName isEqualToString:@".DS_Store"]) {
-                        
-                        NSString *filePath = [self.currentlyOpenMessageAttachment.pathToImagesFolder stringByAppendingPathComponent:fileName];
+            else {
+                
+                for(NSMutableDictionary *fileAttributes in self.currentlyOpenMessageAttachment.metaFileList) {
+                    
+                    if([[fileAttributes valueForKey:MEDIA_TYPE_KEY] isEqualToString:IMAGE_IDENTIFIER]) {
+                        NSString *fileName = [fileAttributes valueForKey:FILE_NAME_KEY];
+                        NSString *filePath = [self.currentlyOpenMessageAttachment.pathToUnzippedAttachment stringByAppendingPathComponent:fileName];
                         
                         MWPhoto *photo = [MWPhoto photoWithURL:[NSURL fileURLWithPath:filePath]];
                         [self.receivingMediaArray addObject:photo];
+                        
                     }
-                }
-            }
-            
-            if(receivedVideos) {
-                
-                for(NSString *fileName in receivedVideos) {
-                    if(![fileName isEqualToString:@".DS_Store"]) {
+                    
+                    else if([[fileAttributes valueForKey:MEDIA_TYPE_KEY] isEqualToString:VIDEO_IDENTIFIER]) {
                         
-                        NSString *filePath = [self.currentlyOpenMessageAttachment.pathToVideosFolder stringByAppendingPathComponent:fileName];
+                        NSString *fileName = [fileAttributes valueForKey:FILE_NAME_KEY];
+                        NSString *filePath = [self.currentlyOpenMessageAttachment.pathToUnzippedAttachment stringByAppendingPathComponent:fileName];
+                        
                         NSURL *videoFilePath = [NSURL fileURLWithPath:filePath];
-                        
+            
                         UIImage *firstFrame = [Constants thumbnailImageForVideo:videoFilePath atTime:0.1];
-                
+                        
                         MWPhoto *video = [MWPhoto photoWithImage:firstFrame];
                         video.videoURL = videoFilePath;
                         video.isVideo = YES;
                         
                         [self.receivingMediaArray addObject:video];
+                        
                     }
                 }
             }
             
-            NSLog(@"RECEIVING MEDIA ARRAY SIZE: %ld\t%d\t%d", [self.receivingMediaArray count], numberOfImages, numberOfVideos);
+            NSLog(@"RECEIVING MEDIA ARRAY SIZE: %ld", [self.receivingMediaArray count]);
             
             dispatch_async(dispatch_get_main_queue(), ^(void) {
                 
@@ -570,7 +569,7 @@ static NSURL *receivedURL;
 - (void) didStartSendingMessage:(MSMessage *)message conversation:(MSConversation *)conversation
 {
     [super didStartSendingMessage:message conversation:conversation];
-    self.currentlyOpenMessageAttachment.isOutgoing = NO;
+    self.currentlyOpenMessageAttachment.isOutgoingMessage = NO;
     self.privateTextData = nil;
 }
 
@@ -578,7 +577,7 @@ static NSURL *receivedURL;
 {
     self.privateTextData = nil;
     
-    if(self.currentlyOpenMessageAttachment && [self.currentlyOpenMessageAttachment isOutgoing]) {
+    if(self.currentlyOpenMessageAttachment && [self.currentlyOpenMessageAttachment isOutgoingMessage]) {
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(void) {
             
@@ -727,10 +726,13 @@ static NSURL *receivedURL;
 }
 
 /** CALL THIS FROM A SEPARATE THREAD - handles actually sending the message*/
-- (void) sendMessageWithAttachments:(MessageAttachments*)messageAttachments encryptionKey:(NSString*)encryptionKey totalNumberOfItems:(int)totalNumberOfItems
+- (void) sendMessageWithAttachments:(MessageAttachments*)messageAttachments encryptionKey:(NSString*)encryptionKey
 {
+    
     self.currentlyOpenMessageAttachment = messageAttachments;
-    self.currentlyOpenMessageAttachment.isOutgoing = YES;
+    self.currentlyOpenMessageAttachment.isOutgoingMessage = YES;
+    
+    [self.currentlyOpenMessageAttachment saveMetaFileListToFile];
     
     [SSZipArchive createZipFileAtPath:messageAttachments.pathToZippedAttachment
               withContentsOfDirectory:messageAttachments.pathToUnzippedAttachment];
@@ -758,7 +760,7 @@ static NSURL *receivedURL;
     MessageParameters *messageParameters = [[MessageParameters alloc] initWithEncryptionKey:encryptionKey
                                                                              attachmentName:messageAttachments.attachmentName
                                                                                   messageID:[[NSUUID UUID] UUIDString]
-                                                                              numberOfItems:totalNumberOfItems];
+                                                                              numberOfItems:[messageAttachments totalNumberOfAttachments]];
     
     MSSession *messageSession = [[MSSession alloc] init];
     MSMessage *message = [[MSMessage alloc] initWithSession:messageSession];

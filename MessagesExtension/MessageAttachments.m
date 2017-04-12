@@ -13,12 +13,6 @@
 
 #import "MessageAttachments.h"
 
-static NSString *IMAGE_IDENTIFIER = @"image";
-static NSString *VIDEO_IDENTIFIER = @"video";
-static NSString *PRIVATE_TEXTFILE_IDENTIFIER = @"privateTextFile";
-
-static NSString *FILE_NAME_KEY = @"fileName";
-static NSString *MEDIA_TYPE_KEY = @"mediaTypeKey";
 
 @implementation MessageAttachments
 
@@ -84,6 +78,11 @@ static NSString *MEDIA_TYPE_KEY = @"mediaTypeKey";
     [self.metaFileList addObject:fileDescription];
 }
 
+- (int) totalNumberOfAttachments
+{
+    return (int) [self.metaFileList count];
+}
+
 - (int) numberOfImagesInMetaFileList
 {
     return [self getCountOfMediaTypeKeyInMetaFileList:IMAGE_IDENTIFIER];
@@ -119,7 +118,13 @@ static NSString *MEDIA_TYPE_KEY = @"mediaTypeKey";
 
 - (void) loadMetaFileListFromFile
 {
-    self.metaFileList = [[NSMutableArray alloc] initWithContentsOfFile:self.pathToMetaFile];
+    if([[NSFileManager defaultManager] fileExistsAtPath:self.pathToMetaFile]) {
+        self.metaFileList = [[NSMutableArray alloc] initWithContentsOfFile:self.pathToMetaFile];
+    }
+    
+    if(!self.metaFileList) {
+        self.metaFileList = [[NSMutableArray alloc] init];
+    }
 }
 
 @end

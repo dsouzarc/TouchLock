@@ -15,6 +15,15 @@
  Like the file locations of various media
  */
 
+
+static NSString *IMAGE_IDENTIFIER = @"image";
+static NSString *VIDEO_IDENTIFIER = @"video";
+static NSString *PRIVATE_TEXTFILE_IDENTIFIER = @"privateTextFile";
+
+static NSString *FILE_NAME_KEY = @"fileName";
+static NSString *MEDIA_TYPE_KEY = @"mediaTypeKey";
+
+
 @interface MessageAttachments : NSObject
 
 - (instancetype) init;
@@ -33,6 +42,7 @@
 - (void) addVideoWithNameToMetaFile:(NSString*)videoName;
 - (void) addPrivateTextFileWithNameToMetaFile:(NSString*)privateTextFileName;
 
+- (int) totalNumberOfAttachments;
 - (int) numberOfImagesInMetaFileList;
 - (int) numberOfVideosInMetaFileList;
 - (int) numberOfPrivateTextFilesInMetaFileList;
