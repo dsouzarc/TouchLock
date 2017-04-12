@@ -12,10 +12,24 @@
 
 #import "MessageAttachments.h"
 
+@protocol PrivateTextViewControllerDelegate <NSObject>
+
+- (void) privateTextViewController:(id)privateTextViewController
+   exitedEditorWithMessageTextData:(NSData*)messageTextData;
+
+- (void) privateTextViewController:(id)privateTextViewController
+                           didExit:(BOOL)didExit;
+
+@end
+
 
 @interface PrivateTextViewController : UIViewController
 
-- (instancetype) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil messageAttachment:(MessageAttachments*)messageAttachment isOutgoing:(BOOL)isOutgoing;
+- (instancetype) initWithNibName:(NSString *)nibNameOrNil
+                          bundle:(NSBundle *)nibBundleOrNil
+                      isOutgoing:(BOOL)isOutgoing
+                 messageTextData:(NSData*)messageTextData;
 
+@property (weak, nonatomic) id<PrivateTextViewControllerDelegate> delegate;
 
 @end

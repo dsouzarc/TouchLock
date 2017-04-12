@@ -28,6 +28,6 @@
 #import "RNDecryptor.h"
 #import "SSZipArchive.h"
 
-@interface MessagesViewController : MSMessagesAppViewController<QBImagePickerControllerDelegate, MWPhotoBrowserDelegate, DefaultViewProtocol, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface MessagesViewController : MSMessagesAppViewController<QBImagePickerControllerDelegate, MWPhotoBrowserDelegate, DefaultViewProtocol, PrivateTextViewControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @end

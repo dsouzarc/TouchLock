@@ -23,6 +23,7 @@
 @property (strong, nonatomic) UIImagePickerController *cameraPickerController;
 
 @property (strong, nonatomic) PrivateTextViewController *privateTextViewController;
+@property (strong, nonatomic) NSData *privateTextData;
 
 @property (strong, nonatomic) MessageAttachments *currentlyOpenMessageAttachment;
 
@@ -39,6 +40,34 @@
     }
     
     [self showCompactDefaultView];
+}
+
+- (void) pressedSendTextButton
+{
+    if([self presentationStyle] == MSMessagesAppPresentationStyleCompact) {
+        [self requestPresentationStyle:MSMessagesAppPresentationStyleExpanded];
+    }
+    
+    self.privateTextViewController = [[PrivateTextViewController alloc] initWithNibName:@"PrivateTextViewController"
+                                                                                 bundle:[NSBundle mainBundle]
+                                                                             isOutgoing:YES
+                                                                        messageTextData:self.privateTextData];
+    self.privateTextViewController.delegate = self;
+    
+    [self presentViewController:self.privateTextViewController animated:YES completion:nil];
+}
+
+- (void) privateTextViewController:(id)privateTextViewController exitedEditorWithMessageTextData:(NSData *)messageTextData
+{
+    self.privateTextData = messageTextData;
+    [self privateTextViewController:privateTextViewController didExit:YES];
+}
+
+- (void) privateTextViewController:(id)privateTextViewController didExit:(BOOL)didExit
+{
+    [self.privateTextViewController dismissViewControllerAnimated:YES completion:nil];
+    self.privateTextViewController = nil;
+    [self requestPresentationStyle:MSMessagesAppPresentationStyleCompact];
 }
 
 - (void) qb_imagePickerController:(QBImagePickerController *)imagePickerController didFinishPickingAssets:(NSArray *)assets
@@ -219,21 +248,6 @@
 - (void) qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController
 {
     [[self.imagePickerController view] removeFromSuperview];
-}
-
-- (void) pressedSendTextButton
-{
-    
-    if([self presentationStyle] == MSMessagesAppPresentationStyleCompact) {
-        [self requestPresentationStyle:MSMessagesAppPresentationStyleExpanded];
-    }
-    
-    self.privateTextViewController = [[PrivateTextViewController alloc] initWithNibName:@"PrivateTextViewController" bundle:[NSBundle mainBundle] messageAttachment:self.currentlyOpenMessageAttachment isOutgoing:YES];
-    
-    [self presentViewController:self.privateTextViewController animated:YES completion:nil];
-    
-    NSLog(@"SHOULD'VE PRESENTD");
-    
 }
 
 - (void) pressedChoosePhotoButton

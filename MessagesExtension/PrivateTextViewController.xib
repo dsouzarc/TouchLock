@@ -11,6 +11,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PrivateTextViewController">
             <connections>
+                <outlet property="cancelButton" destination="5ZK-Vc-bLt" id="ptX-cV-esF"/>
+                <outlet property="privateMessageTextView" destination="arQ-yX-pUe" id="o2A-Lf-ejw"/>
+                <outlet property="sendButton" destination="eKy-XX-V8I" id="8RH-Xd-MXe"/>
+                <outlet property="titleNavigationItem" destination="Gh1-SD-xBc" id="JDr-YZ-Utu"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -30,8 +34,16 @@
                     <rect key="frame" x="0.0" y="86" width="375" height="44"/>
                     <items>
                         <navigationItem title="Title" id="Gh1-SD-xBc">
-                            <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="5ZK-Vc-bLt"/>
-                            <barButtonItem key="rightBarButtonItem" title="Send" id="eKy-XX-V8I"/>
+                            <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="5ZK-Vc-bLt">
+                                <connections>
+                                    <action selector="pressedCancelButton:" destination="-1" id="zDw-Gu-XHM"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem key="rightBarButtonItem" title="Send" id="eKy-XX-V8I">
+                                <connections>
+                                    <action selector="pressedSendButton:" destination="-1" id="Iy2-Vh-1na"/>
+                                </connections>
+                            </barButtonItem>
                         </navigationItem>
                     </items>
                 </navigationBar>
