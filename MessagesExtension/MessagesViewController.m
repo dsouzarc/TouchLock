@@ -50,7 +50,7 @@
  *
  *****************************************************************/
 
-# pragma mark Button Listeners
+# pragma mark - Button Listeners
 
 - (void) pressedSendTextButton
 {
@@ -141,7 +141,7 @@
  *
  *****************************************************************/
 
-# pragma mark QBImagePickerController Delegate
+# pragma mark - QBImagePickerController Delegate
 
 - (void) qb_imagePickerController:(QBImagePickerController *)imagePickerController didFinishPickingAssets:(NSArray *)assets
 {
@@ -274,7 +274,7 @@
  *
  *****************************************************************/
 
-# pragma mark PrivateTextViewController Delegate
+# pragma mark - PrivateTextViewController Delegate
 
 - (void) privateTextViewController:(id)privateTextViewController exitedEditorWithMessageTextData:(NSData *)messageTextData
 {
@@ -314,7 +314,7 @@
  *
  *****************************************************************/
 
-# pragma mark UIImagePickerController Delegate
+# pragma mark - UIImagePickerController Delegate
 
 - (void) imagePickerControllerDidCancel:(UIImagePickerController*)picker
 {
@@ -373,7 +373,7 @@
  *
  *****************************************************************/
 
-# pragma mark Show Compact & Expand Views
+# pragma mark - Show Compact & Expand Views
 
 - (void) showCompactDefaultView
 {
@@ -413,7 +413,7 @@
  *
  *****************************************************************/
 
-# pragma mark Conversation Handling
+# pragma mark - Conversation Handling
 
 - (void) willSelectMessage:(MSMessage *)message conversation:(MSConversation *)conversation
 {
@@ -648,7 +648,7 @@ static NSURL *receivedURL;
  *
  *****************************************************************/
 
-# pragma mark MWPhotoBrowserDelegate
+# pragma mark - MWPhotoBrowserDelegate
 
 - (NSUInteger) numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser
 {
@@ -702,7 +702,7 @@ static NSURL *receivedURL;
  *
  *****************************************************************/
 
-# pragma mark Loading HUD
+# pragma mark - Loading HUD
 
 - (void) showLoadingHUD
 {
@@ -740,7 +740,7 @@ static NSURL *receivedURL;
  *
  *****************************************************************/
 
-# pragma mark Miscellaneous Helper Methods
+# pragma mark - Miscellaneous Helper Methods
 
 - (void) showQBImagePickerController
 {

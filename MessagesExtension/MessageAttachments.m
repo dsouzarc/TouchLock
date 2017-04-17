@@ -118,7 +118,6 @@
     int numImages = 0;
     
     for(NSMutableDictionary *fileAttributes in self.metaFileList) {
-        
         if([[fileAttributes valueForKey:MEDIA_TYPE_KEY] isEqualToString:VIDEO_IDENTIFIER]) {
             numVideos++;
         }
@@ -130,7 +129,6 @@
         else if([[fileAttributes valueForKey:MEDIA_TYPE_KEY] isEqualToString:IMAGE_IDENTIFIER]) {
             numImages++;
         }
-        
     }
     
     NSMutableString *descriptiveString = [[NSMutableString alloc] init];
