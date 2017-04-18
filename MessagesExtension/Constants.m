@@ -10,8 +10,20 @@
 
 @implementation Constants
 
++ (NSData*) generateEncryptionKeyForRealmDB
+{
+    NSMutableData *key = [NSMutableData dataWithLength:64];
+    (void)SecRandomCopyBytes(kSecRandomDefault, key.length, (uint8_t *)key.mutableBytes);
+    
+    return key;
+}
+
 + (NSUserDefaults*) sharedUserDefaults
 {
+    NSMutableData *key = [NSMutableData dataWithLength:64];
+    (void)SecRandomCopyBytes(kSecRandomDefault, key.length, (uint8_t *)key.mutableBytes);
+
+    
     return [[NSUserDefaults alloc] initWithSuiteName:@"group.com.ryan.Touch-Lock-Shared"];
 }
 
