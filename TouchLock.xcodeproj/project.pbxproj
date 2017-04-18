@@ -44,10 +44,18 @@
 		94231EB31E91F19300214BCF /* RNEncryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 94231EAF1E91F19300214BCF /* RNEncryptor.m */; };
 		942EE1051E94B7C900E113E0 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 942EE1041E94B7C900E113E0 /* Constants.m */; };
 		94480F591E91B1D5009C0C71 /* secure_text_photo.png in Resources */ = {isa = PBXBuildFile; fileRef = 94480F581E91B1D5009C0C71 /* secure_text_photo.png */; };
+		945801051EA5965B004B0252 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 945801041EA5965B004B0252 /* Main.storyboard */; };
 		94A23EBF1E9D5C5D00176FBB /* MessageParameters.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A23EBE1E9D5C5D00176FBB /* MessageParameters.m */; };
 		94A23EC31E9D823E00176FBB /* UIFloatLabelTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A23EC21E9D823E00176FBB /* UIFloatLabelTextView.m */; };
 		94A23ECC1E9D82EE00176FBB /* PrivateTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A23ECA1E9D82EE00176FBB /* PrivateTextViewController.m */; };
 		94A23ECD1E9D82EE00176FBB /* PrivateTextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94A23ECB1E9D82EE00176FBB /* PrivateTextViewController.xib */; };
+		94BBA5E51EA5987D0015DCA2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 94BBA5E41EA5987D0015DCA2 /* main.m */; };
+		94BBA5E81EA5987D0015DCA2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 94BBA5E71EA5987D0015DCA2 /* AppDelegate.m */; };
+		94BBA5EB1EA5987D0015DCA2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94BBA5EA1EA5987D0015DCA2 /* ViewController.m */; };
+		94BBA5EE1EA5987D0015DCA2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94BBA5EC1EA5987D0015DCA2 /* Main.storyboard */; };
+		94BBA5F01EA5987D0015DCA2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94BBA5EF1EA5987D0015DCA2 /* Assets.xcassets */; };
+		94BBA5F31EA5987D0015DCA2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94BBA5F11EA5987D0015DCA2 /* LaunchScreen.storyboard */; };
+		94BBA5FE1EA5987D0015DCA2 /* Touch_LockUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 94BBA5FD1EA5987D0015DCA2 /* Touch_LockUITests.m */; };
 		94EE21911E9BE80500DFBBED /* MessageAttachments.m in Sources */ = {isa = PBXBuildFile; fileRef = 94EE21901E9BE80500DFBBED /* MessageAttachments.m */; };
 		94F7D7221E58BF9300CB1B9E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94F7D7211E58BF9300CB1B9E /* Assets.xcassets */; };
 		94F7D7291E58BF9300CB1B9E /* MessagesExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 94F7D7281E58BF9300CB1B9E /* MessagesExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -64,6 +72,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		94BBA5FA1EA5987D0015DCA2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 94F7D7181E58BF9300CB1B9E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 94BBA5E01EA5987D0015DCA2;
+			remoteInfo = "Touch Lock";
+		};
 		94F7D72A1E58BF9300CB1B9E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 94F7D7181E58BF9300CB1B9E /* Project object */;
@@ -176,6 +191,7 @@
 		942EE1041E94B7C900E113E0 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		94480F581E91B1D5009C0C71 /* secure_text_photo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = secure_text_photo.png; sourceTree = "<group>"; };
 		94480F5A1E91C28F009C0C71 /* DefaultViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultViewProtocol.h; sourceTree = "<group>"; };
+		945801041EA5965B004B0252 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		94689D511E91D38B00372712 /* QBImagePickerController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QBImagePickerController.framework; path = "Pods/../build/Debug-iphoneos/QBImagePickerController/QBImagePickerController.framework"; sourceTree = "<group>"; };
 		94A23EBD1E9D5C5D00176FBB /* MessageParameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageParameters.h; sourceTree = "<group>"; };
 		94A23EBE1E9D5C5D00176FBB /* MessageParameters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageParameters.m; sourceTree = "<group>"; };
@@ -184,6 +200,21 @@
 		94A23EC91E9D82EE00176FBB /* PrivateTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrivateTextViewController.h; sourceTree = "<group>"; };
 		94A23ECA1E9D82EE00176FBB /* PrivateTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrivateTextViewController.m; sourceTree = "<group>"; };
 		94A23ECB1E9D82EE00176FBB /* PrivateTextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrivateTextViewController.xib; sourceTree = "<group>"; };
+		94BBA5E11EA5987D0015DCA2 /* Touch Lock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Touch Lock.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		94BBA5E41EA5987D0015DCA2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		94BBA5E61EA5987D0015DCA2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		94BBA5E71EA5987D0015DCA2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		94BBA5E91EA5987D0015DCA2 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		94BBA5EA1EA5987D0015DCA2 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		94BBA5ED1EA5987D0015DCA2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		94BBA5EF1EA5987D0015DCA2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		94BBA5F21EA5987D0015DCA2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		94BBA5F41EA5987D0015DCA2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		94BBA5F91EA5987D0015DCA2 /* Touch LockUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Touch LockUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		94BBA5FD1EA5987D0015DCA2 /* Touch_LockUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Touch_LockUITests.m; sourceTree = "<group>"; };
+		94BBA5FF1EA5987D0015DCA2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		94BBA6061EA59C080015DCA2 /* MessagesExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MessagesExtension.entitlements; sourceTree = "<group>"; };
+		94BBA6071EA59D740015DCA2 /* Touch Lock.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Touch Lock.entitlements"; sourceTree = "<group>"; };
 		94EE218F1E9BE80500DFBBED /* MessageAttachments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageAttachments.h; sourceTree = "<group>"; };
 		94EE21901E9BE80500DFBBED /* MessageAttachments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageAttachments.m; sourceTree = "<group>"; };
 		94F7D71E1E58BF9300CB1B9E /* TouchLock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TouchLock.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -217,6 +248,20 @@
 				940ECD3A1E94773C00178CB9 /* libz.tbd in Frameworks */,
 				940ECD391E94770300178CB9 /* libz.1.dylib in Frameworks */,
 				930922193DF4A69D7FCAD807 /* libPods-TouchLock.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		94BBA5DE1EA5987D0015DCA2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		94BBA5F61EA5987D0015DCA2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -400,11 +445,47 @@
 			name = Miscellaneous;
 			sourceTree = "<group>";
 		};
+		94BBA5E21EA5987D0015DCA2 /* Touch Lock */ = {
+			isa = PBXGroup;
+			children = (
+				94BBA6071EA59D740015DCA2 /* Touch Lock.entitlements */,
+				94BBA5E61EA5987D0015DCA2 /* AppDelegate.h */,
+				94BBA5E71EA5987D0015DCA2 /* AppDelegate.m */,
+				94BBA5E91EA5987D0015DCA2 /* ViewController.h */,
+				94BBA5EA1EA5987D0015DCA2 /* ViewController.m */,
+				94BBA5EC1EA5987D0015DCA2 /* Main.storyboard */,
+				94BBA5EF1EA5987D0015DCA2 /* Assets.xcassets */,
+				94BBA5F11EA5987D0015DCA2 /* LaunchScreen.storyboard */,
+				94BBA5F41EA5987D0015DCA2 /* Info.plist */,
+				94BBA5E31EA5987D0015DCA2 /* Supporting Files */,
+			);
+			path = "Touch Lock";
+			sourceTree = "<group>";
+		};
+		94BBA5E31EA5987D0015DCA2 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				94BBA5E41EA5987D0015DCA2 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		94BBA5FC1EA5987D0015DCA2 /* Touch LockUITests */ = {
+			isa = PBXGroup;
+			children = (
+				94BBA5FD1EA5987D0015DCA2 /* Touch_LockUITests.m */,
+				94BBA5FF1EA5987D0015DCA2 /* Info.plist */,
+			);
+			path = "Touch LockUITests";
+			sourceTree = "<group>";
+		};
 		94F7D7171E58BF9300CB1B9E = {
 			isa = PBXGroup;
 			children = (
+				94BBA5E21EA5987D0015DCA2 /* Touch Lock */,
 				94F7D7201E58BF9300CB1B9E /* TouchLock */,
 				94F7D72F1E58BF9300CB1B9E /* MessagesExtension */,
+				94BBA5FC1EA5987D0015DCA2 /* Touch LockUITests */,
 				94F7D72C1E58BF9300CB1B9E /* Frameworks */,
 				94F7D71F1E58BF9300CB1B9E /* Products */,
 				E0AA90F6B793E19DFCFCAB88 /* Pods */,
@@ -416,6 +497,8 @@
 			children = (
 				94F7D71E1E58BF9300CB1B9E /* TouchLock.app */,
 				94F7D7281E58BF9300CB1B9E /* MessagesExtension.appex */,
+				94BBA5E11EA5987D0015DCA2 /* Touch Lock.app */,
+				94BBA5F91EA5987D0015DCA2 /* Touch LockUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -425,6 +508,7 @@
 			children = (
 				94F7D7211E58BF9300CB1B9E /* Assets.xcassets */,
 				94F7D7231E58BF9300CB1B9E /* Info.plist */,
+				945801041EA5965B004B0252 /* Main.storyboard */,
 			);
 			path = TouchLock;
 			sourceTree = "<group>";
@@ -450,6 +534,7 @@
 		94F7D72F1E58BF9300CB1B9E /* MessagesExtension */ = {
 			isa = PBXGroup;
 			children = (
+				94BBA6061EA59C080015DCA2 /* MessagesExtension.entitlements */,
 				94F7D7301E58BF9300CB1B9E /* MessagesViewController.h */,
 				94F7D7311E58BF9300CB1B9E /* MessagesViewController.m */,
 				94A23EBC1E9BEE2400176FBB /* Message Objects */,
@@ -532,6 +617,41 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		94BBA5E01EA5987D0015DCA2 /* Touch Lock */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 94BBA6041EA5987D0015DCA2 /* Build configuration list for PBXNativeTarget "Touch Lock" */;
+			buildPhases = (
+				94BBA5DD1EA5987D0015DCA2 /* Sources */,
+				94BBA5DE1EA5987D0015DCA2 /* Frameworks */,
+				94BBA5DF1EA5987D0015DCA2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Touch Lock";
+			productName = "Touch Lock";
+			productReference = 94BBA5E11EA5987D0015DCA2 /* Touch Lock.app */;
+			productType = "com.apple.product-type.application";
+		};
+		94BBA5F81EA5987D0015DCA2 /* Touch LockUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 94BBA6051EA5987D0015DCA2 /* Build configuration list for PBXNativeTarget "Touch LockUITests" */;
+			buildPhases = (
+				94BBA5F51EA5987D0015DCA2 /* Sources */,
+				94BBA5F61EA5987D0015DCA2 /* Frameworks */,
+				94BBA5F71EA5987D0015DCA2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				94BBA5FB1EA5987D0015DCA2 /* PBXTargetDependency */,
+			);
+			name = "Touch LockUITests";
+			productName = "Touch LockUITests";
+			productReference = 94BBA5F91EA5987D0015DCA2 /* Touch LockUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		94F7D71D1E58BF9300CB1B9E /* TouchLock */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 94F7D73F1E58BF9300CB1B9E /* Build configuration list for PBXNativeTarget "TouchLock" */;
@@ -581,6 +701,24 @@
 				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "Ryan D'souza";
 				TargetAttributes = {
+					94BBA5E01EA5987D0015DCA2 = {
+						CreatedOnToolsVersion = 8.3.1;
+						DevelopmentTeam = Q7N3L673D8;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+							com.apple.DataProtection = {
+								enabled = 1;
+							};
+						};
+					};
+					94BBA5F81EA5987D0015DCA2 = {
+						CreatedOnToolsVersion = 8.3.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 94BBA5E01EA5987D0015DCA2;
+					};
 					94F7D71D1E58BF9300CB1B9E = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = Q7N3L673D8;
@@ -592,6 +730,14 @@
 						DevelopmentTeam = Q7N3L673D8;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+							com.apple.DataProtection = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -619,16 +765,36 @@
 			targets = (
 				94F7D71D1E58BF9300CB1B9E /* TouchLock */,
 				94F7D7271E58BF9300CB1B9E /* MessagesExtension */,
+				94BBA5E01EA5987D0015DCA2 /* Touch Lock */,
+				94BBA5F81EA5987D0015DCA2 /* Touch LockUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		94BBA5DF1EA5987D0015DCA2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				94BBA5F31EA5987D0015DCA2 /* LaunchScreen.storyboard in Resources */,
+				94BBA5F01EA5987D0015DCA2 /* Assets.xcassets in Resources */,
+				94BBA5EE1EA5987D0015DCA2 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		94BBA5F71EA5987D0015DCA2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		94F7D71C1E58BF9300CB1B9E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				94F7D7221E58BF9300CB1B9E /* Assets.xcassets in Resources */,
+				945801051EA5965B004B0252 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -731,6 +897,24 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		94BBA5DD1EA5987D0015DCA2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				94BBA5EB1EA5987D0015DCA2 /* ViewController.m in Sources */,
+				94BBA5E81EA5987D0015DCA2 /* AppDelegate.m in Sources */,
+				94BBA5E51EA5987D0015DCA2 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		94BBA5F51EA5987D0015DCA2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				94BBA5FE1EA5987D0015DCA2 /* Touch_LockUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		94F7D7241E58BF9300CB1B9E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -776,6 +960,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		94BBA5FB1EA5987D0015DCA2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 94BBA5E01EA5987D0015DCA2 /* Touch Lock */;
+			targetProxy = 94BBA5FA1EA5987D0015DCA2 /* PBXContainerItemProxy */;
+		};
 		94F7D72B1E58BF9300CB1B9E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 94F7D7271E58BF9300CB1B9E /* MessagesExtension */;
@@ -797,6 +986,22 @@
 			name = QBImagePicker.strings;
 			sourceTree = "<group>";
 		};
+		94BBA5EC1EA5987D0015DCA2 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				94BBA5ED1EA5987D0015DCA2 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		94BBA5F11EA5987D0015DCA2 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				94BBA5F21EA5987D0015DCA2 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
 		94F7D7331E58BF9300CB1B9E /* MainInterface.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -808,6 +1013,62 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		94BBA6001EA5987D0015DCA2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Touch Lock/Touch Lock.entitlements";
+				DEVELOPMENT_TEAM = Q7N3L673D8;
+				INFOPLIST_FILE = "Touch Lock/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ryan.Touch-Lock";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		94BBA6011EA5987D0015DCA2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Touch Lock/Touch Lock.entitlements";
+				DEVELOPMENT_TEAM = Q7N3L673D8;
+				INFOPLIST_FILE = "Touch Lock/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ryan.Touch-Lock";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		94BBA6021EA5987D0015DCA2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				INFOPLIST_FILE = "Touch LockUITests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ryan.Touch-LockUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "Touch Lock";
+			};
+			name = Debug;
+		};
+		94BBA6031EA5987D0015DCA2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				INFOPLIST_FILE = "Touch LockUITests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ryan.Touch-LockUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "Touch Lock";
+			};
+			name = Release;
+		};
 		94F7D7391E58BF9300CB1B9E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -904,6 +1165,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = MessagesExtension/MessagesExtension.entitlements;
 				DEVELOPMENT_TEAM = Q7N3L673D8;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -926,6 +1188,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = MessagesExtension/MessagesExtension.entitlements;
 				DEVELOPMENT_TEAM = Q7N3L673D8;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -982,6 +1245,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		94BBA6041EA5987D0015DCA2 /* Build configuration list for PBXNativeTarget "Touch Lock" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				94BBA6001EA5987D0015DCA2 /* Debug */,
+				94BBA6011EA5987D0015DCA2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		94BBA6051EA5987D0015DCA2 /* Build configuration list for PBXNativeTarget "Touch LockUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				94BBA6021EA5987D0015DCA2 /* Debug */,
+				94BBA6031EA5987D0015DCA2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		94F7D71B1E58BF9300CB1B9E /* Build configuration list for PBXProject "TouchLock" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
