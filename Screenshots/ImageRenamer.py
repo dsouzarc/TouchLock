@@ -13,7 +13,7 @@ import os;
 files = os.listdir('.');
 index = 0;
 
-projectName = "giftCardBalanceTracker"
+projectName = "TouchLock"
 
 prefix = "https://github.com/dsouzarc/" + projectName + "/blob/master/Screenshots/";
 
