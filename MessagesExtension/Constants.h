@@ -9,7 +9,22 @@
 #import <Foundation/Foundation.h>
 #import <Photos/Photos.h>
 
+#import <Realm/Realm.h>
+#import <UICKeyChainStore/UICKeyChainStore.h>
+
 @interface Constants : NSObject
+
+/** Returns an un-encrypted instance of the encrypted RealmDB that is shared across the app and MessagesExtension */ 
++ (RLMRealm*) getRealmDBInstance;
+
+/** Returns the attachments directory --> shared between iOS app and Messages Extension */
++ (NSString*) getAttachmentsDirectory;
+
+/** Creates a directory inside the attachments directory where the message contents will go */
++ (NSString*) generateAttachmentsDirectory;
+
+/** With the folder name, creates a directory inside the attachments directory where the message contents will go */
++ (NSString*) generateAttachmentsDirectoryForFolderName:(NSString*)folderName;
 
 + (NSUserDefaults*) sharedUserDefaults;
 

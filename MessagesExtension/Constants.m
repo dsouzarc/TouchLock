@@ -8,8 +8,11 @@
 
 #import "Constants.h"
 
+static NSString *attachmentsAppGroupIdentifier = @"group.com.ryan.Touch-Lock";
+
 @implementation Constants
 
+/** Generates a 64-byte encryption key */
 + (NSData*) generateEncryptionKeyForRealmDB
 {
     NSMutableData *key = [NSMutableData dataWithLength:64];
@@ -18,12 +21,77 @@
     return key;
 }
 
+/** Returns a 64-byte encryption key to decrypt RealmDB. If it's not present, creates and saves the encryption key */
++ (NSData*) getEncryptionKeyForRealmDB
+{
+    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:@"group.com.ryan.Touch-Lock-Shared-Secure"];
+    
+    NSData *encryptionKey = nil;
+    
+    if([keychain contains:@"realm_db_encryption_key"]) {
+        encryptionKey = [keychain dataForKey:@"realm_db_encryption_key"];
+    }
+    
+    else {
+        encryptionKey = [Constants generateEncryptionKeyForRealmDB];
+        [keychain setData:encryptionKey forKey:@"realm_db_encryption_key"];
+    }
+    
+    return encryptionKey;
+}
+
++ (RLMRealm*) getRealmDBInstance
+{
+    NSFileManager* fileManager = [NSFileManager defaultManager];
+    NSURL *databaseLocation = [fileManager containerURLForSecurityApplicationGroupIdentifier:attachmentsAppGroupIdentifier];
+    databaseLocation = [[databaseLocation URLByAppendingPathComponent:@"file_storage"] URLByAppendingPathExtension:@"realm"];
+    
+    RLMRealmConfiguration *realmConfiguration = [RLMRealmConfiguration defaultConfiguration];
+    [realmConfiguration setEncryptionKey:[Constants getEncryptionKeyForRealmDB]];
+    [realmConfiguration setFileURL:databaseLocation];
+    
+    NSError *error = nil;
+    RLMRealm *realm = [RLMRealm realmWithConfiguration:realmConfiguration error:&error];
+    
+    if (!realm) {
+        NSLog(@"ERROR OPENING REALM: %@", error);
+    }
+    
+    return realm;
+}
+
++ (NSString*) getAttachmentsDirectory
+{
+    NSFileManager *defaultManager = [NSFileManager defaultManager];
+    NSString *sharedDirectory = [[defaultManager containerURLForSecurityApplicationGroupIdentifier:attachmentsAppGroupIdentifier] path];
+    
+    return [sharedDirectory stringByAppendingPathComponent:@"attachments"];
+}
+
++ (NSString*) generateAttachmentsDirectory
+{
+    NSString *folderName = [[NSUUID UUID] UUIDString];
+    return [self generateAttachmentsDirectoryForFolderName:folderName];
+}
+
++ (NSString*) generateAttachmentsDirectoryForFolderName:(NSString *)folderName
+{
+    NSString *attachmentsDirectory = [Constants getAttachmentsDirectory];
+    NSString *fullPath = [attachmentsDirectory stringByAppendingPathComponent:folderName];
+    
+    if(![[NSFileManager defaultManager] fileExistsAtPath:fullPath]) {
+        
+        [[NSFileManager defaultManager] createDirectoryAtPath:fullPath
+                                  withIntermediateDirectories:YES
+                                                   attributes:nil
+                                                        error:nil];
+    }
+    
+    return fullPath;
+}
+
 + (NSUserDefaults*) sharedUserDefaults
 {
-    NSMutableData *key = [NSMutableData dataWithLength:64];
-    (void)SecRandomCopyBytes(kSecRandomDefault, key.length, (uint8_t *)key.mutableBytes);
-
-    
     return [[NSUserDefaults alloc] initWithSuiteName:@"group.com.ryan.Touch-Lock-Shared"];
 }
 
