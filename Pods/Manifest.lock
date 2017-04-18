@@ -5,6 +5,9 @@ PODS:
     - DACircularProgress (~> 2.3)
     - MBProgressHUD (~> 0.9)
     - SDWebImage (!= 3.7.2, ~> 3.7)
+  - Realm (2.5.1):
+    - Realm/Headers (= 2.5.1)
+  - Realm/Headers (2.5.1)
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
@@ -12,13 +15,15 @@ PODS:
 DEPENDENCIES:
   - MBProgressHUD
   - MWPhotoBrowser
+  - Realm
 
 SPEC CHECKSUMS:
   DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   MWPhotoBrowser: 5836d7aa041dc05a13de380c246826578adc5ea5
+  Realm: 32f86104d37c8521f864d4274050b38ba6190733
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
 
-PODFILE CHECKSUM: fcb03013dc3af85d9d37e56aa9575e3fe1893406
+PODFILE CHECKSUM: d98db6d519c91eafd0dcd839cc2ee29fd5b45c7e
 
 COCOAPODS: 1.1.1
