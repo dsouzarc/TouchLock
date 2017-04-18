@@ -10,6 +10,11 @@
 
 @implementation Constants
 
++ (NSUserDefaults*) sharedUserDefaults
+{
+    return [[NSUserDefaults alloc] initWithSuiteName:@"group.com.ryan.Touch-Lock-Shared"];
+}
+
 + (UIImage*) thumbnailImageForVideo:(NSURL *)videoURL atTime:(NSTimeInterval)time
 {
     

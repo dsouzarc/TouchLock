@@ -11,6 +11,8 @@
 
 @interface Constants : NSObject
 
++ (NSUserDefaults*) sharedUserDefaults;
+
 + (UIImage*) thumbnailImageForVideo:(NSURL *)videoURL atTime:(NSTimeInterval)time;
 
 + (NSArray*) getPHAssetCollectionSubtypes;

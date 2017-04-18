@@ -56,6 +56,7 @@
 		94BBA5F01EA5987D0015DCA2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94BBA5EF1EA5987D0015DCA2 /* Assets.xcassets */; };
 		94BBA5F31EA5987D0015DCA2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94BBA5F11EA5987D0015DCA2 /* LaunchScreen.storyboard */; };
 		94BBA5FE1EA5987D0015DCA2 /* Touch_LockUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 94BBA5FD1EA5987D0015DCA2 /* Touch_LockUITests.m */; };
+		94BBA6541EA5A59E0015DCA2 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 942EE1041E94B7C900E113E0 /* Constants.m */; };
 		94EE21911E9BE80500DFBBED /* MessageAttachments.m in Sources */ = {isa = PBXBuildFile; fileRef = 94EE21901E9BE80500DFBBED /* MessageAttachments.m */; };
 		94F7D7221E58BF9300CB1B9E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94F7D7211E58BF9300CB1B9E /* Assets.xcassets */; };
 		94F7D7291E58BF9300CB1B9E /* MessagesExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 94F7D7281E58BF9300CB1B9E /* MessagesExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -288,7 +289,8 @@
 				940ECD221E9464AE00178CB9 /* SSZipCommon.h */,
 				940ECD231E9464AE00178CB9 /* ZipArchive.h */,
 			);
-			path = SSZipArchive;
+			name = SSZipArchive;
+			path = MessagesExtension/SSZipArchive;
 			sourceTree = "<group>";
 		};
 		940ECCFE1E9464AE00178CB9 /* aes */ = {
@@ -360,7 +362,8 @@
 				94231E7E1E91D3E200214BCF /* QBVideoIndicatorView.h */,
 				94231E7F1E91D3E200214BCF /* QBVideoIndicatorView.m */,
 			);
-			path = QBImagePicker;
+			name = QBImagePicker;
+			path = MessagesExtension/QBImagePicker;
 			sourceTree = "<group>";
 		};
 		94231EA21E91F19300214BCF /* RNCryptor iOS */ = {
@@ -369,12 +372,14 @@
 				94231EA31E91F19300214BCF /* module.modulemap */,
 				94231EA41E91F19300214BCF /* RNCryptor iOS.h */,
 			);
-			path = "RNCryptor iOS";
-			sourceTree = "<group>";
+			name = "RNCryptor iOS";
+			path = "MessagesExtension/RNCryptor iOS";
+			sourceTree = SOURCE_ROOT;
 		};
 		94231EA51E91F19300214BCF /* RNCryptor */ = {
 			isa = PBXGroup;
 			children = (
+				94231EA21E91F19300214BCF /* RNCryptor iOS */,
 				94231EA61E91F19300214BCF /* RNCryptor+Private.h */,
 				94231EA71E91F19300214BCF /* RNCryptor-Prefix.pch */,
 				94231EA81E91F19300214BCF /* RNCryptor.h */,
@@ -386,7 +391,8 @@
 				94231EAE1E91F19300214BCF /* RNEncryptor.h */,
 				94231EAF1E91F19300214BCF /* RNEncryptor.m */,
 			);
-			path = RNCryptor;
+			name = RNCryptor;
+			path = MessagesExtension/RNCryptor;
 			sourceTree = "<group>";
 		};
 		94A23EBC1E9BEE2400176FBB /* Message Objects */ = {
@@ -396,6 +402,7 @@
 				94A23ED41E9DF37A00176FBB /* Parameters */,
 			);
 			name = "Message Objects";
+			path = MessagesExtension;
 			sourceTree = "<group>";
 		};
 		94A23EC01E9D823E00176FBB /* UIFloatLabelTextView */ = {
@@ -404,7 +411,8 @@
 				94A23EC11E9D823E00176FBB /* UIFloatLabelTextView.h */,
 				94A23EC21E9D823E00176FBB /* UIFloatLabelTextView.m */,
 			);
-			path = UIFloatLabelTextView;
+			name = UIFloatLabelTextView;
+			path = MessagesExtension/UIFloatLabelTextView;
 			sourceTree = "<group>";
 		};
 		94A23ED21E9DF34300176FBB /* Private Text */ = {
@@ -479,12 +487,26 @@
 			path = "Touch LockUITests";
 			sourceTree = "<group>";
 		};
+		94BBA6081EA5A11A0015DCA2 /* Third Party Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				94A23EC01E9D823E00176FBB /* UIFloatLabelTextView */,
+				940ECCFD1E9464AE00178CB9 /* SSZipArchive */,
+				94231EA51E91F19300214BCF /* RNCryptor */,
+				94231E651E91D3E200214BCF /* QBImagePicker */,
+			);
+			name = "Third Party Libraries";
+			sourceTree = "<group>";
+		};
 		94F7D7171E58BF9300CB1B9E = {
 			isa = PBXGroup;
 			children = (
+				94BBA6081EA5A11A0015DCA2 /* Third Party Libraries */,
+				94A23EBC1E9BEE2400176FBB /* Message Objects */,
+				94FB16A51E96018E0001D943 /* Constants */,
 				94BBA5E21EA5987D0015DCA2 /* Touch Lock */,
-				94F7D7201E58BF9300CB1B9E /* TouchLock */,
 				94F7D72F1E58BF9300CB1B9E /* MessagesExtension */,
+				94F7D7201E58BF9300CB1B9E /* TouchLock */,
 				94BBA5FC1EA5987D0015DCA2 /* Touch LockUITests */,
 				94F7D72C1E58BF9300CB1B9E /* Frameworks */,
 				94F7D71F1E58BF9300CB1B9E /* Products */,
@@ -534,19 +556,11 @@
 		94F7D72F1E58BF9300CB1B9E /* MessagesExtension */ = {
 			isa = PBXGroup;
 			children = (
-				94BBA6061EA59C080015DCA2 /* MessagesExtension.entitlements */,
 				94F7D7301E58BF9300CB1B9E /* MessagesViewController.h */,
 				94F7D7311E58BF9300CB1B9E /* MessagesViewController.m */,
-				94A23EBC1E9BEE2400176FBB /* Message Objects */,
-				94FB16A51E96018E0001D943 /* Constants */,
 				94F7D7571E58D42E00CB1B9E /* Main Views */,
 				94A23ED51E9DF38D00176FBB /* Miscellaneous */,
 				94F7D7461E58C4E800CB1B9E /* icons */,
-				94A23EC01E9D823E00176FBB /* UIFloatLabelTextView */,
-				940ECCFD1E9464AE00178CB9 /* SSZipArchive */,
-				94231EA21E91F19300214BCF /* RNCryptor iOS */,
-				94231EA51E91F19300214BCF /* RNCryptor */,
-				94231E651E91D3E200214BCF /* QBImagePicker */,
 			);
 			path = MessagesExtension;
 			sourceTree = "<group>";
@@ -554,6 +568,7 @@
 		94F7D7461E58C4E800CB1B9E /* icons */ = {
 			isa = PBXGroup;
 			children = (
+				94BBA6061EA59C080015DCA2 /* MessagesExtension.entitlements */,
 				94231EA01E91E82300214BCF /* default_blurred_image.jpg */,
 				94480F581E91B1D5009C0C71 /* secure_text_photo.png */,
 				94F7D7471E58C6DF00CB1B9E /* take_photo.png */,
@@ -601,6 +616,7 @@
 				942EE1041E94B7C900E113E0 /* Constants.m */,
 			);
 			name = Constants;
+			path = MessagesExtension;
 			sourceTree = "<group>";
 		};
 		E0AA90F6B793E19DFCFCAB88 /* Pods */ = {
@@ -904,6 +920,7 @@
 				94BBA5EB1EA5987D0015DCA2 /* ViewController.m in Sources */,
 				94BBA5E81EA5987D0015DCA2 /* AppDelegate.m in Sources */,
 				94BBA5E51EA5987D0015DCA2 /* main.m in Sources */,
+				94BBA6541EA5A59E0015DCA2 /* Constants.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

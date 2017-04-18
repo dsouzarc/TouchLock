@@ -476,10 +476,24 @@
             
             self.currentlyOpenMessageAttachment = [[MessageAttachments alloc] initWithAttachmentName:messageParameters.attachmentName];
             
-            [decryptedData writeToFile:self.currentlyOpenMessageAttachment.pathToZippedAttachment atomically:YES];
+            if(![decryptedData writeToFile:self.currentlyOpenMessageAttachment.pathToZippedAttachment options:NSDataWritingAtomic error:&error]) {
+                NSLog(@"ERROR WRITING DECRYPTED TO FILE: %@", error);
+            }
+            
+            if(error) {
+                NSLog(@"ERROR WRITING DECRYPTED TO FILE: %@", [error description]);
+                return;
+            }
             decryptedData = nil;
             
-            [SSZipArchive unzipFileAtPath:self.currentlyOpenMessageAttachment.pathToZippedAttachment toDestination:self.currentlyOpenMessageAttachment.pathToUnzippedAttachment];
+            if(![SSZipArchive unzipFileAtPath:self.currentlyOpenMessageAttachment.pathToZippedAttachment toDestination:self.currentlyOpenMessageAttachment.pathToUnzippedAttachment overwrite:YES password:nil error:&error]) {
+                NSLog(@"ERROR UNZIPPING FILE: %@", error);
+            }
+            if(error) {
+                NSLog(@"ERROR UNZIPPING FILE HERE: %@", [error description]);
+                return;
+            }
+
             
             //Delete the ".zip" file
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
@@ -599,6 +613,11 @@ static NSURL *receivedURL;
     
     [[NSUserDefaults standardUserDefaults] setObject:[receivedURL path] forKey:messageParameters.messageID];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    NSUserDefaults *sharedDefaults = [Constants sharedUserDefaults];
+    
+    [sharedDefaults setObject:[receivedURL path] forKey:messageParameters.messageID];
+    [sharedDefaults synchronize];
 }
 
 - (void) didStartSendingMessage:(MSMessage *)message conversation:(MSConversation *)conversation

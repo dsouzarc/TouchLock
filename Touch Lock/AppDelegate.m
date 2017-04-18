@@ -8,6 +8,9 @@
 
 #import "AppDelegate.h"
 
+
+#import "Constants.h"
+
 @interface AppDelegate ()
 
 @end
@@ -19,6 +22,24 @@
     // Override point for customization after application launch.
     
     NSLog(@"LAUNCHING HERE");
+    
+    
+    NSUserDefaults *sharedDefaults = [Constants sharedUserDefaults];
+    
+    NSLog(@"IN APP: %@", [sharedDefaults objectForKey:@"password"]);
+    
+    for(NSString *key in [[sharedDefaults dictionaryRepresentation] allKeys]) {
+        
+        NSLog(@"FOUND: %@\t%@", key, [sharedDefaults objectForKey:key]);
+        
+        /*if([[NSFileManager defaultManager] fileExistsAtPath:[[sharedDefaults objectForKey:key] stringValue]]) {
+            NSLog(@"FILE EXISTS: %@", [sharedDefaults objectForKey:key]);
+        }
+        
+        else {
+            NSLog(@"FILE DOES NOT EXIST: %@", [sharedDefaults objectForKey:key]);
+        }*/
+    }
     
     return YES;
 }
