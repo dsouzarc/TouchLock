@@ -15,14 +15,16 @@ static NSString *IMAGE_IDENTIFIER = @"image";
 static NSString *VIDEO_IDENTIFIER = @"video";
 static NSString *PRIVATE_TEXTFILE_IDENTIFIER = @"privateTextFile";
 
+
 /** Represents an attachment in a message. A message can have multiple MessageAttachment objects */
 @interface MessageAttachment : RLMObject
 
 + (MessageAttachment*) generateMessageAttachmentForMessageID:(NSString*)messageID
                                              messageSendTime:(NSDate*)messageSendTime
                                            isOutgoingMessage:(BOOL)isOutgoingMessage
-                                      attachmentDataFileType:(NSString*)attachmentDataFileType
-                                              attachmentData:(NSData*)attachmentData;
+                                                    fileType:(NSString*)fileType
+                                                fileLocation:(NSString*)fileLocation
+                                               encryptionKey:(NSString*)encryptionKey;
 
 /** Message ID associated with the message */
 @property (strong, nonatomic) NSString *messageID;
@@ -34,9 +36,12 @@ static NSString *PRIVATE_TEXTFILE_IDENTIFIER = @"privateTextFile";
 @property BOOL isOutgoingMessage;
 
 /** IDENTIFIER type of the file - image, video, privateTextFile */
-@property (strong, nonatomic) NSString *attachmentDataFileType;
+@property (strong, nonatomic) NSString *fileType;
 
-/** The attachment/file's actual data */
-@property (strong, nonatomic) NSData *attachmentData;
+/** The attachment's local location */
+@property (strong, nonatomic) NSString *fileLocation;
+
+/** An encryption key to decrypt the attachment */
+@property (strong, nonatomic) NSString *encryptionKey;
 
 @end

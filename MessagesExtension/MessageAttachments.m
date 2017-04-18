@@ -18,64 +18,110 @@
 
 - (instancetype) init
 {
-    NSString *attachmentName = [Constants getSendFormatUsingCurrentDate];
-    self = [self initWithAttachmentName:attachmentName];
-    
-    return self;
-}
-
-- (instancetype) initWithAttachmentName:(NSString*)attachmentName
-{
     self = [super init];
     
     if(self) {
+    
+        self.folderName = [[NSUUID UUID] UUIDString];
+        self.pathToAttachmentFolder = [Constants generateAttachmentsDirectoryForFolderName:self.folderName];
+        self.pathToMetaFileInAttachmentFolder = [self.pathToAttachmentFolder stringByAppendingPathComponent:@".META_FILE"];
         
-        self.attachmentName = attachmentName;
-        self.isOutgoingMessage = NO;
+        self.zipFolderName = [NSString stringWithFormat:@"%@.zip", self.folderName];
+        self.pathToZipFolder = [NSTemporaryDirectory() stringByAppendingPathComponent:self.zipFolderName];
+        
+        self.messageID = self.folderName;
+        self.messageEncryptionKey = [Constants generateEncryptionKey];
+        
+        self.messageAttachments = [[NSMutableArray alloc] init];
         self.metaFileList = [[NSMutableArray alloc] init];
-        
-        //Zipped and Unzipped path locations
-        NSString *documentsDirectory = [Constants getDocumentsDirectory];
-        self.pathToUnzippedAttachment = [documentsDirectory stringByAppendingPathComponent:attachmentName];
-        self.pathToZippedAttachment = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.zip", attachmentName]];
-        
-        self.pathToMetaFile = [self.pathToUnzippedAttachment stringByAppendingPathComponent:@"meta.out"];
-        
-        NSError *error;
-        [[NSFileManager defaultManager] createDirectoryAtPath:self.pathToUnzippedAttachment
-                                  withIntermediateDirectories:YES
-                                                   attributes:nil
-                                                        error:&error];
     }
     
     return self;
 }
 
-- (void) addImageWithNameToMetaFile:(NSString *)imageName
+- (void) addImageAttachment:(UIImage *)image
 {
+    NSString *imageName = [NSString stringWithFormat:@"%@.jpeg", [[NSUUID UUID] UUIDString]];
+    NSString *pathToImage = [self.pathToAttachmentFolder stringByAppendingPathComponent:imageName];
+    
+    NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
+    [imageData writeToFile:pathToImage atomically:YES];
+    imageData = nil;
+    
+    /* NSError *error;
+    NSData *encryptedData = [RNEncryptor encryptData:imageData withSettings:kRNCryptorAES256Settings password:self.messageEncryptionKey error:&error];
+    [encryptedData writeToFile:pathToImage atomically:YES];
+    encryptedData = nil; */
+    
+    MessageAttachment *messageAttachment = [MessageAttachment generateMessageAttachmentForMessageID:self.messageID
+                                                                                    messageSendTime:[NSDate date]
+                                                                                  isOutgoingMessage:YES
+                                                                                           fileType:IMAGE_IDENTIFIER
+                                                                                       fileLocation:pathToImage
+                                                                                      encryptionKey:self.messageEncryptionKey];
+    [self.messageAttachments addObject:messageAttachment];
+    
+    
     NSMutableDictionary *fileDescription = [[NSMutableDictionary alloc] init];
-    [fileDescription setValue:imageName forKey:FILE_NAME_KEY];
+    [fileDescription setValue:pathToImage forKey:FILE_NAME_KEY];
     [fileDescription setValue:IMAGE_IDENTIFIER forKey:MEDIA_TYPE_KEY];
-    
     [self.metaFileList addObject:fileDescription];
 }
 
-- (void) addVideoWithNameToMetaFile:(NSString *)videoName
+- (void) addVideoAttachmentAtURL:(NSURL *)videoURL
 {
-    NSMutableDictionary *fileDescription = [[NSMutableDictionary alloc] init];
-    [fileDescription setValue:videoName forKey:FILE_NAME_KEY];
-    [fileDescription setValue:VIDEO_IDENTIFIER forKey:MEDIA_TYPE_KEY];
+    NSString *videoName = [NSString stringWithFormat:@"%@.MOV", [[NSUUID UUID] UUIDString]];
+    NSString *pathToVideo = [self.pathToAttachmentFolder stringByAppendingPathComponent:videoName];
     
+    NSError *error;
+    [[NSFileManager defaultManager] copyItemAtPath:[videoURL path] toPath:pathToVideo error:&error];
+
+    MessageAttachment *messageAttachment = [MessageAttachment generateMessageAttachmentForMessageID:self.messageID
+                                                                                    messageSendTime:[NSDate date]
+                                                                                  isOutgoingMessage:YES
+                                                                                           fileType:VIDEO_IDENTIFIER
+                                                                                       fileLocation:pathToVideo
+                                                                                      encryptionKey:self.messageEncryptionKey];
+    [self.messageAttachments addObject:messageAttachment];
+    
+    NSMutableDictionary *fileDescription = [[NSMutableDictionary alloc] init];
+    [fileDescription setValue:pathToVideo forKey:FILE_NAME_KEY];
+    [fileDescription setValue:IMAGE_IDENTIFIER forKey:MEDIA_TYPE_KEY];
     [self.metaFileList addObject:fileDescription];
 }
 
-- (void) addPrivateTextFileWithNameToMetaFile:(NSString *)privateTextFileName
+- (void) addPrivateTextFileWithData:(NSData *)textFileData
 {
+    NSString *textfileName = [NSString stringWithFormat:@"%@.out", [[NSUUID UUID] UUIDString]];
+    NSString *pathToTextFile = [self.pathToAttachmentFolder stringByAppendingPathComponent:textfileName];
+    
+    [textFileData writeToFile:pathToTextFile atomically:YES];
+    
+    MessageAttachment *messageAttachment = [MessageAttachment generateMessageAttachmentForMessageID:self.messageID
+                                                                                    messageSendTime:[NSDate date]
+                                                                                  isOutgoingMessage:YES
+                                                                                           fileType:PRIVATE_TEXTFILE_IDENTIFIER
+                                                                                       fileLocation:pathToTextFile
+                                                                                      encryptionKey:self.messageEncryptionKey];
+    [self.messageAttachments addObject:messageAttachment];
+    
     NSMutableDictionary *fileDescription = [[NSMutableDictionary alloc] init];
-    [fileDescription setValue:privateTextFileName forKey:FILE_NAME_KEY];
+    [fileDescription setValue:pathToTextFile forKey:FILE_NAME_KEY];
     [fileDescription setValue:PRIVATE_TEXTFILE_IDENTIFIER forKey:MEDIA_TYPE_KEY];
-    
     [self.metaFileList addObject:fileDescription];
+}
+
+- (void) storeAttachmentsInDatabase
+{
+    RLMRealm *realmDB = [Constants getRealmDBInstance];
+    [realmDB beginWriteTransaction];
+    [realmDB addObjects:self.messageAttachments];
+    [realmDB commitWriteTransaction];
+    
+    RLMResults<MessageAttachment*> *allMessageAttachments = [MessageAttachment allObjectsInRealm:realmDB];
+    for(MessageAttachment *messageAttachment in allMessageAttachments) {
+        NSLog(@"FOUND ATTACHMENT: %@", messageAttachment.fileLocation);
+    }
 }
 
 - (int) totalNumberOfAttachments
@@ -156,13 +202,13 @@
 
 - (void) saveMetaFileListToFile
 {
-    [self.metaFileList writeToFile:self.pathToMetaFile atomically:YES];
+    [self.metaFileList writeToFile:self.pathToMetaFileInAttachmentFolder atomically:YES];
 }
 
 - (void) loadMetaFileListFromFile
 {
-    if([[NSFileManager defaultManager] fileExistsAtPath:self.pathToMetaFile]) {
-        self.metaFileList = [[NSMutableArray alloc] initWithContentsOfFile:self.pathToMetaFile];
+    if([[NSFileManager defaultManager] fileExistsAtPath:self.pathToMetaFileInAttachmentFolder]) {
+        self.metaFileList = [[NSMutableArray alloc] initWithContentsOfFile:self.pathToMetaFileInAttachmentFolder];
     }
     
     if(!self.metaFileList) {

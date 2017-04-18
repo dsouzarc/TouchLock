@@ -15,6 +15,8 @@
 #import <Photos/Photos.h>
 #import <AVKit/AVKit.h>
 
+#import <Realm/Realm.h>
+
 #import "QBImagePickerController.h"
 #import "MWPhotoBrowser.h"
 #import "MBProgressHUD.h"
@@ -25,6 +27,7 @@
 
 #import "DefaultViewProtocol.h"
 #import "Constants.h"
+#import "MessageAttachment.h"
 #import "MessageAttachments.h"
 #import "MessageParameters.h"
 

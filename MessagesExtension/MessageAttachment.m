@@ -13,8 +13,9 @@
 + (MessageAttachment*) generateMessageAttachmentForMessageID:(NSString *)messageID
                                              messageSendTime:(NSDate *)messageSendTime
                                            isOutgoingMessage:(BOOL)isOutgoingMessage
-                                      attachmentDataFileType:(NSString *)attachmentDataFileType
-                                              attachmentData:(NSData *)attachmentData
+                                                    fileType:(NSString *)fileType
+                                                fileLocation:(NSString *)fileLocation
+                                               encryptionKey:(NSString *)encryptionKey
 
 {
     MessageAttachment *attachment = [[MessageAttachment alloc] init];
@@ -22,8 +23,9 @@
     attachment.messageID = messageID;
     attachment.messageSendTime = messageSendTime;
     attachment.isOutgoingMessage = isOutgoingMessage;
-    attachment.attachmentDataFileType = attachmentDataFileType;
-    attachment.attachmentData = attachmentData;
+    attachment.fileType = fileType;
+    attachment.fileLocation = fileLocation;
+    attachment.encryptionKey = encryptionKey;
     
     return attachment;
 }

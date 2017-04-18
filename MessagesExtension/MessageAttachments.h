@@ -8,17 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
+#import "RNEncryptor.h"
+
 #import "Constants.h"
+#import "MessageAttachment.h"
 
 /**
  Represents the attributes of a Message Attachment
  Like the file locations of various media
  */
 
-
-static NSString *IMAGE_IDENTIFIER = @"image";
-static NSString *VIDEO_IDENTIFIER = @"video";
-static NSString *PRIVATE_TEXTFILE_IDENTIFIER = @"privateTextFile";
 
 static NSString *FILE_NAME_KEY = @"fileName";
 static NSString *MEDIA_TYPE_KEY = @"mediaTypeKey";
@@ -27,20 +26,25 @@ static NSString *MEDIA_TYPE_KEY = @"mediaTypeKey";
 @interface MessageAttachments : NSObject
 
 - (instancetype) init;
-- (instancetype) initWithAttachmentName:(NSString*)attachmentName;
 
-@property (strong, nonatomic) NSString *attachmentName;
-@property (strong, nonatomic) NSString *pathToZippedAttachment;
-@property (strong, nonatomic) NSString *pathToUnzippedAttachment;
+@property (strong, nonatomic) NSString *folderName;
+@property (strong, nonatomic) NSString *pathToAttachmentFolder;
+@property (strong, nonatomic) NSString *pathToMetaFileInAttachmentFolder;
 
-@property (strong, nonatomic) NSString *pathToMetaFile;
+@property (strong, nonatomic) NSString *zipFolderName;
+@property (strong, nonatomic) NSString *pathToZipFolder;
+
+@property (strong, nonatomic) NSString *messageID;
+@property (strong, nonatomic) NSString *messageEncryptionKey;
+
+@property (strong, nonatomic) NSMutableArray<MessageAttachment*> *messageAttachments;
 @property (strong, nonatomic) NSMutableArray<NSMutableDictionary*> *metaFileList;
 
-@property BOOL isOutgoingMessage;
+- (void) addImageAttachment:(UIImage*)image;
+- (void) addVideoAttachmentAtURL:(NSURL*)videoURL;
+- (void) addPrivateTextFileWithData:(NSData*)textFileData;
 
-- (void) addImageWithNameToMetaFile:(NSString*)imageName;
-- (void) addVideoWithNameToMetaFile:(NSString*)videoName;
-- (void) addPrivateTextFileWithNameToMetaFile:(NSString*)privateTextFileName;
+- (void) storeAttachmentsInDatabase;
 
 - (int) totalNumberOfAttachments;
 - (int) numberOfImagesInMetaFileList;

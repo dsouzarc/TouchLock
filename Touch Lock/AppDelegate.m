@@ -9,8 +9,6 @@
 #import "AppDelegate.h"
 
 
-#import "Constants.h"
-
 @interface AppDelegate ()
 
 @end
@@ -39,6 +37,12 @@
         else {
             NSLog(@"FILE DOES NOT EXIST: %@", [sharedDefaults objectForKey:key]);
         }*/
+    }
+    
+    
+    RLMResults<MessageAttachment*> *allMessageAttachments = [MessageAttachment allObjectsInRealm:[Constants getRealmDBInstance]];
+    for(MessageAttachment *messageAttachment in allMessageAttachments) {
+        NSLog(@"FOUND ATTACHMENT: %@", messageAttachment.fileLocation);
     }
     
     return YES;

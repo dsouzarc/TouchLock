@@ -162,14 +162,12 @@
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(void) {
         
-        NSFileManager *fileManager = [NSFileManager defaultManager];
         PHImageManager *photoManager = [PHImageManager defaultManager];
         
         PHImageRequestOptions *photoRequestOptions = [Constants getPhotoRequestOptions];
         PHVideoRequestOptions *videoRequestOptions = [Constants getVideoRequestOptions];
         
-        NSString *currentSendName = [Constants getSendFormatUsingCurrentDate];
-        MessageAttachments *messageAttachments = [[MessageAttachments alloc] initWithAttachmentName:currentSendName];
+        self.currentlyOpenMessageAttachment = [[MessageAttachments alloc] init];
         
         __block int numberOfVideosSaved = 0;
         __block int numberOfOtherMediaSaved = 0;
@@ -185,14 +183,9 @@
                                            options:photoRequestOptions
                                      resultHandler:^(UIImage *originalImage, NSDictionary *info) {
                                          
-                                         NSString *imageFileName = [NSString stringWithFormat:@"%@.png", [[NSUUID UUID] UUIDString]];
-                                         [messageAttachments addImageWithNameToMetaFile:imageFileName];
-                                         
-                                         NSData *pngImageData = UIImagePNGRepresentation(originalImage);
-                                         [pngImageData writeToFile:[messageAttachments.pathToUnzippedAttachment stringByAppendingPathComponent:imageFileName] atomically:YES];
-                                         
+                                         [self.currentlyOpenMessageAttachment addImageAttachment:originalImage];
+        
                                          NSLog(@"Finished photo");
-                                         
                                          numberOfOtherMediaSaved++;
                                      }
                  ];
@@ -204,20 +197,10 @@
                                              options:videoRequestOptions
                                        resultHandler:^(AVAsset * _Nullable asset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info) {
                                            
-                                           NSString *videoFileName = [NSString stringWithFormat:@"%@.MOV", [[NSUUID UUID] UUIDString]];
-                                           [messageAttachments addVideoWithNameToMetaFile:videoFileName];
-                                           
-                                           NSURL *videoFileURL = [NSURL fileURLWithPath:[messageAttachments.pathToUnzippedAttachment stringByAppendingPathComponent:videoFileName]];
-                                           
-                                           NSError *error;
                                            AVURLAsset *videoURLAsset = (AVURLAsset*) asset;
-                                           
-                                           [fileManager copyItemAtURL:[videoURLAsset URL]
-                                                                toURL:videoFileURL
-                                                                error:&error];
-                                           
+                                           [self.currentlyOpenMessageAttachment addVideoAttachmentAtURL:[videoURLAsset URL]];
+                            
                                            NSLog(@"Finished video");
-                                           
                                            numberOfVideosSaved++;
                                        }
                  ];
@@ -248,16 +231,13 @@
             }
         }
         
-        //Long, randomly generated string --> each UUID = 36 characters long
-        NSString *encryptionKey = [Constants generateEncryptionKey];
-        
         //Since we can't load videos synchronously, wait for the rest to finish
         while((numberOfOtherMediaSaved + numberOfVideosSaved) < totalNumberOfItems) {
             sleep(0.5); //Wait half a second
             NSLog(@"Sleeping while waiting to process");
         }
         
-        [self sendMessageWithAttachments:messageAttachments encryptionKey:encryptionKey];
+        [self sendMessageWithAttachments:self.currentlyOpenMessageAttachment];
     });
 }
 
@@ -284,17 +264,10 @@
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(void) {
         
-        NSString *currentSendName = [Constants getSendFormatUsingCurrentDate];
-        MessageAttachments *messageAttachments = [[MessageAttachments alloc] initWithAttachmentName:currentSendName];
-        
-        NSString *fileName = [NSString stringWithFormat:@"%@.out", [[NSUUID UUID] UUIDString]];
-        [messageAttachments addPrivateTextFileWithNameToMetaFile:fileName];
-        
-        NSString *filePath = [messageAttachments.pathToUnzippedAttachment stringByAppendingPathComponent:fileName];
-        [self.privateTextData writeToFile:filePath atomically:YES];
-        
-        NSString *encryptionKey = [Constants generateEncryptionKey];
-        [self sendMessageWithAttachments:messageAttachments encryptionKey:encryptionKey];
+        self.currentlyOpenMessageAttachment = [[MessageAttachments alloc] init];
+        [self.currentlyOpenMessageAttachment addPrivateTextFileWithData:self.privateTextData];
+
+        [self sendMessageWithAttachments:self.currentlyOpenMessageAttachment];
     });
     
     [self privateTextViewController:privateTextViewController didExit:YES];
@@ -326,7 +299,7 @@
     
     [self showLoadingHUDWithText:@"Compressing attachment"];
     
-    MessageAttachments *messageAttachment = [[MessageAttachments alloc] init];
+    self.currentlyOpenMessageAttachment = [[MessageAttachments alloc] init];
     
     [[self.imagePickerController view] removeFromSuperview];
     self.imagePickerController = nil;
@@ -337,32 +310,18 @@
         if([[info objectForKey:UIImagePickerControllerMediaType] isEqualToString:(NSString*) kUTTypeImage]) {
             
             UIImage *originalImage = (UIImage*) [info objectForKey:UIImagePickerControllerOriginalImage];
-            NSData *pngImageData = UIImagePNGRepresentation(originalImage);
+            [self.currentlyOpenMessageAttachment addImageAttachment:originalImage];
             
-            NSString *imageFileName = [NSString stringWithFormat:@"%@.png", [[NSUUID UUID] UUIDString]];
-            [messageAttachment addImageWithNameToMetaFile:imageFileName];
-            
-            NSString *imageFilePath = [messageAttachment.pathToUnzippedAttachment stringByAppendingPathComponent:imageFileName];
-            [pngImageData writeToFile:imageFilePath atomically:YES];
         }
         
         //Dealing with a movie
         else if([[info objectForKey:UIImagePickerControllerMediaType] isEqualToString:(NSString*) kUTTypeMovie]) {
             
-            NSString *recordedMoviePath = [[info objectForKey:UIImagePickerControllerMediaURL] path];
-    
-            NSString *sendVideofileName = [NSString stringWithFormat:@"%@.mov", [[NSUUID UUID] UUIDString]];
-            [messageAttachment addImageWithNameToMetaFile:sendVideofileName];
-            
-            NSString *sendVideoFilePath = [messageAttachment.pathToUnzippedAttachment stringByAppendingPathComponent:sendVideofileName];
-            
-            NSError *copyError;
-            [[NSFileManager defaultManager] copyItemAtPath:recordedMoviePath toPath:sendVideoFilePath error:&copyError];
+            NSURL *recordedVideoURL = [info objectForKey:UIImagePickerControllerMediaURL];
+            [self.currentlyOpenMessageAttachment addVideoAttachmentAtURL:recordedVideoURL];
         }
         
-        NSString *encryptionKey = [Constants generateEncryptionKey];
-        
-        [self sendMessageWithAttachments:messageAttachment encryptionKey:encryptionKey];
+        [self sendMessageWithAttachments:self.currentlyOpenMessageAttachment];
     });
 }
 
@@ -432,7 +391,7 @@
     
     // Use this method to configure the extension and restore previously stored state.
     
-    if([conversation selectedMessage]) {
+    /*if([conversation selectedMessage]) {
         
         NSLog(@"ACTIVE NOW AND SELECTED");
         
@@ -591,7 +550,7 @@
                 });
             }
         });
-    }
+    } */
 }
 
 - (void) willResignActiveWithConversation:(MSConversation *)conversation
@@ -609,7 +568,7 @@ static NSURL *receivedURL;
     MSMessageTemplateLayout *templateLayout = (MSMessageTemplateLayout*) message.layout;
     receivedURL = [templateLayout mediaFileURL];
     
-    NSLog(@"RECEIVED MESSAGE WITH ATTACHMENTS: %d\tID: %@", messageParameters.numberOfItems, messageParameters.messageID);
+    NSLog(@"RECEIVED MESSAGE WITH ATTACHMENTS: %d\tID: %@\t%@", messageParameters.numberOfItems, messageParameters.messageID, [receivedURL path]);
     
     [[NSUserDefaults standardUserDefaults] setObject:[receivedURL path] forKey:messageParameters.messageID];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -623,7 +582,10 @@ static NSURL *receivedURL;
 - (void) didStartSendingMessage:(MSMessage *)message conversation:(MSConversation *)conversation
 {
     [super didStartSendingMessage:message conversation:conversation];
-    self.currentlyOpenMessageAttachment.isOutgoingMessage = NO;
+    
+    [self.currentlyOpenMessageAttachment storeAttachmentsInDatabase];
+    
+    self.currentlyOpenMessageAttachment = nil;
     self.privateTextData = nil;
 }
 
@@ -631,12 +593,16 @@ static NSURL *receivedURL;
 {
     self.privateTextData = nil;
     
-    if(self.currentlyOpenMessageAttachment && [self.currentlyOpenMessageAttachment isOutgoingMessage]) {
+    if(self.currentlyOpenMessageAttachment) {
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(void) {
             
             NSError *error;
-            [[NSFileManager defaultManager] removeItemAtPath:[self.currentlyOpenMessageAttachment pathToUnzippedAttachment]
+            [[NSFileManager defaultManager] removeItemAtPath:[self.currentlyOpenMessageAttachment pathToAttachmentFolder]
+                                                       error:&error];
+            
+            
+            [[NSFileManager defaultManager] removeItemAtPath:[self.currentlyOpenMessageAttachment pathToZipFolder]
                                                        error:&error];
             NSLog(@"DELETED IN CANCEL");
         });
@@ -703,12 +669,12 @@ static NSURL *receivedURL;
             NSFileManager *defaultManager = [NSFileManager defaultManager];
             NSError *error;
         
-            if([defaultManager fileExistsAtPath:self.currentlyOpenMessageAttachment.pathToUnzippedAttachment]) {
-                [defaultManager removeItemAtPath:self.currentlyOpenMessageAttachment.pathToUnzippedAttachment error:&error];
+            if([defaultManager fileExistsAtPath:self.currentlyOpenMessageAttachment.pathToZipFolder]) {
+                //[defaultManager removeItemAtPath:self.currentlyOpenMessageAttachment.pathToZipFolder error:&error];
             }
             
-            if([defaultManager fileExistsAtPath:self.currentlyOpenMessageAttachment.pathToZippedAttachment]) {
-                [defaultManager removeItemAtPath:self.currentlyOpenMessageAttachment.pathToZippedAttachment error:&error];
+            if([defaultManager fileExistsAtPath:self.currentlyOpenMessageAttachment.pathToAttachmentFolder]) {
+                //[defaultManager removeItemAtPath:self.currentlyOpenMessageAttachment.pathToAttachmentFolder error:&error];
             }
         });
     }
@@ -778,19 +744,17 @@ static NSURL *receivedURL;
 }
 
 /** CALL THIS FROM A SEPARATE THREAD - handles actually sending the message*/
-- (void) sendMessageWithAttachments:(MessageAttachments*)messageAttachments encryptionKey:(NSString*)encryptionKey
+- (void) sendMessageWithAttachments:(MessageAttachments*)messageAttachments
 {
-    
     self.currentlyOpenMessageAttachment = messageAttachments;
-    self.currentlyOpenMessageAttachment.isOutgoingMessage = YES;
-    
     [self.currentlyOpenMessageAttachment saveMetaFileListToFile];
     
-    [SSZipArchive createZipFileAtPath:messageAttachments.pathToZippedAttachment
-              withContentsOfDirectory:messageAttachments.pathToUnzippedAttachment];
+    [SSZipArchive createZipFileAtPath:self.currentlyOpenMessageAttachment.pathToZipFolder
+              withContentsOfDirectory:self.currentlyOpenMessageAttachment.pathToAttachmentFolder];
     
     NSError *error;
-    NSData *encryptedData = [RNEncryptor encryptData:[NSData dataWithContentsOfFile:messageAttachments.pathToZippedAttachment]
+    
+    /*NSData *encryptedData = [RNEncryptor encryptData:[NSData dataWithContentsOfFile:messageAttachments.pathToZippedAttachment]
                                         withSettings:kRNCryptorAES256Settings
                                             password:encryptionKey
                                                error:&error];
@@ -800,19 +764,19 @@ static NSURL *receivedURL;
     }
     
     [encryptedData writeToFile:messageAttachments.pathToZippedAttachment atomically:YES];
-    encryptedData = nil;
+    encryptedData = nil;*/
     
     MSMessageTemplateLayout *messageLayout = [[MSMessageTemplateLayout alloc] init];
     //TODO: Implement messageLayout.image = defaultImage;
     //messageLayout.imageTitle = @"iMessage extension";
     messageLayout.caption = @"Encrypted Message";
     messageLayout.subcaption = [messageAttachments getAttachmentsDescriptiveString];
-    messageLayout.mediaFileURL = [NSURL fileURLWithPath:messageAttachments.pathToZippedAttachment];
+    messageLayout.mediaFileURL = [NSURL fileURLWithPath:self.currentlyOpenMessageAttachment.pathToZipFolder];
     
-    MessageParameters *messageParameters = [[MessageParameters alloc] initWithEncryptionKey:encryptionKey
-                                                                             attachmentName:messageAttachments.attachmentName
-                                                                                  messageID:[[NSUUID UUID] UUIDString]
-                                                                              numberOfItems:[messageAttachments totalNumberOfAttachments]];
+    MessageParameters *messageParameters = [[MessageParameters alloc] initWithEncryptionKey:self.currentlyOpenMessageAttachment.messageEncryptionKey
+                                                                             attachmentName:self.currentlyOpenMessageAttachment.pathToZipFolder
+                                                                                  messageID:self.currentlyOpenMessageAttachment.messageID
+                                                                              numberOfItems:[self.currentlyOpenMessageAttachment totalNumberOfAttachments]];
     
     MSSession *messageSession = [[MSSession alloc] init];
     MSMessage *message = [[MSMessage alloc] initWithSession:messageSession];
@@ -832,8 +796,8 @@ static NSURL *receivedURL;
                                  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(void) {
                                      
                                      NSError *deleteError;
-                                     [[NSFileManager defaultManager] removeItemAtPath:messageAttachments.pathToUnzippedAttachment error:&deleteError];
-                                     [[NSFileManager defaultManager] removeItemAtPath:messageAttachments.pathToZippedAttachment error:&deleteError];
+                                     //[[NSFileManager defaultManager] removeItemAtPath:messageAttachments.pathToUnzippedAttachment error:&deleteError];
+                                     [[NSFileManager defaultManager] removeItemAtPath:self.currentlyOpenMessageAttachment.pathToZipFolder error:&deleteError];
                                  });
                              }
          ];
